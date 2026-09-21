@@ -87,6 +87,15 @@
 \providecommand{\CifarNoisyRandomAubc}{--}\providecommand{\CifarCleanBaldFinal}{--}
 \providecommand{\CifarCleanBaldFinalStd}{--}\providecommand{\CifarNoisyIrisPairedP}{--}
 \providecommand{\CifarAurocIntro}{--}\providecommand{\CifarAurocEnt}{--}
+\providecommand{\FmnistRoundZero}{--}\providecommand{\BloodRoundZero}{--}
+\providecommand{\CifarRoundZero}{--}\providecommand{\CifarAccLow}{--}
+\providecommand{\CifarAccHigh}{--}\providecommand{\CifarNoisyNorelPairedP}{--}
+\providecommand{\CifarCleanNodivPairedP}{--}\providecommand{\FmnistHeadPct}{--}
+\providecommand{\BloodHeadPct}{--}\providecommand{\CifarHeadPct}{--}
+\providecommand{\CifarCleanIrisNodivFinal}{--}\providecommand{\CifarCleanIrisNodivFinalStd}{--}
+\providecommand{\CifarNoisyIrisNorelFinal}{--}\providecommand{\CifarNoisyIrisNorelFinalStd}{--}
+\providecommand{\CifarNoisyIrisFinalGain}{--}\providecommand{\FmnistNoisyIrisMatchBudget}{--}
+\providecommand{\FmnistNoisyIrisLabelSaving}{--}\providecommand{\CifarNoisyNSeeds}{--}
 
 \begin{document}
 \let\WriteBookmarks\relax
@@ -151,8 +160,9 @@ an ablation localises the cause to the \emph{selection signal} rather
 than to label handling --- removing reliability weighting there changes
 nothing, while concentrating a scarce budget on the predicted errors of
 a model that is still weak is itself the mistake. The extension
-costs under 1\% extra parameters and no extra forward pass at query
-time.
+costs a fixed two-layer MLP --- \FmnistHeadPct\% of the small CNN used
+here and \CifarHeadPct\% of a ResNet-18, a share that keeps shrinking as
+the backbone grows --- and no extra forward pass at query time.
 \end{abstract}
 
 \begin{highlights}
@@ -637,8 +647,9 @@ assumed to be accurate. \\[4pt]
 \method{} (ours) &
 A learned error predictor \emph{becomes} the selection signal; the
 $k$-center gate turns it into a diverse batch; low-loss weighting
-handles the noisy labels --- a single network, ${<}1\%$ extra
-parameters, no extra forward pass at query time. &
+handles the noisy labels --- a single network, a fixed-size auxiliary
+head (\CifarHeadPct--\FmnistHeadPct\% of the parameters here), no extra
+forward pass at query time. &
 Symmetric noise model; $\gamma$ assumed known; requires a capable base
 model (fails at cold start, Section~\ref{sec:results}); synthetic
 annotator.
@@ -802,7 +813,10 @@ proficient; otherwise, a high loss simply indicates that the sample
 ``has not yet been learned'' --- and Section~\ref{sec:results}
 demonstrates exactly where this assumption fails.
 
-\paragraph{Cost.} A two-layer MLP (less than 1\% of the parameters), no
+\paragraph{Cost.} A two-layer MLP. Because its size is fixed
+($d\to128\to1$) while the backbone's is not, its relative cost falls as
+the model grows: \FmnistHeadPct\% of the small CNN used here,
+\CifarHeadPct\% of a ResNet-18, and less again on anything larger. No
 additional forward pass during querying, and no change to the
 classifier's gradients. Any model trained using the standard
 classification pipeline can adopt this.
@@ -1103,18 +1117,18 @@ Fashion-MNIST &
 Grayscale $28\times28$ catalogue photographs of clothing articles;
 several structurally confusable classes \citep{xiao2017} &
 10 & 60,000 / 10,000 &
-Capable base model (round-0 ${\sim}74\%$) \\[3pt]
+Capable base model (round-0 ${\sim}\FmnistRoundZero\%$) \\[3pt]
 BloodMNIST &
 Single-cell peripheral blood microscopy, expert-labelled, imbalanced
 classes; $28\times28$ RGB, MedMNIST~v2 subset
 \citep{yang2023,acevedo2020} &
 8 & 11,959 / 3,421 &
-Capable base model (round-0 ${\sim}68\%$); application-realistic \\[3pt]
+Capable base model (round-0 ${\sim}\BloodRoundZero\%$); application-realistic \\[3pt]
 CIFAR-10 &
 Colour $32\times32$ photographs of natural objects; ResNet-18 trained
 from scratch \citep{krizhevsky2009,he2016} &
 10 & 50,000 / 10,000 &
-Cold start (round-0 ${\sim}46\%$) \\
+Cold start (round-0 ${\sim}\CifarRoundZero\%$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1203,7 +1217,7 @@ of selection (Table~\ref{tab:datasets}). For the two datasets where the
 model is already capable --- Fashion-MNIST and BloodMNIST --- \method{}
 achieves the highest final accuracy under the noisy oracle that the
 applied literature considers realistic. On CIFAR-10, where the model
-starts from scratch and reaches only ${\sim}46\%$ accuracy, no
+starts from scratch and reaches only ${\sim}\CifarRoundZero\%$ accuracy, no
 selection method outperforms random sampling. For BloodMNIST, the two
 metrics disagree in an instructive manner; rather than glossing over
 this discrepancy, we present it as a result in itself.
@@ -1321,7 +1335,7 @@ behind in AUBC).
 
 \paragraph{CIFAR-10: where the method should not be used.} At budgets
 of 1,000--6,000 labels, a ResNet-18 trained from scratch achieves only
-46--74\% accuracy; consequently, \emph{any} informativeness signal
+\CifarAccLow--\CifarAccHigh\% accuracy; consequently, \emph{any} informativeness signal
 derived from such a weak model --- whether entropy, mutual information,
 or our learned introspection score --- is so unreliable that
 concentrating the budget on it is actively detrimental. This is the
@@ -1339,14 +1353,14 @@ to find out \emph{which} component fails, instead of inferring it.
 Neither answer is the obvious one. Removing the reliability weight
 leaves the result unchanged
 (\CifarNoisyIrisNorelFinal$\pm$\CifarNoisyIrisNorelFinalStd\% versus
-\CifarNoisyIrisFinal\%, $p=0.850$): low-loss weighting is simply inert
+\CifarNoisyIrisFinal\%, $p=\CifarNoisyNorelPairedP$): low-loss weighting is simply inert
 at this budget, neither the rescue it is on the capable datasets nor
 the liability one might expect of it on a weak model. Removing the
 diversity gate under the perfect oracle makes matters \emph{worse}
 (\CifarCleanIrisNodivFinal$\pm$\CifarCleanIrisNodivFinalStd\% versus
 \CifarCleanIrisFinal\%), so geometric coverage is still doing useful
 work even here. What is left is the informativeness signal itself: with
-a backbone at ${\sim}46\%$ accuracy, ranking the pool by predicted
+a backbone at ${\sim}\CifarRoundZero\%$ accuracy, ranking the pool by predicted
 error concentrates the budget in the wrong places, and no amount of
 downstream gating repairs that. This is precisely the low-budget regime
 in which \citet{hacohen2022} find representative sampling to beat
@@ -1418,7 +1432,7 @@ The same two ablations on CIFAR-10 say something different, and that
 contrast is the point. There, dropping the reliability weight moves
 nothing at all
 (\CifarNoisyIrisNorelFinal\% versus \CifarNoisyIrisFinal\%,
-$p=0.850$), whereas on the capable datasets it was worth up to
+$p=\CifarNoisyNorelPairedP$), whereas on the capable datasets it was worth up to
 \FmnistNoisyIrisFinalGain{} points; the small-loss criterion needs a
 model that has already learned something before it can tell a corrupted
 label from a hard one, and below that threshold it does not so much

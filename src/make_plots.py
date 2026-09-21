@@ -93,7 +93,15 @@ def main():
             print("wrote", out)
 
     summary = pd.DataFrame(rows)
-    summary.to_csv(os.path.join(RESULTS_DIR, "summary.csv"), index=False)
+    summary_path = os.path.join(RESULTS_DIR, "summary.csv")
+    summary.to_csv(summary_path, index=False)
+    # Re-read what was just written.  make_numbers.py reads this CSV, and the
+    # float round-trip can shift a value sitting exactly on a rounding
+    # boundary (0.91505 -> 91.50 in memory but 91.51 after the round-trip),
+    # which would print two different numbers for one quantity in the table
+    # and in the prose.  Building the table from the round-tripped values
+    # keeps the two in lockstep.
+    summary = pd.read_csv(summary_path)
 
     # ---- markdown + latex tables ----
     md, tex = [], []

@@ -113,6 +113,57 @@ def main():
             cmd(f"{DS[ds]}AurocEnt",
                 f"{100 * np.nanmean(last.auroc_entropy):.1f}")
 
+    # ---- round-0 accuracy: the capability-gate proxy quoted in the text and
+    # in the dataset table.  Generated, not typed, so it cannot go stale.
+    res = pd.read_csv(os.path.join(RESULTS_DIR, "results.csv"))
+    r0 = res[res["round"] == 0]
+    for ds, tag in DS.items():
+        g = r0[r0.dataset == ds]
+        if not g.empty:
+            cmd(f"{tag}RoundZero", f"{100 * g.test_acc.mean():.0f}")
+    # CIFAR-10 spans this accuracy band over the whole budget sweep.
+    cif = res[res.dataset == "cifar10"]
+    if not cif.empty:
+        lo = 100 * cif[cif["round"] == 0].test_acc.mean()
+        hi = 100 * (cif[cif["round"] == cif["round"].max()]
+                    .groupby("method").test_acc.mean().max())
+        cmd("CifarAccLow", f"{lo:.0f}")
+        cmd("CifarAccHigh", f"{hi:.0f}")
+
+    # ---- ablation paired tests (IRIS vs its own ablation, matched seeds)
+    from scipy import stats as _st
+    fin = res[res["round"] == res.groupby(
+        ["dataset", "method", "noise", "seed"])["round"].transform("max")]
+    for ds, nz, ab, name in [("cifar10", 0.2, "iris-norel", "CifarNoisyNorelPairedP"),
+                             ("cifar10", 0.0, "iris-nodiv", "CifarCleanNodivPairedP")]:
+        a = fin[(fin.dataset == ds) & (fin.noise == nz) & (fin.method == "iris")]
+        b = fin[(fin.dataset == ds) & (fin.noise == nz) & (fin.method == ab)]
+        common = sorted(set(a.seed) & set(b.seed))
+        if len(common) > 1:
+            x = a[a.seed.isin(common)].sort_values("seed").test_acc.values
+            y = b[b.seed.isin(common)].sort_values("seed").test_acc.values
+            cmd(name, f"{_st.ttest_rel(x, y)[1]:.3f}")
+
+    # ---- parameter cost of the introspection head, per backbone.
+    # The head is a fixed d->128->1 MLP, so its share shrinks as the
+    # backbone grows; quoting one number for all three would be wrong.
+    try:
+        import sys as _sys
+        _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import torch as _t
+        _dev = os.environ.get("CUDA_VISIBLE_DEVICES")
+        os.environ["CUDA_VISIBLE_DEVICES"] = ""
+        import hitl_experiments as _H
+        for ds, tag in DS.items():
+            bb, hd = _H.make_model(ds, 0)
+            nb = sum(q.numel() for q in bb.parameters())
+            nh = sum(q.numel() for q in hd.parameters())
+            cmd(f"{tag}HeadPct", f"{100 * nh / (nb + nh):.1f}")
+        if _dev is not None:
+            os.environ["CUDA_VISIBLE_DEVICES"] = _dev
+    except Exception as e:  # torch absent: leave the macros to their fallbacks
+        print("skipped head-size macros:", e)
+
     with open(OUT, "w") as f:
         f.write("\n".join(lines) + "\n")
     print(f"wrote {OUT} ({len(lines) - 1} macros)")
