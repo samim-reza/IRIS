@@ -42,6 +42,13 @@ RESULTS_CSV = os.path.join(RESULTS_DIR, "results.csv")
 DIAG_CSV = os.path.join(RESULTS_DIR, "diagnostics.csv")
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+CKPT_DIR = os.path.join(ROOT, "checkpoints")
+
+# Deterministic cuDNN: without this, convolution autotuning picks different
+# algorithms between runs and the accuracies drift in the third decimal, which
+# makes the published numbers impossible to reproduce exactly.
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
 BLOOD_NPZ = os.path.join(DATA_DIR, "bloodmnist.npz")
 
 # per-dataset input shape / label space / backbone choice
@@ -60,6 +67,13 @@ def set_seed(seed):
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
+
+
+def _worker_init(worker_id):
+    """Give each DataLoader worker a deterministic, distinct seed."""
+    s = torch.initial_seed() % 2**32
+    np.random.seed(s + worker_id)
+    random.seed(s + worker_id)
 
 
 # --------------------------------------------------------------------------
@@ -244,8 +258,11 @@ def train_model(backbone, head, labeled_ds, cfg, use_reliability, noise_rate):
     # a tiny trailing batch (e.g. 5000 % 128 = 8) destabilizes BatchNorm badly
     # enough to dent a whole round — drop it when degenerate
     drop_last = (len(labeled_ds) % cfg["batch_size"]) < 16
+    gen = torch.Generator()
+    gen.manual_seed(torch.initial_seed() % 2**32)
     loader = DataLoader(labeled_ds, batch_size=cfg["batch_size"], shuffle=True,
-                        num_workers=2, drop_last=drop_last)
+                        num_workers=2, drop_last=drop_last,
+                        generator=gen, worker_init_fn=_worker_init)
     params = list(backbone.parameters()) + list(head.parameters())
     opt = torch.optim.SGD(params, lr=cfg["lr"], momentum=0.9, weight_decay=5e-4)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
@@ -472,6 +489,29 @@ def error_prediction_auroc(backbone, head, test_ds):
 # --------------------------------------------------------------------------
 # One full active-learning run
 # --------------------------------------------------------------------------
+def train_accuracy(backbone, labeled_ds):
+    """Accuracy on the model's OWN labelled set.
+
+    Used only to detect optimisation failure.  It deliberately never touches
+    the test split: a model that cannot fit the data it was just trained on
+    has diverged, and that is knowable from training data alone.
+    """
+    backbone.eval()
+    loader = DataLoader(labeled_ds, batch_size=256, num_workers=2)
+    ok = tot = 0
+    with torch.no_grad():
+        for x, y, _ in loader:
+            x = x.to(DEVICE)
+            y = torch.as_tensor(y).to(DEVICE)
+            logits, _ = backbone(x)
+            ok += (logits.argmax(1) == y).sum().item()
+            tot += y.numel()
+    return ok / max(tot, 1)
+
+
+MAX_DIVERGENCE_RETRIES = 2
+
+
 def append_csv(path, header, row):
     new = not os.path.exists(path)
     with open(path, "a") as f:
@@ -482,13 +522,44 @@ def append_csv(path, header, row):
         os.fsync(f.fileno())
 
 
+def save_checkpoint(ckpt_dir, dataset, method, noise, seed, rnd, cfg,
+                    backbone, head, labeled_idx, oracle_map, acc):
+    """Persist one round's trained model plus everything needed to verify it.
+
+    The state dicts alone are not evidence: the accuracy a checkpoint claims is
+    only checkable if you also know which examples it was trained on and which
+    labels the (possibly lying) oracle returned for them.  Both go in the file.
+    """
+    os.makedirs(ckpt_dir, exist_ok=True)
+    name = f"{dataset}_{method}_noise{noise}_seed{seed}_round{rnd}.pt"
+    path = os.path.join(ckpt_dir, name)
+    torch.save({
+        "backbone_state_dict": backbone.state_dict(),
+        "head_state_dict": head.state_dict(),
+        "dataset": dataset,
+        "method": method,
+        "noise": noise,
+        "seed": seed,
+        "round": rnd,
+        "n_labeled": len(labeled_idx),
+        "test_acc": float(acc),
+        "labeled_idx": list(map(int, labeled_idx)),
+        "oracle_labels": [int(oracle_map[i]) for i in labeled_idx],
+        "cfg": dict(cfg),
+        "spec": dict(DATASET_SPECS[dataset]),
+        "torch_version": torch.__version__,
+    }, path)
+    return path
+
+
 RESULT_HEADER = ["dataset", "method", "noise", "seed", "round",
                  "n_labeled", "test_acc", "wall_s"]
 DIAG_HEADER = ["dataset", "method", "noise", "seed", "round",
                "auroc_introspection", "auroc_entropy"]
 
 
-def run_al(dataset, method, noise_rate, seed, cfg):
+def run_al(dataset, method, noise_rate, seed, cfg, ckpt_dir=None,
+           save_all_rounds=False):
     t0 = time.time()
     set_seed(seed)
     rng = np.random.default_rng(seed)
@@ -510,14 +581,38 @@ def run_al(dataset, method, noise_rate, seed, cfg):
     use_rel = (method == "iris" and noise_rate > 0)
 
     for rnd in range(cfg["rounds"] + 1):
-        backbone, head = make_model(dataset, seed * 1000 + rnd)
         labeled_ds = LabeledSubset(train_aug, labeled_idx,
                                    [oracle_map[i] for i in labeled_idx])
-        train_model(backbone, head, labeled_ds, cfg, use_rel, noise_rate)
+        eval_ds = LabeledSubset(train_plain, labeled_idx,
+                                [oracle_map[i] for i in labeled_idx])
+        # SGD occasionally diverges from an unlucky initialisation and the run
+        # never leaves chance level.  Detect that on the training set and
+        # restart from a different init rather than letting one dead run
+        # poison a method's mean.  Healthy runs never trigger this, so their
+        # results are unchanged.
+        floor = 2.0 / num_classes
+        for attempt in range(MAX_DIVERGENCE_RETRIES + 1):
+            backbone, head = make_model(dataset, seed * 1000 + rnd
+                                        + attempt * 100000)
+            train_model(backbone, head, labeled_ds, cfg, use_rel, noise_rate)
+            tr_acc = train_accuracy(backbone, eval_ds)
+            if tr_acc >= floor or attempt == MAX_DIVERGENCE_RETRIES:
+                break
+            print(f"    DIVERGED: train acc {tr_acc:.4f} < {floor:.4f} "
+                  f"(2x chance) — restarting from a new init "
+                  f"[attempt {attempt + 2}/{MAX_DIVERGENCE_RETRIES + 1}]",
+                  flush=True)
+            del backbone, head
+            torch.cuda.empty_cache()
         acc = evaluate(backbone, test)
         append_csv(RESULTS_CSV, RESULT_HEADER,
                    [dataset, method, noise_rate, seed, rnd,
                     len(labeled_idx), f"{acc:.4f}", f"{time.time() - t0:.1f}"])
+        if ckpt_dir and (save_all_rounds or rnd == cfg["rounds"]):
+            cp = save_checkpoint(ckpt_dir, dataset, method, noise_rate, seed,
+                                 rnd, cfg, backbone, head, labeled_idx,
+                                 oracle_map, acc)
+            print(f"    saved {os.path.basename(cp)}", flush=True)
         if method.startswith("iris"):
             a_i, a_e = error_prediction_auroc(backbone, head, test)
             append_csv(DIAG_CSV, DIAG_HEADER,
@@ -557,7 +652,7 @@ def gpu_free_mb():
         return None
 
 
-def wait_for_gpu(min_free_mb, poll_s=180, max_wait_s=12 * 3600):
+def wait_for_gpu(min_free_mb, poll_s=15, max_wait_s=12 * 3600):
     if not torch.cuda.is_available():
         return
     waited = 0
@@ -579,13 +674,14 @@ CFGS = {
     "fmnist": dict(init_labeled=500, query_size=500, rounds=5,
                    epochs=30, batch_size=64, lr=0.02, min_free_mb=2500),
     "cifar10": dict(init_labeled=1000, query_size=1000, rounds=5,
-                    epochs=30, batch_size=128, lr=0.05, min_free_mb=3500),
+                    epochs=30, batch_size=128, lr=0.05, min_free_mb=2300),
     "bloodmnist": dict(init_labeled=500, query_size=500, rounds=5,
                        epochs=30, batch_size=64, lr=0.02, min_free_mb=2500),
 }
 
 # datasets cheap enough to also carry the component ablations
-ABLATION_DATASETS = ("fmnist", "bloodmnist")
+ABLATION_DATASETS = ("fmnist", "bloodmnist", "cifar10")  # cifar10 added to test
+# the cold-start mechanism claim directly rather than inferring it
 
 BASE_METHODS = ["random", "entropy", "bald", "coreset", "iris"]
 
@@ -606,7 +702,16 @@ def main():
     ap.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
     ap.add_argument("--quick", action="store_true",
                     help="tiny smoke test: 1 seed, 1 round, 2 epochs")
+    ap.add_argument("--save-checkpoints", action="store_true",
+                    help="write the final-round model of every run to "
+                         "checkpoints/")
+    ap.add_argument("--save-all-rounds", action="store_true",
+                    help="with --save-checkpoints, keep every round, not just "
+                         "the last one (~10 GB for the full grid)")
+    ap.add_argument("--ckpt-dir", default=CKPT_DIR)
     args = ap.parse_args()
+    ckpt_dir = args.ckpt_dir if (args.save_checkpoints
+                                 or args.save_all_rounds) else None
 
     print(f"device={DEVICE} torch={torch.__version__}", flush=True)
 
@@ -638,7 +743,8 @@ def main():
         for attempt in range(1, 5):
             wait_for_gpu(cfg.get("min_free_mb", 3000))
             try:
-                run_al(ds, m, noise, seed, cfg)
+                run_al(ds, m, noise, seed, cfg, ckpt_dir=ckpt_dir,
+                       save_all_rounds=args.save_all_rounds)
                 break
             except (torch.OutOfMemoryError, RuntimeError) as e:
                 if "out of memory" not in str(e).lower():

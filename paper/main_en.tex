@@ -139,14 +139,18 @@ and CIFAR-10, against Random, Entropy, BALD and Core-set, under both a
 perfect and a noisy ($\gamma=0.2$) synthetic annotator. On the two
 datasets whose base model is already competent when selection begins,
 \method{} attains the highest final accuracy under the noisy oracle
-(\FmnistNoisyIrisFinal\% and \BloodNoisyIrisFinal\%, the latter winning
-on all \BloodNoisyNSeeds{} seeds, $p=\BloodNoisyIrisPairedP$, with no
-hyperparameter retuning), whereas BALD --- the strongest baseline under
-a perfect oracle --- drops \emph{below} random sampling once annotator
-noise is present. We also map where the method stops working: in the
+(\FmnistNoisyIrisFinal\% on Fashion-MNIST, significant over the best
+baseline at $p=\FmnistNoisyIrisPairedP$, and \BloodNoisyIrisFinal\% on
+BloodMNIST, a consistent but unconfirmed
+\BloodNoisyIrisSeedsWon{}-seed trend at
+$p=\BloodNoisyIrisPairedP$ obtained with no hyperparameter retuning),
+whereas BALD --- the strongest baseline under a perfect oracle ---
+drops \emph{below} random sampling once annotator noise is present. We also map where the method stops working: in the
 CIFAR-10 cold start no acquisition strategy beats random sampling, and
-reliability weighting actively hurts, because a weak model cannot
-separate hard-but-correct examples from corrupted ones. The extension
+an ablation localises the cause to the \emph{selection signal} rather
+than to label handling --- removing reliability weighting there changes
+nothing, while concentrating a scarce budget on the predicted errors of
+a model that is still weak is itself the mistake. The extension
 costs under 1\% extra parameters and no extra forward pass at query
 time.
 \end{abstract}
@@ -1139,10 +1143,12 @@ BALD (10 MC-dropout passes) \citep{gal2017}, and Core-set $k$-center
 \citep{sener2018}. All methods use identical backbones, optimisers,
 schedules and seeds; the introspection head is present in every run,
 though unused for selection, to keep parameter counts and RNG streams
-matched. \textbf{Ablations} (Fashion-MNIST and BloodMNIST, the two
-inexpensive datasets): \method{} without the diversity gate (top-$K$
-introspection only), and \method{} without the reliability weight under
-noise. \textbf{Metrics.} Test accuracy after each round; final
+matched. \textbf{Ablations}, on all three datasets:
+\method{} without the diversity gate (top-$K$ introspection only) under
+the perfect oracle, and \method{} without the reliability weight under
+the noisy one. We run them on CIFAR-10 as well as on the two
+inexpensive datasets specifically so that the cold-start failure can be
+attributed to a component rather than guessed at. \textbf{Metrics.} Test accuracy after each round; final
 accuracy; and area under the accuracy--budget curve (AUBC,
 trapezoidal, normalised by the budget range). We report mean $\pm$
 standard deviation over \FmnistNoisyNSeeds{} seeds for Fashion-MNIST
@@ -1216,11 +1222,13 @@ baseline (\BloodNoisyBestBaseFinalName) and far ahead of the weakest
 baseline (BALD, \BloodNoisyBaldFinal\%). The trend is consistent across
 seeds: out of \BloodNoisyNSeeds{} seeds, \method{} beats the best
 baseline in \BloodNoisyIrisSeedsWon{} seeds on BloodMNIST and
-\FmnistNoisyIrisSeedsWon{} seeds on Fashion-MNIST. This difference is
-statistically significant on BloodMNIST according to a paired $t$-test
-across seeds ($p=\BloodNoisyIrisPairedP$); on Fashion-MNIST, where the
-margin is smaller, it is not ($p=\FmnistNoisyIrisPairedP$), so we
-report the latter as a consistent trend rather than a proven effect.
+\FmnistNoisyIrisSeedsWon{} seeds on Fashion-MNIST. On Fashion-MNIST this
+difference is statistically significant under a paired $t$-test across
+seeds ($p=\FmnistNoisyIrisPairedP$); on BloodMNIST, where the margin is
+smaller, it does not clear the 5\% level
+($p=\BloodNoisyIrisPairedP$), so we report that one as a consistent
+trend rather than a proven effect. The direction is the same on both
+datasets; only Fashion-MNIST has the seed count to establish it.
 
 Qualitatively, the most striking observation concerns the behaviour of
 the uncertainty-based baselines. BALD --- the strongest baseline under
@@ -1245,16 +1253,18 @@ ignorance --- on a dataset unrelated to Fashion-MNIST, while keeping
 the Fashion-MNIST hyperparameters unchanged. The hypothesis holds, and
 it holds exactly where it matters most. With a noisy oracle on
 BloodMNIST, \method{} achieves the highest final-budget accuracy
-(\BloodNoisyIrisFinal$\pm$\BloodNoisyIrisFinalStd\%), outperforming the
-best baseline across all \BloodNoisyNSeeds{} seeds
-($p=\BloodNoisyIrisPairedP$); this is the only result in the study that
-is both statistically significant and favourable to our method. The
+(\BloodNoisyIrisFinal$\pm$\BloodNoisyIrisFinalStd\%), beating the best
+baseline (\BloodNoisyBestBaseFinalName) on
+\BloodNoisyIrisSeedsWon{} of \BloodNoisyNSeeds{} seeds, though the
+paired test stops short of the 5\% level
+($p=\BloodNoisyIrisPairedP$). That the effect transfers at all is the
+point worth making: BloodMNIST received no tuning of any kind. The
 picture is less clear with a perfect oracle, and we report it as such:
-\method{} achieves the highest nominal accuracy
-(\BloodCleanIrisFinal$\pm$\BloodCleanIrisFinalStd\%) but is
-statistically indistinguishable from BALD (\BloodCleanBaldFinal\%) and
-Entropy (\BloodCleanEntropyFinal\%) (\BloodCleanIrisSeedsWon{} seeds,
-$p=\BloodCleanIrisPairedP$); what is clearly distinct, however, is that
+\method{} is statistically indistinguishable from BALD
+(\BloodCleanBaldFinal\%) and Entropy (\BloodCleanEntropyFinal\%), and
+lands nominally third among the three
+(\BloodCleanIrisFinal$\pm$\BloodCleanIrisFinalStd\%;
+\BloodCleanIrisSeedsWon{} seeds, $p=\BloodCleanIrisPairedP$); what is clearly distinct, however, is that
 all three learned-signal methods outperform random sampling
 (\BloodCleanRandomFinal\%) --- the exact opposite of what occurs on
 CIFAR-10.
@@ -1273,13 +1283,16 @@ over the entire trajectory, it rewards methods that lead early on:
 under noise, random sampling wins in this respect
 (\BloodNoisyRandomAubc\% versus \BloodNoisyIrisAubc\%). Final accuracy
 rewards the end state, and in real-world applications it is the model
-at that end state that gets deployed. With a perfect oracle, the
-crossover occurs early enough to translate into label savings ---
-\method{} reaches the accuracy that random sampling achieves with 3,000
-labels using only \BloodCleanIrisMatchBudget{} labels, a saving of
-\BloodCleanIrisLabelSaving\% --- whereas under noise the benefit
-manifests not as reaching the target earlier but as a higher final
-accuracy. The practical takeaway is that these two metrics answer
+at that end state that gets deployed. On BloodMNIST the crossover never
+arrives early enough to translate into label savings under either
+oracle: \method{} still needs the full
+\BloodCleanIrisMatchBudget{} labels to match what random sampling
+reaches at 3,000, so its benefit shows up as a higher final accuracy
+rather than an earlier finish. Fashion-MNIST under noise is where the
+saving does materialise --- \method{} matches random sampling's
+3,000-label accuracy using only \FmnistNoisyIrisMatchBudget{} labels,
+a saving of \FmnistNoisyIrisLabelSaving\% of the annotation budget ---
+which is the form the gain takes when the crossover happens early. The practical takeaway is that these two metrics answer
 different questions, and an annotation programme should choose between
 them according to whether the goal is to stop early (AUBC) or to
 exhaust the budget and deploy the model (final accuracy). The deep-AL
@@ -1287,14 +1300,18 @@ literature frequently reports one or the other without specifying the
 underlying scenario.
 
 \paragraph{Perfect oracle.} On Fashion-MNIST with a perfect annotator,
-\method{} achieves the highest AUBC
-(\FmnistCleanIrisAubc$\pm$\FmnistCleanIrisAubcStd\%,
-\FmnistCleanIrisAubcGain{} points above \FmnistCleanBestBaseName), and
-is statistically tied with BALD on final accuracy --- meaning that even
-when the oracle is perfectly accurate, the architectural additions
-incur no penalty. The perfect-oracle scenario on BloodMNIST mirrors the
-pattern described above: superior final accuracy compared to any other
-method, yet lower AUBC than every baseline. CIFAR-10 tells a different
+\method{} is level with the
+field: its AUBC (\FmnistCleanIrisAubc$\pm$\FmnistCleanIrisAubcStd\%)
+sits \FmnistCleanIrisAubcGain{} points from the best baseline
+(\FmnistCleanBestBaseName) and it is statistically tied with BALD on
+final accuracy --- meaning that when the oracle is perfectly accurate
+the architectural additions neither help nor cost anything. The
+perfect-oracle scenario on BloodMNIST mirrors that: \method{} is
+indistinguishable from the leaders on final accuracy, yet lower on
+AUBC than every baseline. The gains this paper claims are gains under
+\emph{noise}; with a clean oracle there is nothing for the reliability
+gate to do, and the diversity gate alone does not separate \method{}
+from a well-tuned uncertainty baseline. CIFAR-10 tells a different
 story: \emph{random sampling matches or outperforms every selection
 method}, including ours (random's
 \CifarCleanRandomFinal$\pm$\CifarCleanRandomFinalStd\% versus
@@ -1313,18 +1330,30 @@ cold-start problem identified in the deep-AL literature
 random sampling wins at low budgets. The failure is even more
 pronounced under noise: random sampling performs best by both metrics
 (\CifarNoisyRandomFinal$\pm$\CifarNoisyRandomFinalStd\% final accuracy,
-\CifarNoisyRandomAubc\% AUBC), while \method{} ranks last in final
-accuracy (\CifarNoisyIrisFinal$\pm$\CifarNoisyIrisFinalStd\%,
-$p=\CifarNoisyIrisPairedP$) --- a significant difference, and one
-against us; we report it as plainly as we reported the significant
-difference in our favour on BloodMNIST. The reason is instructive:
-low-loss weighting assumes that per-sample loss can distinguish noisy
-labels from clean ones, but at this budget the loss of a ResNet-18
-trained from scratch is high even for difficult \emph{yet correct}
-samples, so the weighting scheme discards the very examples the weak
-model needs most. Fashion-MNIST and BloodMNIST --- where the base model
-is capable from the very first round --- show the same mechanism
-working exactly as intended. Having two datasets on either side of the
+\CifarNoisyRandomAubc\% AUBC), while \method{} sits mid-field
+(\CifarNoisyIrisFinal$\pm$\CifarNoisyIrisFinalStd\%, above BALD and
+Core-set but \CifarNoisyIrisFinalGain{} points short of random;
+$p=\CifarNoisyIrisPairedP$ over \CifarNoisyNSeeds{} seeds, so the
+deficit is consistent rather than proven). We ran both ablations here
+to find out \emph{which} component fails, instead of inferring it.
+Neither answer is the obvious one. Removing the reliability weight
+leaves the result unchanged
+(\CifarNoisyIrisNorelFinal$\pm$\CifarNoisyIrisNorelFinalStd\% versus
+\CifarNoisyIrisFinal\%, $p=0.850$): low-loss weighting is simply inert
+at this budget, neither the rescue it is on the capable datasets nor
+the liability one might expect of it on a weak model. Removing the
+diversity gate under the perfect oracle makes matters \emph{worse}
+(\CifarCleanIrisNodivFinal$\pm$\CifarCleanIrisNodivFinalStd\% versus
+\CifarCleanIrisFinal\%), so geometric coverage is still doing useful
+work even here. What is left is the informativeness signal itself: with
+a backbone at ${\sim}46\%$ accuracy, ranking the pool by predicted
+error concentrates the budget in the wrong places, and no amount of
+downstream gating repairs that. This is precisely the low-budget regime
+in which \citet{hacohen2022} find representative sampling to beat
+uncertainty sampling, reproduced here for a \emph{learned} signal.
+Fashion-MNIST and BloodMNIST --- where the base model is capable from
+the very first round --- show the same components working as
+intended. Having two datasets on either side of the
 boundary turns an isolated observation into a practical rule, the very
 rule codified as the capability gate in
 Section~\ref{sec:application}.
@@ -1385,6 +1414,21 @@ selection and label-acceptance components contribute additively --- each
 gate earns its place, and only the full method tops the rankings across
 every scenario involving a capable model and a constrained budget.
 
+The same two ablations on CIFAR-10 say something different, and that
+contrast is the point. There, dropping the reliability weight moves
+nothing at all
+(\CifarNoisyIrisNorelFinal\% versus \CifarNoisyIrisFinal\%,
+$p=0.850$), whereas on the capable datasets it was worth up to
+\FmnistNoisyIrisFinalGain{} points; the small-loss criterion needs a
+model that has already learned something before it can tell a corrupted
+label from a hard one, and below that threshold it does not so much
+misfire as fall silent. Dropping the diversity gate still costs
+accuracy (\CifarCleanIrisNodivFinal\% versus \CifarCleanIrisFinal\%),
+so coverage remains useful regardless of model quality. Each component
+therefore has its own precondition, and the capability gate of
+Section~\ref{sec:application} is really a statement about the
+introspection signal alone.
+
 \section{Discussion}\label{sec:discussion}
 \method{} operationalises --- \emph{inside} the classifier --- two
 lessons that the applied HITL literature of 2026 keeps relearning at
@@ -1405,14 +1449,19 @@ The results establish a practical threshold, with a dataset on either
 side of it. Once the base model has sufficient capability, selection
 --- whether learned or heuristic, as seen here on Fashion-MNIST and
 BloodMNIST --- becomes beneficial, while the reliability gate
-safeguards those gains against annotator errors; of the two, the
-BloodMNIST result is the more robust, since the method was not tuned
-for that dataset at all. In cold-start scenarios, such as training
+safeguards those gains against annotator errors. Of the two, the
+Fashion-MNIST result is the one the seeds actually resolve; the
+BloodMNIST result is the more interesting, since the method was not
+tuned for that dataset at all, but at six seeds its margin stays inside
+the noise and we treat it as corroboration rather than proof. In cold-start scenarios, such as training
 CIFAR-10 from scratch with a few thousand labels, it is better to
-allocate the initial portion of the budget to random sampling and keep
-the reliability gate \emph{disabled} until the model can tell difficult
-samples from noisy ones; applying it too early degrades rather than
-improves accuracy in the presence of noise. This leads to an immediate,
+allocate the initial portion of the budget to random sampling and leave
+the \emph{selection} signal switched off until the model is good enough
+for its own error predictions to mean something. Our cold-start
+ablation is specific on this point: the reliability weight can be left
+enabled, since it neither helps nor harms there, and the diversity gate
+should be, since coverage still pays; it is introspection-driven
+ranking that must wait. This leads to an immediate,
 empirically testable next step: a warm-start strategy of initial random
 or self-supervised sampling, followed by activation of
 introspection-based selection and reliability weighting only once the
@@ -1439,17 +1488,18 @@ assumed known following co-teaching \citep{han2018}. Our margin over
 the best baseline is directionally consistent --- under the noisy
 oracle, \method{} wins on \BloodNoisyIrisSeedsWon{} seeds for
 BloodMNIST and \FmnistNoisyIrisSeedsWon{} seeds for Fashion-MNIST ---
-but only the BloodMNIST difference exceeds the 5\% significance level
-in paired tests ($p=\BloodNoisyIrisPairedP$ versus
-$p=\FmnistNoisyIrisPairedP$); meanwhile, under the \emph{perfect}
+but only the Fashion-MNIST difference exceeds the 5\% significance
+level in paired tests ($p=\FmnistNoisyIrisPairedP$ versus
+$p=\BloodNoisyIrisPairedP$); meanwhile, under the \emph{perfect}
 oracle, \method{} is statistically indistinguishable from the best
 baseline on both datasets ($p=\BloodCleanIrisPairedP$,
-$p=\FmnistCleanIrisPairedP$). For CIFAR-10 there are only
-\CifarNoisyNSeeds{} seeds, so the negative result, while large in
-magnitude, rests on less evidence than the positive ones. To summarise
-honestly: the benefit under the noisy oracle is established on one
-dataset, directionally supported on a second, and absent in cold-start
-scenarios.
+$p=\FmnistCleanIrisPairedP$). With six seeds, a margin well under a
+point is hard to resolve, and we would rather report the BloodMNIST
+result as an unconfirmed trend than lean on it. For CIFAR-10 there are
+only \CifarNoisyNSeeds{} seeds, so the cold-start result rests on less
+evidence still. To summarise honestly: the benefit under the noisy
+oracle is established on one dataset, directionally supported on a
+second, and absent in cold-start scenarios.
 
 The budgets are also truncated. At 3,000 labels on BloodMNIST the
 accuracy of every method is still rising, and \method{} exhibits the

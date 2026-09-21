@@ -123,9 +123,13 @@ def main():
             mark = " **(best)**" if m == best else ""
             md.append(f"| {LABELS[m]}{mark} | {fa} | {au} |")
             bold = (lambda s: f"\\textbf{{{s}}}") if m == best else (lambda s: s)
-            tex.append(f"{setting_tex} & {LABELS[m].replace('w/o', 'w/o ')} & "
-                       f"{bold(fa.replace('±', '$\\pm$'))} & "
-                       f"{bold(au.replace('±', '$\\pm$'))} \\\\")
+            # NB: keep backslash-bearing substitutions out of the f-string
+            # expressions -- that is a SyntaxError before Python 3.12.
+            pm = "$\\pm$"
+            fa_tex = bold(fa.replace("±", pm))
+            au_tex = bold(au.replace("±", pm))
+            label = LABELS[m].replace("w/o", "w/o ")
+            tex.append(f"{setting_tex} & {label} & {fa_tex} & {au_tex} \\\\")
     tex.append("\\bottomrule\n\\end{tabular}")
 
     with open(os.path.join(RESULTS_DIR, "summary_table.md"), "w") as f:

@@ -1,0 +1,110 @@
+device=cuda torch=2.12.0+cu130
+grid: 36 runs
+skip (done): cifar10 random 0.0 0
+skip (done): cifar10 random 0.0 1
+skip (done): cifar10 random 0.0 2
+skip (done): cifar10 entropy 0.0 0
+skip (done): cifar10 entropy 0.0 1
+skip (done): cifar10 entropy 0.0 2
+skip (done): cifar10 bald 0.0 0
+skip (done): cifar10 bald 0.0 1
+skip (done): cifar10 bald 0.0 2
+skip (done): cifar10 coreset 0.0 0
+skip (done): cifar10 coreset 0.0 1
+skip (done): cifar10 coreset 0.0 2
+skip (done): cifar10 iris 0.0 0
+skip (done): cifar10 iris 0.0 1
+skip (done): cifar10 iris 0.0 2
+=== run 16/36: cifar10 iris-nodiv noise=0.0 seed=0 ===
+[cifar10|iris-nodiv|noise=0.0|seed=0] round 0: n=1000 acc=0.4308 (14s)
+[cifar10|iris-nodiv|noise=0.0|seed=0] round 1: n=2000 acc=0.4950 (28s)
+[cifar10|iris-nodiv|noise=0.0|seed=0] round 2: n=3000 acc=0.5426 (45s)
+[cifar10|iris-nodiv|noise=0.0|seed=0] round 3: n=4000 acc=0.5876 (69s)
+[cifar10|iris-nodiv|noise=0.0|seed=0] round 4: n=5000 acc=0.6674 (103s)
+    saved cifar10_iris-nodiv_noise0.0_seed0_round5.pt
+[cifar10|iris-nodiv|noise=0.0|seed=0] round 5: n=6000 acc=0.6973 (147s)
+=== run 17/36: cifar10 iris-nodiv noise=0.0 seed=1 ===
+GPU busy (1545MB free < 3500MB needed) — waiting 180s
+GPU busy (1527MB free < 3500MB needed) — waiting 180s
+device=cuda torch=2.12.0+cu130
+grid: 36 runs
+skip (done): cifar10 random 0.0 0
+skip (done): cifar10 random 0.0 1
+skip (done): cifar10 random 0.0 2
+skip (done): cifar10 entropy 0.0 0
+skip (done): cifar10 entropy 0.0 1
+skip (done): cifar10 entropy 0.0 2
+skip (done): cifar10 bald 0.0 0
+skip (done): cifar10 bald 0.0 1
+skip (done): cifar10 bald 0.0 2
+skip (done): cifar10 coreset 0.0 0
+skip (done): cifar10 coreset 0.0 1
+skip (done): cifar10 coreset 0.0 2
+skip (done): cifar10 iris 0.0 0
+skip (done): cifar10 iris 0.0 1
+skip (done): cifar10 iris 0.0 2
+skip (done): cifar10 iris-nodiv 0.0 0
+=== run 17/36: cifar10 iris-nodiv noise=0.0 seed=1 ===
+[cifar10|iris-nodiv|noise=0.0|seed=1] round 0: n=1000 acc=0.4441 (8s)
+[cifar10|iris-nodiv|noise=0.0|seed=1] round 1: n=2000 acc=0.5139 (21s)
+[cifar10|iris-nodiv|noise=0.0|seed=1] round 2: n=3000 acc=0.5328 (37s)
+[cifar10|iris-nodiv|noise=0.0|seed=1] round 3: n=4000 acc=0.5885 (56s)
+[cifar10|iris-nodiv|noise=0.0|seed=1] round 4: n=5000 acc=0.5637 (77s)
+    saved cifar10_iris-nodiv_noise0.0_seed1_round5.pt
+[cifar10|iris-nodiv|noise=0.0|seed=1] round 5: n=6000 acc=0.7148 (103s)
+=== run 18/36: cifar10 iris-nodiv noise=0.0 seed=2 ===
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+GPU busy (1527MB free < 2300MB needed) — waiting 15s
+[cifar10|iris-nodiv|noise=0.0|seed=2] round 0: n=1000 acc=0.4423 (8s)
+[cifar10|iris-nodiv|noise=0.0|seed=2] round 1: n=2000 acc=0.4940 (20s)
+[cifar10|iris-nodiv|noise=0.0|seed=2] round 2: n=3000 acc=0.5790 (36s)
+[cifar10|iris-nodiv|noise=0.0|seed=2] round 3: n=4000 acc=0.5579 (55s)
+[cifar10|iris-nodiv|noise=0.0|seed=2] round 4: n=5000 acc=0.6930 (77s)
+    saved cifar10_iris-nodiv_noise0.0_seed2_round5.pt
+[cifar10|iris-nodiv|noise=0.0|seed=2] round 5: n=6000 acc=0.6410 (102s)
+skip (done): cifar10 random 0.2 0
+skip (done): cifar10 random 0.2 1
+skip (done): cifar10 random 0.2 2
+skip (done): cifar10 entropy 0.2 0
+skip (done): cifar10 entropy 0.2 1
+skip (done): cifar10 entropy 0.2 2
+skip (done): cifar10 bald 0.2 0
+skip (done): cifar10 bald 0.2 1
+skip (done): cifar10 bald 0.2 2
+skip (done): cifar10 coreset 0.2 0
+skip (done): cifar10 coreset 0.2 1
+skip (done): cifar10 coreset 0.2 2
+skip (done): cifar10 iris 0.2 0
+skip (done): cifar10 iris 0.2 1
+skip (done): cifar10 iris 0.2 2
+=== run 34/36: cifar10 iris-norel noise=0.2 seed=0 ===
+[cifar10|iris-norel|noise=0.2|seed=0] round 0: n=1000 acc=0.3913 (8s)
+[cifar10|iris-norel|noise=0.2|seed=0] round 1: n=2000 acc=0.4518 (21s)
+[cifar10|iris-norel|noise=0.2|seed=0] round 2: n=3000 acc=0.4765 (37s)
+[cifar10|iris-norel|noise=0.2|seed=0] round 3: n=4000 acc=0.5550 (56s)
+[cifar10|iris-norel|noise=0.2|seed=0] round 4: n=5000 acc=0.5958 (79s)
+    saved cifar10_iris-norel_noise0.2_seed0_round5.pt
+[cifar10|iris-norel|noise=0.2|seed=0] round 5: n=6000 acc=0.6195 (105s)
+=== run 35/36: cifar10 iris-norel noise=0.2 seed=1 ===
+[cifar10|iris-norel|noise=0.2|seed=1] round 0: n=1000 acc=0.4016 (8s)
+[cifar10|iris-norel|noise=0.2|seed=1] round 1: n=2000 acc=0.4692 (21s)
+[cifar10|iris-norel|noise=0.2|seed=1] round 2: n=3000 acc=0.4777 (37s)
+[cifar10|iris-norel|noise=0.2|seed=1] round 3: n=4000 acc=0.4660 (56s)
+[cifar10|iris-norel|noise=0.2|seed=1] round 4: n=5000 acc=0.5994 (79s)
+    saved cifar10_iris-norel_noise0.2_seed1_round5.pt
+[cifar10|iris-norel|noise=0.2|seed=1] round 5: n=6000 acc=0.6168 (105s)
+=== run 36/36: cifar10 iris-norel noise=0.2 seed=2 ===
+[cifar10|iris-norel|noise=0.2|seed=2] round 0: n=1000 acc=0.3769 (8s)
+[cifar10|iris-norel|noise=0.2|seed=2] round 1: n=2000 acc=0.4328 (24s)
+[cifar10|iris-norel|noise=0.2|seed=2] round 2: n=3000 acc=0.4911 (40s)
+[cifar10|iris-norel|noise=0.2|seed=2] round 3: n=4000 acc=0.5338 (60s)
+[cifar10|iris-norel|noise=0.2|seed=2] round 4: n=5000 acc=0.5795 (82s)
+    saved cifar10_iris-norel_noise0.2_seed2_round5.pt
+[cifar10|iris-norel|noise=0.2|seed=2] round 5: n=6000 acc=0.6264 (108s)
+ALL RUNS COMPLETE

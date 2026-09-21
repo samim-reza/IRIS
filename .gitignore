@@ -33,3 +33,5 @@ venv/
 .DS_Store
 Thumbs.db
 paper/_backup/
+checkpoints/
+results/previous_run/

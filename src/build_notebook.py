@@ -172,15 +172,44 @@ if os.path.exists(diag_path):
 else:
     print("diagnostics.csv not found yet")""")
 
-md("""## 5. Where everything lives
-- **Paper draft (PDF):** `paper/main_en.pdf` — numbers/figures auto-filled from
-  `results/` by `src/make_numbers.py` + `src/make_plots.py` (rerun by
-  `code/finalize.sh`).
-- **Literature review:** `literature_review/literature_review.md` (15+ sources incl.
-  six 2026 Nature-portfolio papers and six 2026 Springer/Elsevier Q1 papers, all PDFs
-  in `papers/`).
-- **Reproduce from scratch:** run section 3, wait for `ALL RUNS COMPLETE` in
-  `logs/experiments.log`, then re-run section 4 here.
+md("## 5. Verifying the saved models\n"
+   "Each run keeps the final trained model that produced its published accuracy, "
+   "in `checkpoints/`, together with the examples it was trained on and the labels "
+   "the (possibly lying) oracle returned. The cell below reloads a sample of them "
+   "and re-measures accuracy on the untouched test set: a clean result is a delta "
+   "of 0.0000 for every checkpoint.\n\n"
+   "Training is deterministic (cuDNN autotuning off, DataLoader seeded), so these "
+   "numbers reproduce exactly rather than approximately.")
+
+code("""# Re-measure saved checkpoints.  Needs a GPU; set SAMPLE=None for all 174.
+SAMPLE = 6
+import glob, torch, random as _rnd
+sys.path.insert(0, os.path.join(ROOT, "src"))
+paths = sorted(glob.glob(os.path.join(ROOT, "checkpoints", "*.pt")))
+if not paths:
+    print("no checkpoints — run the grid with --save-checkpoints first")
+else:
+    import verify_checkpoint as V
+    sel = paths if SAMPLE is None else _rnd.Random(0).sample(paths, min(SAMPLE, len(paths)))
+    cache, worst = {}, 0.0
+    print(f"{'checkpoint':<52}{'recorded':>10}{'reloaded':>10}{'delta':>9}")
+    for cp in sel:
+        ck, acc, d = V.verify(cp, cache)
+        worst = max(worst, abs(d))
+        print(f"{os.path.basename(cp):<52}{ck['test_acc']:>10.4f}{acc:>10.4f}{d:>+9.4f}")
+    print(f"\\nmax |delta| over {len(sel)} checkpoint(s) = {worst:.6f}")""")
+
+md("""## 6. Where everything lives
+- **Paper (PDF):** `paper/main_en.pdf` — Elsevier CAS format; every number, table
+  and figure is auto-filled from `results/` by `src/make_numbers.py` and
+  `src/make_plots.py` (rerun together by `src/finalize.sh`).
+- **Saved models:** `checkpoints/` — the final model of each of the 174 runs,
+  re-checkable with `src/verify_checkpoint.py` (section 5).
+- **Previous results:** `results/previous_run/` — the earlier grid, with
+  `src/compare_runs.py` to diff old against new.
+- **Literature review:** `docs/literature_review/literature_review.md`.
+- **Reproduce from scratch:** `tmux new-session -d -s iris 'bash src/rerun_all.sh
+  > logs/rerun.log 2>&1'`, wait for `RERUN COMPLETE`, then re-run section 4 here.
 """)
 
 nb["cells"] = cells

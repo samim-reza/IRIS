@@ -23,7 +23,7 @@ It costs under 1% extra parameters and no extra forward pass at query time.
 
 ## Everything here reproduces without training
 
-The full experiment grid (174 runs) is **already in `results/`**. Cloning this
+The full experiment grid (180 runs) is **already in `results/`**. Cloning this
 repo and running two scripts regenerates every figure, table and number in the
 paper — including the paper PDF itself — in well under a minute on a laptop, with
 **no GPU and no training**.
@@ -40,6 +40,47 @@ python src/make_numbers.py    # -> paper/numbers.tex  (196 LaTeX macros)
 That is the whole reproduction path. Re-running the experiments is optional and
 covered in [Re-running the experiments](#re-running-the-experiments-optional-gpu).
 
+### Verifying the results, not just reading them
+
+Every run keeps the **final trained model** that produced its published
+accuracy, under `checkpoints/` (180 files, ~1.9 GB, git-ignored). Each file
+carries the weights, both heads, and the audit trail a claim needs: the exact
+examples the model was trained on and the labels the (possibly lying) oracle
+returned for them.
+
+```bash
+python src/verify_checkpoint.py                    # re-measure all 180 checkpoints
+python src/verify_checkpoint.py --dataset bloodmnist
+```
+
+It reloads each model, re-evaluates it on the untouched test set, and prints the
+delta against the accuracy recorded during training. A clean result is
+`max |delta| = 0.000000`.
+
+Training is **deterministic**: cuDNN autotuning is disabled and the training
+DataLoader is seeded, so re-running reproduces the published numbers exactly
+rather than approximately. This was verified by re-running a completed run and
+getting byte-identical per-round accuracies.
+
+The grid also carries a **divergence guard**. SGD occasionally fails to escape
+its initialisation and a run sits at chance level for good; one such run
+appeared here and would have silently dragged a baseline's mean down by 11
+points. After training, the model is checked against *its own training set* --
+never the test set -- and restarted from a different initialisation if it could
+not fit the data it was just shown. Healthy runs never trigger it and are
+bit-identical with or without it.
+
+To reproduce the whole grid from scratch, with checkpoints:
+
+```bash
+tmux new-session -d -s iris 'bash src/rerun_all.sh > logs/rerun.log 2>&1'
+tmux attach -t iris        # watch;  Ctrl-b d to detach
+```
+
+`results/previous_run/` holds the earlier, pre-checkpointing results, and
+`python src/compare_runs.py` diffs the two per scenario and flags any change in
+which method wins.
+
 ### What "no training" does and does not cover
 
 `results/` holds the **measurements**, not model weights. Every number, figure,
@@ -47,18 +88,17 @@ table, significance test and the paper PDF regenerate from it exactly, with no
 GPU — that is verified, and a fresh clone reproduces the committed figures
 bit-identically.
 
-There are deliberately **no saved checkpoints in this repository**. Active
-learning retrains the classifier *from scratch* after every acquisition round
-(see `run_al` in `src/hitl_experiments.py`), so the 174 runs produce 1,044
-short-lived models; each is trained, evaluated, recorded to
-`results/results.csv`, and discarded. Keeping them is neither meaningful for the
-claim being made — which is about the *acquisition policy*, not about one set of
-weights — nor practical.
+Active learning retrains the classifier *from scratch* after every acquisition
+round (see `run_al` in `src/hitl_experiments.py`), so the 180 runs train 1,080
+models in total. Keeping all of them would serve nobody, so each run keeps the
+**final** one — the model that produced that run's published accuracy. Those
+180 checkpoints are ~1.9 GB, too large for git, so they are produced by the
+grid rather than shipped; `src/verify_checkpoint.py` re-measures them.
 
-So: to **check the paper's results**, you need no training. To **run inference
-with a trained IRIS classifier** on your own images, you do have to train one;
-a single run is about 3 minutes for Fashion-MNIST or BloodMNIST and about 11
-minutes for CIFAR-10 on one GPU.
+So: to **check the paper's numbers, figures and tables**, you need no GPU and no
+training. To **hold the trained models** and re-measure them yourself, rerun the
+grid with `--save-checkpoints` (~3 GPU-hours for all of it, or ~3 minutes for a
+single Fashion-MNIST or BloodMNIST run).
 
 ### Rebuild the paper too
 
@@ -81,9 +121,9 @@ sd over seeds. Full table: `results/summary_table.md`.
 
 | Dataset | Regime | Random | IRIS (ours) | Verdict |
 |---|---|---|---|---|
-| Fashion-MNIST | capable base model | 83.85 ± 0.55 | **84.82 ± 0.50** | best of 5 methods; trend not significant |
-| BloodMNIST | capable base model | 86.69 ± 0.91 | **88.08 ± 0.56** | best; wins 6/6 seeds, *p* = 0.003 |
-| CIFAR-10 | cold start (ResNet-18 from scratch) | **63.69 ± 0.96** | 58.28 ± 1.24 | **IRIS loses** — see below |
+| Fashion-MNIST | capable base model | 83.71 ± 0.54 | **85.68 ± 0.61** | best of 5; wins 5/6 seeds, *p* = 0.021, and saves 17% of the budget |
+| BloodMNIST | capable base model | 86.94 ± 0.75 | **87.82 ± 0.75** | best of 5; wins 5/6 seeds, *p* = 0.097 — a trend, not proof |
+| CIFAR-10 | cold start (ResNet-18 from scratch) | **63.24 ± 0.55** | 62.20 ± 0.30 | **IRIS loses** — see below |
 
 Three findings the repository is built to let you check:
 
@@ -91,9 +131,11 @@ Three findings the repository is built to let you check:
   oracle drops *below* random sampling once labels are noisy, on both capable-model
   datasets.
 - **Cold start defeats every acquisition strategy, ours included.** On CIFAR-10
-  from scratch, nothing beats random sampling, and reliability weighting actively
-  hurts, because a weak model cannot tell hard-but-correct examples from corrupted
-  ones. The paper reports this as a condition of use, not a footnote.
+  from scratch nothing beats random sampling. Running both ablations there
+  localises the cause: removing reliability weighting changes nothing
+  (*p* = 0.850) and removing the diversity gate makes things worse, so it is the
+  learned *selection signal* that fails when the backbone is still at ~46%
+  accuracy. The paper reports this as a condition of use, not a footnote.
 - **Batch quality ≠ error-ranking quality.** Softmax entropy has a *higher*
   point-wise error-detection AUROC than the learned head on all three datasets,
   yet picks worse batches (`results/diagnostics_auroc.png`).
@@ -132,8 +174,8 @@ Two directories are deliberately **not** in git:
 ## Re-running the experiments (optional, GPU)
 
 Only needed if you want to regenerate `results/` from scratch, or if you want
-trained weights (see below). The grid is 174 runs and takes roughly 10 GPU-hours
-in total.
+trained weights (see below). The grid is 180 runs and takes roughly 3 GPU-hours
+on an idle RTX 4090.
 
 ```bash
 pip install torch torchvision          # in addition to requirements.txt
@@ -160,10 +202,10 @@ python -u src/hitl_experiments.py --datasets fmnist bloodmnist --seeds 3 4 5
   MedMNIST v2 (500 + 5×500, *the same* small CNN and recipe, untuned), CIFAR-10
   (1,000 + 5×1,000, ResNet-18 from scratch)
 - **Methods** — random · entropy · BALD · core-set · **IRIS**, plus the
-  `iris-nodiv` and `iris-norel` ablations on the two 28×28 datasets
+  `iris-nodiv` and `iris-norel` ablations on all three datasets
 - **Oracle** — clean (γ = 0) and noisy (γ = 0.2 symmetric label noise)
-- **Seeds** — 6 on Fashion-MNIST and BloodMNIST, 3 on CIFAR-10 (72 + 72 + 30 =
-  174 runs)
+- **Seeds** — 6 on Fashion-MNIST and BloodMNIST, 3 on CIFAR-10 (72 + 72 + 36 =
+  180 runs, ablations included)
 - **Metrics** — accuracy vs. budget, final accuracy, AUBC, error-prediction
   AUROC, and a paired *t*-test of IRIS against the strongest baseline on matched
   seeds

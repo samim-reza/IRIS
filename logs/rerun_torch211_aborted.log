@@ -1,0 +1,84 @@
+=== RERUN START Mon Sep 21 11:27:31 PM +06 2026 ===
+device=cuda torch=2.11.0+cu130
+grid: 102 runs
+=== run 1/102: fmnist random noise=0.0 seed=0 ===
+    saved fmnist_random_noise0.0_seed0_round0.pt
+[fmnist|random|noise=0.0|seed=0] round 0: n=500 acc=0.7450 (3s)
+    saved fmnist_random_noise0.0_seed0_round1.pt
+[fmnist|random|noise=0.0|seed=0] round 1: n=1000 acc=0.7832 (7s)
+    saved fmnist_random_noise0.0_seed0_round2.pt
+[fmnist|random|noise=0.0|seed=0] round 2: n=1500 acc=0.8280 (11s)
+    saved fmnist_random_noise0.0_seed0_round3.pt
+[fmnist|random|noise=0.0|seed=0] round 3: n=2000 acc=0.8451 (16s)
+    saved fmnist_random_noise0.0_seed0_round4.pt
+[fmnist|random|noise=0.0|seed=0] round 4: n=2500 acc=0.8505 (21s)
+    saved fmnist_random_noise0.0_seed0_round5.pt
+[fmnist|random|noise=0.0|seed=0] round 5: n=3000 acc=0.8702 (27s)
+=== run 2/102: fmnist random noise=0.0 seed=1 ===
+    saved fmnist_random_noise0.0_seed1_round0.pt
+[fmnist|random|noise=0.0|seed=1] round 0: n=500 acc=0.7563 (3s)
+    saved fmnist_random_noise0.0_seed1_round1.pt
+[fmnist|random|noise=0.0|seed=1] round 1: n=1000 acc=0.7874 (6s)
+    saved fmnist_random_noise0.0_seed1_round2.pt
+[fmnist|random|noise=0.0|seed=1] round 2: n=1500 acc=0.8192 (10s)
+    saved fmnist_random_noise0.0_seed1_round3.pt
+[fmnist|random|noise=0.0|seed=1] round 3: n=2000 acc=0.8301 (15s)
+    saved fmnist_random_noise0.0_seed1_round4.pt
+[fmnist|random|noise=0.0|seed=1] round 4: n=2500 acc=0.8476 (21s)
+    saved fmnist_random_noise0.0_seed1_round5.pt
+[fmnist|random|noise=0.0|seed=1] round 5: n=3000 acc=0.8680 (27s)
+=== run 3/102: fmnist random noise=0.0 seed=2 ===
+    saved fmnist_random_noise0.0_seed2_round0.pt
+[fmnist|random|noise=0.0|seed=2] round 0: n=500 acc=0.7500 (3s)
+    saved fmnist_random_noise0.0_seed2_round1.pt
+[fmnist|random|noise=0.0|seed=2] round 1: n=1000 acc=0.8046 (6s)
+    saved fmnist_random_noise0.0_seed2_round2.pt
+[fmnist|random|noise=0.0|seed=2] round 2: n=1500 acc=0.8115 (11s)
+    saved fmnist_random_noise0.0_seed2_round3.pt
+[fmnist|random|noise=0.0|seed=2] round 3: n=2000 acc=0.8424 (16s)
+    saved fmnist_random_noise0.0_seed2_round4.pt
+[fmnist|random|noise=0.0|seed=2] round 4: n=2500 acc=0.8513 (21s)
+    saved fmnist_random_noise0.0_seed2_round5.pt
+[fmnist|random|noise=0.0|seed=2] round 5: n=3000 acc=0.8567 (27s)
+=== run 4/102: fmnist entropy noise=0.0 seed=0 ===
+    saved fmnist_entropy_noise0.0_seed0_round0.pt
+[fmnist|entropy|noise=0.0|seed=0] round 0: n=500 acc=0.7450 (3s)
+    saved fmnist_entropy_noise0.0_seed0_round1.pt
+[fmnist|entropy|noise=0.0|seed=0] round 1: n=1000 acc=0.7937 (8s)
+    saved fmnist_entropy_noise0.0_seed0_round2.pt
+[fmnist|entropy|noise=0.0|seed=0] round 2: n=1500 acc=0.8278 (13s)
+    saved fmnist_entropy_noise0.0_seed0_round3.pt
+[fmnist|entropy|noise=0.0|seed=0] round 3: n=2000 acc=0.8385 (19s)
+    saved fmnist_entropy_noise0.0_seed0_round4.pt
+[fmnist|entropy|noise=0.0|seed=0] round 4: n=2500 acc=0.8580 (26s)
+    saved fmnist_entropy_noise0.0_seed0_round5.pt
+[fmnist|entropy|noise=0.0|seed=0] round 5: n=3000 acc=0.8732 (34s)
+=== run 5/102: fmnist entropy noise=0.0 seed=1 ===
+    saved fmnist_entropy_noise0.0_seed1_round0.pt
+[fmnist|entropy|noise=0.0|seed=1] round 0: n=500 acc=0.7563 (3s)
+    saved fmnist_entropy_noise0.0_seed1_round1.pt
+[fmnist|entropy|noise=0.0|seed=1] round 1: n=1000 acc=0.8014 (8s)
+    saved fmnist_entropy_noise0.0_seed1_round2.pt
+[fmnist|entropy|noise=0.0|seed=1] round 2: n=1500 acc=0.8403 (14s)
+    saved fmnist_entropy_noise0.0_seed1_round3.pt
+[fmnist|entropy|noise=0.0|seed=1] round 3: n=2000 acc=0.8426 (20s)
+    saved fmnist_entropy_noise0.0_seed1_round4.pt
+[fmnist|entropy|noise=0.0|seed=1] round 4: n=2500 acc=0.8651 (27s)
+    saved fmnist_entropy_noise0.0_seed1_round5.pt
+[fmnist|entropy|noise=0.0|seed=1] round 5: n=3000 acc=0.8632 (35s)
+=== run 6/102: fmnist entropy noise=0.0 seed=2 ===
+    saved fmnist_entropy_noise0.0_seed2_round0.pt
+[fmnist|entropy|noise=0.0|seed=2] round 0: n=500 acc=0.7500 (3s)
+    saved fmnist_entropy_noise0.0_seed2_round1.pt
+[fmnist|entropy|noise=0.0|seed=2] round 1: n=1000 acc=0.8125 (8s)
+    saved fmnist_entropy_noise0.0_seed2_round2.pt
+[fmnist|entropy|noise=0.0|seed=2] round 2: n=1500 acc=0.8307 (14s)
+    saved fmnist_entropy_noise0.0_seed2_round3.pt
+[fmnist|entropy|noise=0.0|seed=2] round 3: n=2000 acc=0.8523 (20s)
+    saved fmnist_entropy_noise0.0_seed2_round4.pt
+[fmnist|entropy|noise=0.0|seed=2] round 4: n=2500 acc=0.8689 (27s)
+    saved fmnist_entropy_noise0.0_seed2_round5.pt
+[fmnist|entropy|noise=0.0|seed=2] round 5: n=3000 acc=0.8776 (35s)
+=== run 7/102: fmnist bald noise=0.0 seed=0 ===
+    saved fmnist_bald_noise0.0_seed0_round0.pt
+[fmnist|bald|noise=0.0|seed=0] round 0: n=500 acc=0.7450 (3s)
