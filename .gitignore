@@ -1,0 +1,35 @@
+# --- Datasets: downloaded automatically on first run (~460 MB) ------------
+data/
+
+# --- Reference PDFs: third-party copyright, not redistributable -----------
+papers/
+
+# --- PRISM submission bundle: built on demand, never committed ------------
+prism_upload/
+*_prism.zip
+prism_*.zip
+
+# --- LaTeX build artefacts -------------------------------------------------
+*.aux
+*.log
+!logs/*.log
+*.out
+*.bbl
+*.blg
+*.abs
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# --- OS -------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+paper/_backup/

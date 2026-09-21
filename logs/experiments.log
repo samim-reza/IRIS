@@ -1,0 +1,842 @@
+device=cuda torch=2.11.0+cu130
+grid: 66 runs
+=== run 1/66: fmnist random noise=0.0 seed=0 ===
+[fmnist|random|noise=0.0|seed=0] round 0: n=500 acc=0.7501 (11s)
+[fmnist|random|noise=0.0|seed=0] round 1: n=1000 acc=0.7770 (30s)
+[fmnist|random|noise=0.0|seed=0] round 2: n=1500 acc=0.8263 (58s)
+[fmnist|random|noise=0.0|seed=0] round 3: n=2000 acc=0.8439 (96s)
+[fmnist|random|noise=0.0|seed=0] round 4: n=2500 acc=0.8476 (148s)
+[fmnist|random|noise=0.0|seed=0] round 5: n=3000 acc=0.8688 (210s)
+=== run 2/66: fmnist random noise=0.0 seed=1 ===
+[fmnist|random|noise=0.0|seed=1] round 0: n=500 acc=0.7103 (12s)
+[fmnist|random|noise=0.0|seed=1] round 1: n=1000 acc=0.7884 (37s)
+[fmnist|random|noise=0.0|seed=1] round 2: n=1500 acc=0.8196 (69s)
+[fmnist|random|noise=0.0|seed=1] round 3: n=2000 acc=0.8370 (116s)
+[fmnist|random|noise=0.0|seed=1] round 4: n=2500 acc=0.8435 (169s)
+[fmnist|random|noise=0.0|seed=1] round 5: n=3000 acc=0.8638 (236s)
+=== run 3/66: fmnist random noise=0.0 seed=2 ===
+[fmnist|random|noise=0.0|seed=2] round 0: n=500 acc=0.7495 (13s)
+[fmnist|random|noise=0.0|seed=2] round 1: n=1000 acc=0.7967 (38s)
+[fmnist|random|noise=0.0|seed=2] round 2: n=1500 acc=0.8051 (74s)
+[fmnist|random|noise=0.0|seed=2] round 3: n=2000 acc=0.8424 (120s)
+[fmnist|random|noise=0.0|seed=2] round 4: n=2500 acc=0.8470 (179s)
+[fmnist|random|noise=0.0|seed=2] round 5: n=3000 acc=0.8599 (247s)
+=== run 4/66: fmnist entropy noise=0.0 seed=0 ===
+[fmnist|entropy|noise=0.0|seed=0] round 0: n=500 acc=0.7501 (13s)
+[fmnist|entropy|noise=0.0|seed=0] round 1: n=1000 acc=0.7939 (39s)
+[fmnist|entropy|noise=0.0|seed=0] round 2: n=1500 acc=0.8263 (77s)
+[fmnist|entropy|noise=0.0|seed=0] round 3: n=2000 acc=0.8290 (125s)
+[fmnist|entropy|noise=0.0|seed=0] round 4: n=2500 acc=0.8587 (176s)
+[fmnist|entropy|noise=0.0|seed=0] round 5: n=3000 acc=0.8758 (239s)
+=== run 5/66: fmnist entropy noise=0.0 seed=1 ===
+[fmnist|entropy|noise=0.0|seed=1] round 0: n=500 acc=0.7103 (12s)
+[fmnist|entropy|noise=0.0|seed=1] round 1: n=1000 acc=0.7804 (36s)
+[fmnist|entropy|noise=0.0|seed=1] round 2: n=1500 acc=0.8228 (71s)
+[fmnist|entropy|noise=0.0|seed=1] round 3: n=2000 acc=0.8370 (119s)
+[fmnist|entropy|noise=0.0|seed=1] round 4: n=2500 acc=0.8612 (178s)
+[fmnist|entropy|noise=0.0|seed=1] round 5: n=3000 acc=0.8591 (246s)
+=== run 6/66: fmnist entropy noise=0.0 seed=2 ===
+[fmnist|entropy|noise=0.0|seed=2] round 0: n=500 acc=0.7495 (12s)
+[fmnist|entropy|noise=0.0|seed=2] round 1: n=1000 acc=0.8155 (38s)
+[fmnist|entropy|noise=0.0|seed=2] round 2: n=1500 acc=0.8189 (77s)
+[fmnist|entropy|noise=0.0|seed=2] round 3: n=2000 acc=0.8432 (127s)
+[fmnist|entropy|noise=0.0|seed=2] round 4: n=2500 acc=0.8478 (188s)
+[fmnist|entropy|noise=0.0|seed=2] round 5: n=3000 acc=0.8689 (258s)
+=== run 7/66: fmnist bald noise=0.0 seed=0 ===
+[fmnist|bald|noise=0.0|seed=0] round 0: n=500 acc=0.7501 (13s)
+[fmnist|bald|noise=0.0|seed=0] round 1: n=1000 acc=0.7986 (54s)
+[fmnist|bald|noise=0.0|seed=0] round 2: n=1500 acc=0.8187 (106s)
+[fmnist|bald|noise=0.0|seed=0] round 3: n=2000 acc=0.8412 (170s)
+[fmnist|bald|noise=0.0|seed=0] round 4: n=2500 acc=0.8564 (245s)
+[fmnist|bald|noise=0.0|seed=0] round 5: n=3000 acc=0.8827 (330s)
+=== run 8/66: fmnist bald noise=0.0 seed=1 ===
+[fmnist|bald|noise=0.0|seed=1] round 0: n=500 acc=0.7103 (13s)
+[fmnist|bald|noise=0.0|seed=1] round 1: n=1000 acc=0.7859 (54s)
+[fmnist|bald|noise=0.0|seed=1] round 2: n=1500 acc=0.8122 (106s)
+[fmnist|bald|noise=0.0|seed=1] round 3: n=2000 acc=0.8303 (169s)
+[fmnist|bald|noise=0.0|seed=1] round 4: n=2500 acc=0.8622 (245s)
+[fmnist|bald|noise=0.0|seed=1] round 5: n=3000 acc=0.8716 (321s)
+=== run 9/66: fmnist bald noise=0.0 seed=2 ===
+[fmnist|bald|noise=0.0|seed=2] round 0: n=500 acc=0.7495 (12s)
+[fmnist|bald|noise=0.0|seed=2] round 1: n=1000 acc=0.8164 (49s)
+[fmnist|bald|noise=0.0|seed=2] round 2: n=1500 acc=0.8213 (98s)
+[fmnist|bald|noise=0.0|seed=2] round 3: n=2000 acc=0.8537 (158s)
+[fmnist|bald|noise=0.0|seed=2] round 4: n=2500 acc=0.8678 (233s)
+[fmnist|bald|noise=0.0|seed=2] round 5: n=3000 acc=0.8819 (315s)
+=== run 10/66: fmnist coreset noise=0.0 seed=0 ===
+[fmnist|coreset|noise=0.0|seed=0] round 0: n=500 acc=0.7501 (13s)
+[fmnist|coreset|noise=0.0|seed=0] round 1: n=1000 acc=0.7861 (45s)
+[fmnist|coreset|noise=0.0|seed=0] round 2: n=1500 acc=0.8161 (86s)
+[fmnist|coreset|noise=0.0|seed=0] round 3: n=2000 acc=0.8216 (141s)
+[fmnist|coreset|noise=0.0|seed=0] round 4: n=2500 acc=0.8174 (207s)
+[fmnist|coreset|noise=0.0|seed=0] round 5: n=3000 acc=0.8345 (280s)
+=== run 11/66: fmnist coreset noise=0.0 seed=1 ===
+[fmnist|coreset|noise=0.0|seed=1] round 0: n=500 acc=0.7103 (12s)
+[fmnist|coreset|noise=0.0|seed=1] round 1: n=1000 acc=0.7792 (39s)
+[fmnist|coreset|noise=0.0|seed=1] round 2: n=1500 acc=0.8156 (77s)
+[fmnist|coreset|noise=0.0|seed=1] round 3: n=2000 acc=0.8154 (126s)
+[fmnist|coreset|noise=0.0|seed=1] round 4: n=2500 acc=0.8310 (188s)
+[fmnist|coreset|noise=0.0|seed=1] round 5: n=3000 acc=0.8336 (262s)
+=== run 12/66: fmnist coreset noise=0.0 seed=2 ===
+[fmnist|coreset|noise=0.0|seed=2] round 0: n=500 acc=0.7495 (14s)
+[fmnist|coreset|noise=0.0|seed=2] round 1: n=1000 acc=0.8102 (44s)
+[fmnist|coreset|noise=0.0|seed=2] round 2: n=1500 acc=0.8214 (87s)
+[fmnist|coreset|noise=0.0|seed=2] round 3: n=2000 acc=0.8358 (141s)
+[fmnist|coreset|noise=0.0|seed=2] round 4: n=2500 acc=0.8380 (204s)
+[fmnist|coreset|noise=0.0|seed=2] round 5: n=3000 acc=0.8360 (278s)
+=== run 13/66: fmnist iris noise=0.0 seed=0 ===
+[fmnist|iris|noise=0.0|seed=0] round 0: n=500 acc=0.7501 (13s)
+[fmnist|iris|noise=0.0|seed=0] round 1: n=1000 acc=0.8092 (40s)
+[fmnist|iris|noise=0.0|seed=0] round 2: n=1500 acc=0.8400 (81s)
+[fmnist|iris|noise=0.0|seed=0] round 3: n=2000 acc=0.8610 (133s)
+[fmnist|iris|noise=0.0|seed=0] round 4: n=2500 acc=0.8691 (197s)
+[fmnist|iris|noise=0.0|seed=0] round 5: n=3000 acc=0.8798 (291s)
+=== run 14/66: fmnist iris noise=0.0 seed=1 ===
+[fmnist|iris|noise=0.0|seed=1] round 0: n=500 acc=0.7103 (18s)
+[fmnist|iris|noise=0.0|seed=1] round 1: n=1000 acc=0.7728 (57s)
+[fmnist|iris|noise=0.0|seed=1] round 2: n=1500 acc=0.8137 (105s)
+[fmnist|iris|noise=0.0|seed=1] round 3: n=2000 acc=0.8412 (168s)
+[fmnist|iris|noise=0.0|seed=1] round 4: n=2500 acc=0.8630 (255s)
+[fmnist|iris|noise=0.0|seed=1] round 5: n=3000 acc=0.8694 (376s)
+=== run 15/66: fmnist iris noise=0.0 seed=2 ===
+[fmnist|iris|noise=0.0|seed=2] round 0: n=500 acc=0.7495 (22s)
+[fmnist|iris|noise=0.0|seed=2] round 1: n=1000 acc=0.7962 (73s)
+[fmnist|iris|noise=0.0|seed=2] round 2: n=1500 acc=0.8101 (153s)
+[fmnist|iris|noise=0.0|seed=2] round 3: n=2000 acc=0.8374 (253s)
+[fmnist|iris|noise=0.0|seed=2] round 4: n=2500 acc=0.8659 (376s)
+[fmnist|iris|noise=0.0|seed=2] round 5: n=3000 acc=0.8760 (523s)
+=== run 16/66: fmnist iris-nodiv noise=0.0 seed=0 ===
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 0: n=500 acc=0.7501 (26s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 1: n=1000 acc=0.7919 (75s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 2: n=1500 acc=0.8169 (149s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 3: n=2000 acc=0.8444 (247s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 4: n=2500 acc=0.8568 (364s)
+Traceback (most recent call last):
+  File "/home/user1/greenresearch/samim/HITL/code/hitl_experiments.py", line 541, in main
+    run_al(ds, m, noise, seed, cfg)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user1/greenresearch/samim/HITL/code/hitl_experiments.py", line 454, in run_al
+    acc = evaluate(backbone, test)
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/user1/greenresearch/samim/HITL/code/hitl_experiments.py", line 304, in evaluate
+    logits, _ = backbone(x.to(DEVICE))
+                ~~~~~~~~^^^^^^^^^^^^^^
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/user1/greenresearch/samim/HITL/code/hitl_experiments.py", line 132, in forward
+    h = self.features(x).flatten(1)
+        ~~~~~~~~~~~~~^^^
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/container.py", line 253, in forward
+    input = module(input)
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/modules/activation.py", line 143, in forward
+    return F.relu(input, inplace=self.inplace)
+           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda/lib/python3.13/site-packages/torch/nn/functional.py", line 1723, in relu
+    result = torch.relu(input)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 50.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 19.31 MiB is free. Including non-PyTorch memory, this process has 568.00 MiB memory in use. Process 56690 has 5.39 GiB memory in use. Process 63313 has 2.62 GiB memory in use. Process 69124 has 2.61 GiB memory in use. Process 71532 has 2.60 GiB memory in use. Process 71535 has 2.60 GiB memory in use. Process 73547 has 2.60 GiB memory in use. Process 75800 has 2.62 GiB memory in use. Process 89977 has 1.77 GiB memory in use. Of the allocated memory 75.68 MiB is allocated by PyTorch, and 18.32 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+RUN FAILED: fmnist iris-nodiv 0.0 0 — continuing
+=== run 17/66: fmnist iris-nodiv noise=0.0 seed=1 ===
+[fmnist|iris-nodiv|noise=0.0|seed=1] round 0: n=500 acc=0.7103 (25s)
+device=cuda torch=2.11.0+cu130
+grid: 66 runs
+skip (done): fmnist random 0.0 0
+skip (done): fmnist random 0.0 1
+skip (done): fmnist random 0.0 2
+skip (done): fmnist entropy 0.0 0
+skip (done): fmnist entropy 0.0 1
+skip (done): fmnist entropy 0.0 2
+skip (done): fmnist bald 0.0 0
+skip (done): fmnist bald 0.0 1
+skip (done): fmnist bald 0.0 2
+skip (done): fmnist coreset 0.0 0
+skip (done): fmnist coreset 0.0 1
+skip (done): fmnist coreset 0.0 2
+skip (done): fmnist iris 0.0 0
+skip (done): fmnist iris 0.0 1
+skip (done): fmnist iris 0.0 2
+=== run 16/66: fmnist iris-nodiv noise=0.0 seed=0 ===
+GPU busy (1161MB free < 2500MB needed) — waiting 180s
+GPU busy (1379MB free < 2500MB needed) — waiting 180s
+GPU busy (479MB free < 2500MB needed) — waiting 180s
+GPU busy (631MB free < 2500MB needed) — waiting 180s
+GPU busy (1135MB free < 2500MB needed) — waiting 180s
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 0: n=500 acc=0.7501 (26s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 1: n=1000 acc=0.7919 (76s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 2: n=1500 acc=0.8169 (145s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 3: n=2000 acc=0.8444 (237s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 4: n=2500 acc=0.8591 (351s)
+[fmnist|iris-nodiv|noise=0.0|seed=0] round 5: n=3000 acc=0.8757 (491s)
+=== run 17/66: fmnist iris-nodiv noise=0.0 seed=1 ===
+[fmnist|iris-nodiv|noise=0.0|seed=1] round 0: n=500 acc=0.7103 (26s)
+[fmnist|iris-nodiv|noise=0.0|seed=1] round 1: n=1000 acc=0.7640 (80s)
+[fmnist|iris-nodiv|noise=0.0|seed=1] round 2: n=1500 acc=0.8030 (157s)
+[fmnist|iris-nodiv|noise=0.0|seed=1] round 3: n=2000 acc=0.8097 (261s)
+[fmnist|iris-nodiv|noise=0.0|seed=1] round 4: n=2500 acc=0.8433 (379s)
+[fmnist|iris-nodiv|noise=0.0|seed=1] round 5: n=3000 acc=0.8515 (518s)
+=== run 18/66: fmnist iris-nodiv noise=0.0 seed=2 ===
+GPU busy (1214MB free < 2500MB needed) — waiting 180s
+GPU busy (2058MB free < 2500MB needed) — waiting 180s
+GPU busy (182MB free < 2500MB needed) — waiting 180s
+GPU busy (1002MB free < 2500MB needed) — waiting 180s
+GPU busy (168MB free < 2500MB needed) — waiting 180s
+device=cuda torch=2.11.0+cu130
+grid: 30 runs
+=== run 1/30: cifar10 random noise=0.0 seed=0 ===
+GPU busy (683MB free < 5000MB needed) — waiting 180s
+GPU busy (693MB free < 5000MB needed) — waiting 180s
+GPU busy (1871MB free < 5000MB needed) — waiting 180s
+GPU busy (2977MB free < 5000MB needed) — waiting 180s
+GPU busy (3821MB free < 5000MB needed) — waiting 180s
+GPU busy (4499MB free < 5000MB needed) — waiting 180s
+GPU busy (4997MB free < 5000MB needed) — waiting 180s
+GPU busy (1165MB free < 5000MB needed) — waiting 180s
+GPU busy (4051MB free < 5000MB needed) — waiting 180s
+GPU busy (2106MB free < 5000MB needed) — waiting 180s
+GPU busy (1243MB free < 5000MB needed) — waiting 180s
+GPU busy (285MB free < 5000MB needed) — waiting 180s
+GPU busy (621MB free < 5000MB needed) — waiting 180s
+GPU busy (763MB free < 5000MB needed) — waiting 180s
+GPU busy (167MB free < 5000MB needed) — waiting 180s
+GPU busy (117MB free < 5000MB needed) — waiting 180s
+GPU busy (1055MB free < 5000MB needed) — waiting 180s
+GPU busy (2615MB free < 5000MB needed) — waiting 180s
+GPU busy (454MB free < 5000MB needed) — waiting 180s
+GPU busy (153MB free < 5000MB needed) — waiting 180s
+GPU busy (696MB free < 5000MB needed) — waiting 180s
+GPU busy (306MB free < 5000MB needed) — waiting 180s
+GPU busy (147MB free < 5000MB needed) — waiting 180s
+GPU busy (1050MB free < 5000MB needed) — waiting 180s
+GPU busy (3626MB free < 5000MB needed) — waiting 180s
+GPU busy (3348MB free < 5000MB needed) — waiting 180s
+GPU busy (308MB free < 5000MB needed) — waiting 180s
+GPU busy (1162MB free < 5000MB needed) — waiting 180s
+GPU busy (1248MB free < 5000MB needed) — waiting 180s
+GPU busy (1046MB free < 5000MB needed) — waiting 180s
+GPU busy (680MB free < 5000MB needed) — waiting 180s
+GPU busy (1000MB free < 5000MB needed) — waiting 180s
+GPU busy (1108MB free < 5000MB needed) — waiting 180s
+GPU busy (2628MB free < 5000MB needed) — waiting 180s
+GPU busy (2888MB free < 5000MB needed) — waiting 180s
+GPU busy (3330MB free < 5000MB needed) — waiting 180s
+GPU busy (1940MB free < 5000MB needed) — waiting 180s
+GPU busy (1140MB free < 5000MB needed) — waiting 180s
+GPU busy (3966MB free < 5000MB needed) — waiting 180s
+GPU busy (3508MB free < 5000MB needed) — waiting 180s
+GPU busy (3098MB free < 5000MB needed) — waiting 180s
+GPU busy (3016MB free < 5000MB needed) — waiting 180s
+device=cuda torch=2.11.0+cu130
+grid: 30 runs
+=== run 1/30: cifar10 random noise=0.0 seed=0 ===
+GPU busy (2568MB free < 3500MB needed) — waiting 180s
+GPU busy (2992MB free < 3500MB needed) — waiting 180s
+GPU busy (746MB free < 3500MB needed) — waiting 180s
+GPU busy (2328MB free < 3500MB needed) — waiting 180s
+GPU busy (458MB free < 3500MB needed) — waiting 180s
+GPU busy (644MB free < 3500MB needed) — waiting 180s
+GPU busy (1028MB free < 3500MB needed) — waiting 180s
+GPU busy (2188MB free < 3500MB needed) — waiting 180s
+GPU busy (2208MB free < 3500MB needed) — waiting 180s
+GPU busy (2380MB free < 3500MB needed) — waiting 180s
+GPU busy (2444MB free < 3500MB needed) — waiting 180s
+GPU busy (3202MB free < 3500MB needed) — waiting 180s
+GPU busy (1928MB free < 3500MB needed) — waiting 180s
+GPU busy (2552MB free < 3500MB needed) — waiting 180s
+GPU busy (2654MB free < 3500MB needed) — waiting 180s
+GPU busy (2881MB free < 3500MB needed) — waiting 180s
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.0|seed=0] round 0: n=1000 acc=0.4613 (45s)
+[cifar10|random|noise=0.0|seed=0] round 1: n=2000 acc=0.5444 (129s)
+[cifar10|random|noise=0.0|seed=0] round 2: n=3000 acc=0.6221 (252s)
+[cifar10|random|noise=0.0|seed=0] round 3: n=4000 acc=0.6632 (418s)
+[cifar10|random|noise=0.0|seed=0] round 4: n=5000 acc=0.6144 (624s)
+[cifar10|random|noise=0.0|seed=0] round 5: n=6000 acc=0.7334 (858s)
+=== run 2/30: cifar10 random noise=0.0 seed=1 ===
+GPU busy (3363MB free < 3500MB needed) — waiting 180s
+GPU busy (1851MB free < 3500MB needed) — waiting 180s
+GPU busy (2671MB free < 3500MB needed) — waiting 180s
+GPU busy (1587MB free < 3500MB needed) — waiting 180s
+GPU busy (1817MB free < 3500MB needed) — waiting 180s
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.0|seed=1] round 0: n=1000 acc=0.4615 (41s)
+[cifar10|random|noise=0.0|seed=1] round 1: n=2000 acc=0.5565 (119s)
+[cifar10|random|noise=0.0|seed=1] round 2: n=3000 acc=0.6220 (222s)
+[cifar10|random|noise=0.0|seed=1] round 3: n=4000 acc=0.6674 (360s)
+[cifar10|random|noise=0.0|seed=1] round 4: n=5000 acc=0.6398 (534s)
+[cifar10|random|noise=0.0|seed=1] round 5: n=6000 acc=0.7447 (742s)
+=== run 3/30: cifar10 random noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.0|seed=2] round 0: n=1000 acc=0.4605 (41s)
+[cifar10|random|noise=0.0|seed=2] round 1: n=2000 acc=0.5353 (117s)
+[cifar10|random|noise=0.0|seed=2] round 2: n=3000 acc=0.5992 (227s)
+[cifar10|random|noise=0.0|seed=2] round 3: n=4000 acc=0.6471 (368s)
+[cifar10|random|noise=0.0|seed=2] round 4: n=5000 acc=0.6241 (534s)
+[cifar10|random|noise=0.0|seed=2] round 5: n=6000 acc=0.7378 (735s)
+=== run 4/30: cifar10 entropy noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.0|seed=0] round 0: n=1000 acc=0.4521 (40s)
+[cifar10|entropy|noise=0.0|seed=0] round 1: n=2000 acc=0.5372 (125s)
+[cifar10|entropy|noise=0.0|seed=0] round 2: n=3000 acc=0.6346 (231s)
+[cifar10|entropy|noise=0.0|seed=0] round 3: n=4000 acc=0.5836 (371s)
+[cifar10|entropy|noise=0.0|seed=0] round 4: n=5000 acc=0.5553 (547s)
+[cifar10|entropy|noise=0.0|seed=0] round 5: n=6000 acc=0.6826 (762s)
+=== run 5/30: cifar10 entropy noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.0|seed=1] round 0: n=1000 acc=0.4480 (41s)
+[cifar10|entropy|noise=0.0|seed=1] round 1: n=2000 acc=0.5100 (127s)
+[cifar10|entropy|noise=0.0|seed=1] round 2: n=3000 acc=0.5148 (247s)
+[cifar10|entropy|noise=0.0|seed=1] round 3: n=4000 acc=0.6306 (403s)
+[cifar10|entropy|noise=0.0|seed=1] round 4: n=5000 acc=0.6267 (593s)
+[cifar10|entropy|noise=0.0|seed=1] round 5: n=6000 acc=0.7391 (810s)
+=== run 6/30: cifar10 entropy noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.0|seed=2] round 0: n=1000 acc=0.4553 (38s)
+[cifar10|entropy|noise=0.0|seed=2] round 1: n=2000 acc=0.5088 (117s)
+[cifar10|entropy|noise=0.0|seed=2] round 2: n=3000 acc=0.5826 (230s)
+[cifar10|entropy|noise=0.0|seed=2] round 3: n=4000 acc=0.5805 (379s)
+[cifar10|entropy|noise=0.0|seed=2] round 4: n=5000 acc=0.4595 (557s)
+[cifar10|entropy|noise=0.0|seed=2] round 5: n=6000 acc=0.7346 (760s)
+=== run 7/30: cifar10 bald noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.0|seed=0] round 0: n=1000 acc=0.4436 (38s)
+[cifar10|bald|noise=0.0|seed=0] round 1: n=2000 acc=0.5001 (214s)
+[cifar10|bald|noise=0.0|seed=0] round 2: n=3000 acc=0.6024 (423s)
+[cifar10|bald|noise=0.0|seed=0] round 3: n=4000 acc=0.6458 (645s)
+[cifar10|bald|noise=0.0|seed=0] round 4: n=5000 acc=0.5444 (898s)
+[cifar10|bald|noise=0.0|seed=0] round 5: n=6000 acc=0.6961 (1193s)
+=== run 8/30: cifar10 bald noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.0|seed=1] round 0: n=1000 acc=0.4532 (39s)
+[cifar10|bald|noise=0.0|seed=1] round 1: n=2000 acc=0.5386 (220s)
+[cifar10|bald|noise=0.0|seed=1] round 2: n=3000 acc=0.6116 (435s)
+[cifar10|bald|noise=0.0|seed=1] round 3: n=4000 acc=0.6475 (680s)
+[cifar10|bald|noise=0.0|seed=1] round 4: n=5000 acc=0.6215 (962s)
+[cifar10|bald|noise=0.0|seed=1] round 5: n=6000 acc=0.7423 (1255s)
+=== run 9/30: cifar10 bald noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.0|seed=2] round 0: n=1000 acc=0.4433 (35s)
+[cifar10|bald|noise=0.0|seed=2] round 1: n=2000 acc=0.5151 (192s)
+[cifar10|bald|noise=0.0|seed=2] round 2: n=3000 acc=0.5943 (373s)
+[cifar10|bald|noise=0.0|seed=2] round 3: n=4000 acc=0.6645 (583s)
+OOM (attempt 1/4): cifar10 bald 0.0 2 — backing off 10 min
+GPU busy (1692MB free < 3500MB needed) — waiting 180s
+GPU busy (2586MB free < 3500MB needed) — waiting 180s
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.0|seed=2] round 0: n=1000 acc=0.4541 (43s)
+[cifar10|bald|noise=0.0|seed=2] round 1: n=2000 acc=0.5221 (224s)
+[cifar10|bald|noise=0.0|seed=2] round 2: n=3000 acc=0.6003 (442s)
+[cifar10|bald|noise=0.0|seed=2] round 3: n=4000 acc=0.6487 (704s)
+[cifar10|bald|noise=0.0|seed=2] round 4: n=5000 acc=0.6404 (1013s)
+[cifar10|bald|noise=0.0|seed=2] round 5: n=6000 acc=0.7421 (1397s)
+=== run 10/30: cifar10 coreset noise=0.0 seed=0 ===
+GPU busy (739MB free < 3500MB needed) — waiting 180s
+GPU busy (71MB free < 3500MB needed) — waiting 180s
+GPU busy (989MB free < 3500MB needed) — waiting 180s
+GPU busy (87MB free < 3500MB needed) — waiting 180s
+GPU busy (199MB free < 3500MB needed) — waiting 180s
+GPU busy (947MB free < 3500MB needed) — waiting 180s
+GPU busy (667MB free < 3500MB needed) — waiting 180s
+GPU busy (123MB free < 3500MB needed) — waiting 180s
+GPU busy (2168MB free < 3500MB needed) — waiting 180s
+GPU busy (953MB free < 3500MB needed) — waiting 180s
+GPU busy (245MB free < 3500MB needed) — waiting 180s
+GPU busy (3389MB free < 3500MB needed) — waiting 180s
+GPU busy (1387MB free < 3500MB needed) — waiting 180s
+GPU busy (1505MB free < 3500MB needed) — waiting 180s
+GPU busy (797MB free < 3500MB needed) — waiting 180s
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.0|seed=0] round 0: n=1000 acc=0.4579 (45s)
+[cifar10|coreset|noise=0.0|seed=0] round 1: n=2000 acc=0.5419 (154s)
+[cifar10|coreset|noise=0.0|seed=0] round 2: n=3000 acc=0.5788 (291s)
+[cifar10|coreset|noise=0.0|seed=0] round 3: n=4000 acc=0.6429 (436s)
+[cifar10|coreset|noise=0.0|seed=0] round 4: n=5000 acc=0.6212 (613s)
+[cifar10|coreset|noise=0.0|seed=0] round 5: n=6000 acc=0.7128 (816s)
+=== run 11/30: cifar10 coreset noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.0|seed=1] round 0: n=1000 acc=0.4653 (36s)
+[cifar10|coreset|noise=0.0|seed=1] round 1: n=2000 acc=0.5279 (121s)
+[cifar10|coreset|noise=0.0|seed=1] round 2: n=3000 acc=0.5775 (237s)
+[cifar10|coreset|noise=0.0|seed=1] round 3: n=4000 acc=0.6338 (383s)
+[cifar10|coreset|noise=0.0|seed=1] round 4: n=5000 acc=0.6008 (550s)
+[cifar10|coreset|noise=0.0|seed=1] round 5: n=6000 acc=0.7011 (718s)
+=== run 12/30: cifar10 coreset noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.0|seed=2] round 0: n=1000 acc=0.4457 (30s)
+[cifar10|coreset|noise=0.0|seed=2] round 1: n=2000 acc=0.5190 (102s)
+[cifar10|coreset|noise=0.0|seed=2] round 2: n=3000 acc=0.5699 (181s)
+[cifar10|coreset|noise=0.0|seed=2] round 3: n=4000 acc=0.6211 (276s)
+[cifar10|coreset|noise=0.0|seed=2] round 4: n=5000 acc=0.6231 (390s)
+[cifar10|coreset|noise=0.0|seed=2] round 5: n=6000 acc=0.7025 (522s)
+=== run 13/30: cifar10 iris noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.0|seed=0] round 0: n=1000 acc=0.4615 (27s)
+[cifar10|iris|noise=0.0|seed=0] round 1: n=2000 acc=0.4757 (83s)
+[cifar10|iris|noise=0.0|seed=0] round 2: n=3000 acc=0.5995 (160s)
+[cifar10|iris|noise=0.0|seed=0] round 3: n=4000 acc=0.6511 (250s)
+[cifar10|iris|noise=0.0|seed=0] round 4: n=5000 acc=0.5327 (393s)
+[cifar10|iris|noise=0.0|seed=0] round 5: n=6000 acc=0.7404 (588s)
+=== run 14/30: cifar10 iris noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.0|seed=1] round 0: n=1000 acc=0.4552 (48s)
+[cifar10|iris|noise=0.0|seed=1] round 1: n=2000 acc=0.5267 (150s)
+[cifar10|iris|noise=0.0|seed=1] round 2: n=3000 acc=0.5486 (286s)
+[cifar10|iris|noise=0.0|seed=1] round 3: n=4000 acc=0.5909 (475s)
+[cifar10|iris|noise=0.0|seed=1] round 4: n=5000 acc=0.5581 (707s)
+[cifar10|iris|noise=0.0|seed=1] round 5: n=6000 acc=0.6885 (964s)
+=== run 15/30: cifar10 iris noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.0|seed=2] round 0: n=1000 acc=0.4621 (45s)
+[cifar10|iris|noise=0.0|seed=2] round 1: n=2000 acc=0.4746 (148s)
+[cifar10|iris|noise=0.0|seed=2] round 2: n=3000 acc=0.5700 (281s)
+[cifar10|iris|noise=0.0|seed=2] round 3: n=4000 acc=0.5817 (427s)
+[cifar10|iris|noise=0.0|seed=2] round 4: n=5000 acc=0.5652 (595s)
+[cifar10|iris|noise=0.0|seed=2] round 5: n=6000 acc=0.7234 (791s)
+=== run 16/30: cifar10 random noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.2|seed=0] round 0: n=1000 acc=0.3993 (36s)
+[cifar10|random|noise=0.2|seed=0] round 1: n=2000 acc=0.4830 (99s)
+[cifar10|random|noise=0.2|seed=0] round 2: n=3000 acc=0.5429 (192s)
+[cifar10|random|noise=0.2|seed=0] round 3: n=4000 acc=0.5904 (315s)
+[cifar10|random|noise=0.2|seed=0] round 4: n=5000 acc=0.5392 (460s)
+[cifar10|random|noise=0.2|seed=0] round 5: n=6000 acc=0.6205 (634s)
+=== run 17/30: cifar10 random noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.2|seed=1] round 0: n=1000 acc=0.3848 (36s)
+[cifar10|random|noise=0.2|seed=1] round 1: n=2000 acc=0.4523 (98s)
+[cifar10|random|noise=0.2|seed=1] round 2: n=3000 acc=0.5087 (192s)
+[cifar10|random|noise=0.2|seed=1] round 3: n=4000 acc=0.5646 (310s)
+[cifar10|random|noise=0.2|seed=1] round 4: n=5000 acc=0.5211 (454s)
+[cifar10|random|noise=0.2|seed=1] round 5: n=6000 acc=0.6467 (629s)
+=== run 18/30: cifar10 random noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.2|seed=2] round 0: n=1000 acc=0.3743 (36s)
+[cifar10|random|noise=0.2|seed=2] round 1: n=2000 acc=0.4743 (100s)
+[cifar10|random|noise=0.2|seed=2] round 2: n=3000 acc=0.5236 (190s)
+[cifar10|random|noise=0.2|seed=2] round 3: n=4000 acc=0.5464 (310s)
+[cifar10|random|noise=0.2|seed=2] round 4: n=5000 acc=0.5321 (457s)
+[cifar10|random|noise=0.2|seed=2] round 5: n=6000 acc=0.6290 (633s)
+=== run 19/30: cifar10 entropy noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.2|seed=0] round 0: n=1000 acc=0.3934 (34s)
+[cifar10|entropy|noise=0.2|seed=0] round 1: n=2000 acc=0.4645 (107s)
+[cifar10|entropy|noise=0.2|seed=0] round 2: n=3000 acc=0.4888 (198s)
+[cifar10|entropy|noise=0.2|seed=0] round 3: n=4000 acc=0.5371 (271s)
+[cifar10|entropy|noise=0.2|seed=0] round 4: n=5000 acc=0.4333 (378s)
+[cifar10|entropy|noise=0.2|seed=0] round 5: n=6000 acc=0.6429 (560s)
+=== run 20/30: cifar10 entropy noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.2|seed=1] round 0: n=1000 acc=0.3923 (38s)
+[cifar10|entropy|noise=0.2|seed=1] round 1: n=2000 acc=0.4518 (110s)
+[cifar10|entropy|noise=0.2|seed=1] round 2: n=3000 acc=0.4864 (222s)
+[cifar10|entropy|noise=0.2|seed=1] round 3: n=4000 acc=0.5443 (378s)
+[cifar10|entropy|noise=0.2|seed=1] round 4: n=5000 acc=0.4477 (552s)
+[cifar10|entropy|noise=0.2|seed=1] round 5: n=6000 acc=0.6158 (774s)
+=== run 21/30: cifar10 entropy noise=0.2 seed=2 ===
+GPU busy (3132MB free < 3500MB needed) — waiting 180s
+GPU busy (3132MB free < 3500MB needed) — waiting 180s
+GPU busy (3013MB free < 3500MB needed) — waiting 180s
+GPU busy (3132MB free < 3500MB needed) — waiting 180s
+GPU busy (3132MB free < 3500MB needed) — waiting 180s
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.2|seed=2] round 0: n=1000 acc=0.3821 (41s)
+[cifar10|entropy|noise=0.2|seed=2] round 1: n=2000 acc=0.4608 (128s)
+[cifar10|entropy|noise=0.2|seed=2] round 2: n=3000 acc=0.4618 (249s)
+[cifar10|entropy|noise=0.2|seed=2] round 3: n=4000 acc=0.5536 (406s)
+[cifar10|entropy|noise=0.2|seed=2] round 4: n=5000 acc=0.4853 (597s)
+[cifar10|entropy|noise=0.2|seed=2] round 5: n=6000 acc=0.5799 (818s)
+=== run 22/30: cifar10 bald noise=0.2 seed=0 ===
+GPU busy (3146MB free < 3500MB needed) — waiting 180s
+GPU busy (3146MB free < 3500MB needed) — waiting 180s
+GPU busy (3016MB free < 3500MB needed) — waiting 180s
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.2|seed=0] round 0: n=1000 acc=0.4002 (37s)
+[cifar10|bald|noise=0.2|seed=0] round 1: n=2000 acc=0.4360 (199s)
+[cifar10|bald|noise=0.2|seed=0] round 2: n=3000 acc=0.4687 (390s)
+[cifar10|bald|noise=0.2|seed=0] round 3: n=4000 acc=0.5493 (597s)
+[cifar10|bald|noise=0.2|seed=0] round 4: n=5000 acc=0.4829 (764s)
+[cifar10|bald|noise=0.2|seed=0] round 5: n=6000 acc=0.6000 (986s)
+=== run 23/30: cifar10 bald noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.2|seed=1] round 0: n=1000 acc=0.3812 (31s)
+[cifar10|bald|noise=0.2|seed=1] round 1: n=2000 acc=0.4421 (160s)
+[cifar10|bald|noise=0.2|seed=1] round 2: n=3000 acc=0.5107 (330s)
+[cifar10|bald|noise=0.2|seed=1] round 3: n=4000 acc=0.5605 (538s)
+[cifar10|bald|noise=0.2|seed=1] round 4: n=5000 acc=0.5108 (778s)
+[cifar10|bald|noise=0.2|seed=1] round 5: n=6000 acc=0.6437 (1045s)
+=== run 24/30: cifar10 bald noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.2|seed=2] round 0: n=1000 acc=0.3835 (36s)
+[cifar10|bald|noise=0.2|seed=2] round 1: n=2000 acc=0.4100 (196s)
+[cifar10|bald|noise=0.2|seed=2] round 2: n=3000 acc=0.4994 (385s)
+[cifar10|bald|noise=0.2|seed=2] round 3: n=4000 acc=0.5428 (601s)
+[cifar10|bald|noise=0.2|seed=2] round 4: n=5000 acc=0.5388 (846s)
+[cifar10|bald|noise=0.2|seed=2] round 5: n=6000 acc=0.6259 (1117s)
+=== run 25/30: cifar10 coreset noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.2|seed=0] round 0: n=1000 acc=0.3838 (36s)
+[cifar10|coreset|noise=0.2|seed=0] round 1: n=2000 acc=0.4203 (122s)
+[cifar10|coreset|noise=0.2|seed=0] round 2: n=3000 acc=0.4901 (239s)
+[cifar10|coreset|noise=0.2|seed=0] round 3: n=4000 acc=0.5510 (386s)
+[cifar10|coreset|noise=0.2|seed=0] round 4: n=5000 acc=0.5181 (561s)
+[cifar10|coreset|noise=0.2|seed=0] round 5: n=6000 acc=0.5973 (765s)
+=== run 26/30: cifar10 coreset noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.2|seed=1] round 0: n=1000 acc=0.3842 (36s)
+[cifar10|coreset|noise=0.2|seed=1] round 1: n=2000 acc=0.4040 (123s)
+[cifar10|coreset|noise=0.2|seed=1] round 2: n=3000 acc=0.4492 (239s)
+[cifar10|coreset|noise=0.2|seed=1] round 3: n=4000 acc=0.5342 (368s)
+[cifar10|coreset|noise=0.2|seed=1] round 4: n=5000 acc=0.4931 (504s)
+[cifar10|coreset|noise=0.2|seed=1] round 5: n=6000 acc=0.6189 (642s)
+=== run 27/30: cifar10 coreset noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.2|seed=2] round 0: n=1000 acc=0.3820 (26s)
+[cifar10|coreset|noise=0.2|seed=2] round 1: n=2000 acc=0.4323 (96s)
+[cifar10|coreset|noise=0.2|seed=2] round 2: n=3000 acc=0.4833 (194s)
+[cifar10|coreset|noise=0.2|seed=2] round 3: n=4000 acc=0.5348 (330s)
+[cifar10|coreset|noise=0.2|seed=2] round 4: n=5000 acc=0.5483 (481s)
+[cifar10|coreset|noise=0.2|seed=2] round 5: n=6000 acc=0.6277 (659s)
+=== run 28/30: cifar10 iris noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.2|seed=0] round 0: n=1000 acc=0.4133 (37s)
+[cifar10|iris|noise=0.2|seed=0] round 1: n=2000 acc=0.4649 (120s)
+[cifar10|iris|noise=0.2|seed=0] round 2: n=3000 acc=0.5029 (235s)
+[cifar10|iris|noise=0.2|seed=0] round 3: n=4000 acc=0.5475 (381s)
+[cifar10|iris|noise=0.2|seed=0] round 4: n=5000 acc=0.4757 (555s)
+[cifar10|iris|noise=0.2|seed=0] round 5: n=6000 acc=0.6226 (756s)
+=== run 29/30: cifar10 iris noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.2|seed=1] round 0: n=1000 acc=0.4074 (39s)
+[cifar10|iris|noise=0.2|seed=1] round 1: n=2000 acc=0.4616 (126s)
+[cifar10|iris|noise=0.2|seed=1] round 2: n=3000 acc=0.4942 (238s)
+[cifar10|iris|noise=0.2|seed=1] round 3: n=4000 acc=0.5632 (383s)
+[cifar10|iris|noise=0.2|seed=1] round 4: n=5000 acc=0.4606 (559s)
+[cifar10|iris|noise=0.2|seed=1] round 5: n=6000 acc=0.6496 (759s)
+=== run 30/30: cifar10 iris noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.2|seed=2] round 0: n=1000 acc=0.3962 (38s)
+[cifar10|iris|noise=0.2|seed=2] round 1: n=2000 acc=0.4228 (125s)
+[cifar10|iris|noise=0.2|seed=2] round 2: n=3000 acc=0.4981 (242s)
+[cifar10|iris|noise=0.2|seed=2] round 3: n=4000 acc=0.5581 (386s)
+[cifar10|iris|noise=0.2|seed=2] round 4: n=5000 acc=0.4685 (561s)
+[cifar10|iris|noise=0.2|seed=2] round 5: n=6000 acc=0.6430 (755s)
+ALL RUNS COMPLETE
+device=cuda torch=2.11.0+cu130
+grid: 30 runs
+=== run 1/30: cifar10 random noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.0|seed=0] round 0: n=1000 acc=0.4591 (35s)
+[cifar10|random|noise=0.0|seed=0] round 1: n=2000 acc=0.5323 (98s)
+[cifar10|random|noise=0.0|seed=0] round 2: n=3000 acc=0.6276 (188s)
+[cifar10|random|noise=0.0|seed=0] round 3: n=4000 acc=0.6705 (312s)
+[cifar10|random|noise=0.0|seed=0] round 4: n=5000 acc=0.7065 (459s)
+[cifar10|random|noise=0.0|seed=0] round 5: n=6000 acc=0.7370 (637s)
+=== run 2/30: cifar10 random noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.0|seed=1] round 0: n=1000 acc=0.4573 (35s)
+[cifar10|random|noise=0.0|seed=1] round 1: n=2000 acc=0.5472 (99s)
+[cifar10|random|noise=0.0|seed=1] round 2: n=3000 acc=0.6136 (192s)
+[cifar10|random|noise=0.0|seed=1] round 3: n=4000 acc=0.6669 (315s)
+[cifar10|random|noise=0.0|seed=1] round 4: n=5000 acc=0.7043 (464s)
+[cifar10|random|noise=0.0|seed=1] round 5: n=6000 acc=0.7497 (642s)
+=== run 3/30: cifar10 random noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.0|seed=2] round 0: n=1000 acc=0.4557 (36s)
+[cifar10|random|noise=0.0|seed=2] round 1: n=2000 acc=0.5203 (97s)
+[cifar10|random|noise=0.0|seed=2] round 2: n=3000 acc=0.5908 (191s)
+[cifar10|random|noise=0.0|seed=2] round 3: n=4000 acc=0.6379 (313s)
+[cifar10|random|noise=0.0|seed=2] round 4: n=5000 acc=0.6961 (462s)
+[cifar10|random|noise=0.0|seed=2] round 5: n=6000 acc=0.7381 (640s)
+=== run 4/30: cifar10 entropy noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.0|seed=0] round 0: n=1000 acc=0.4615 (34s)
+[cifar10|entropy|noise=0.0|seed=0] round 1: n=2000 acc=0.5490 (106s)
+[cifar10|entropy|noise=0.0|seed=0] round 2: n=3000 acc=0.5898 (208s)
+[cifar10|entropy|noise=0.0|seed=0] round 3: n=4000 acc=0.6359 (339s)
+[cifar10|entropy|noise=0.0|seed=0] round 4: n=5000 acc=0.6864 (497s)
+[cifar10|entropy|noise=0.0|seed=0] round 5: n=6000 acc=0.7429 (665s)
+=== run 5/30: cifar10 entropy noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.0|seed=1] round 0: n=1000 acc=0.4629 (32s)
+[cifar10|entropy|noise=0.0|seed=1] round 1: n=2000 acc=0.5123 (91s)
+[cifar10|entropy|noise=0.0|seed=1] round 2: n=3000 acc=0.5619 (174s)
+[cifar10|entropy|noise=0.0|seed=1] round 3: n=4000 acc=0.5844 (267s)
+[cifar10|entropy|noise=0.0|seed=1] round 4: n=5000 acc=0.7043 (383s)
+[cifar10|entropy|noise=0.0|seed=1] round 5: n=6000 acc=0.7071 (545s)
+=== run 6/30: cifar10 entropy noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.0|seed=2] round 0: n=1000 acc=0.4586 (34s)
+[cifar10|entropy|noise=0.0|seed=2] round 1: n=2000 acc=0.4678 (103s)
+[cifar10|entropy|noise=0.0|seed=2] round 2: n=3000 acc=0.5724 (202s)
+[cifar10|entropy|noise=0.0|seed=2] round 3: n=4000 acc=0.6341 (333s)
+[cifar10|entropy|noise=0.0|seed=2] round 4: n=5000 acc=0.7164 (474s)
+[cifar10|entropy|noise=0.0|seed=2] round 5: n=6000 acc=0.7471 (647s)
+=== run 7/30: cifar10 bald noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.0|seed=0] round 0: n=1000 acc=0.4622 (33s)
+[cifar10|bald|noise=0.0|seed=0] round 1: n=2000 acc=0.5010 (183s)
+[cifar10|bald|noise=0.0|seed=0] round 2: n=3000 acc=0.5997 (362s)
+[cifar10|bald|noise=0.0|seed=0] round 3: n=4000 acc=0.6505 (573s)
+[cifar10|bald|noise=0.0|seed=0] round 4: n=5000 acc=0.6960 (808s)
+[cifar10|bald|noise=0.0|seed=0] round 5: n=6000 acc=0.7399 (1070s)
+=== run 8/30: cifar10 bald noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.0|seed=1] round 0: n=1000 acc=0.4610 (34s)
+[cifar10|bald|noise=0.0|seed=1] round 1: n=2000 acc=0.5225 (191s)
+[cifar10|bald|noise=0.0|seed=1] round 2: n=3000 acc=0.6228 (376s)
+[cifar10|bald|noise=0.0|seed=1] round 3: n=4000 acc=0.6253 (587s)
+[cifar10|bald|noise=0.0|seed=1] round 4: n=5000 acc=0.6975 (821s)
+[cifar10|bald|noise=0.0|seed=1] round 5: n=6000 acc=0.7422 (1084s)
+=== run 9/30: cifar10 bald noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.0|seed=2] round 0: n=1000 acc=0.4561 (35s)
+[cifar10|bald|noise=0.0|seed=2] round 1: n=2000 acc=0.5237 (190s)
+[cifar10|bald|noise=0.0|seed=2] round 2: n=3000 acc=0.5961 (369s)
+[cifar10|bald|noise=0.0|seed=2] round 3: n=4000 acc=0.6538 (546s)
+[cifar10|bald|noise=0.0|seed=2] round 4: n=5000 acc=0.6809 (720s)
+[cifar10|bald|noise=0.0|seed=2] round 5: n=6000 acc=0.7400 (941s)
+=== run 10/30: cifar10 coreset noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.0|seed=0] round 0: n=1000 acc=0.4714 (33s)
+[cifar10|coreset|noise=0.0|seed=0] round 1: n=2000 acc=0.5251 (111s)
+[cifar10|coreset|noise=0.0|seed=0] round 2: n=3000 acc=0.5781 (219s)
+[cifar10|coreset|noise=0.0|seed=0] round 3: n=4000 acc=0.6307 (359s)
+[cifar10|coreset|noise=0.0|seed=0] round 4: n=5000 acc=0.6708 (517s)
+[cifar10|coreset|noise=0.0|seed=0] round 5: n=6000 acc=0.7101 (703s)
+=== run 11/30: cifar10 coreset noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.0|seed=1] round 0: n=1000 acc=0.4513 (32s)
+[cifar10|coreset|noise=0.0|seed=1] round 1: n=2000 acc=0.5225 (114s)
+[cifar10|coreset|noise=0.0|seed=1] round 2: n=3000 acc=0.5772 (226s)
+[cifar10|coreset|noise=0.0|seed=1] round 3: n=4000 acc=0.6308 (367s)
+[cifar10|coreset|noise=0.0|seed=1] round 4: n=5000 acc=0.6719 (537s)
+[cifar10|coreset|noise=0.0|seed=1] round 5: n=6000 acc=0.7205 (738s)
+=== run 12/30: cifar10 coreset noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.0|seed=2] round 0: n=1000 acc=0.4572 (35s)
+[cifar10|coreset|noise=0.0|seed=2] round 1: n=2000 acc=0.5237 (121s)
+[cifar10|coreset|noise=0.0|seed=2] round 2: n=3000 acc=0.6039 (236s)
+[cifar10|coreset|noise=0.0|seed=2] round 3: n=4000 acc=0.6524 (381s)
+[cifar10|coreset|noise=0.0|seed=2] round 4: n=5000 acc=0.6673 (552s)
+[cifar10|coreset|noise=0.0|seed=2] round 5: n=6000 acc=0.7110 (753s)
+=== run 13/30: cifar10 iris noise=0.0 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.0|seed=0] round 0: n=1000 acc=0.4601 (39s)
+[cifar10|iris|noise=0.0|seed=0] round 1: n=2000 acc=0.5219 (126s)
+[cifar10|iris|noise=0.0|seed=0] round 2: n=3000 acc=0.5577 (244s)
+[cifar10|iris|noise=0.0|seed=0] round 3: n=4000 acc=0.6054 (391s)
+[cifar10|iris|noise=0.0|seed=0] round 4: n=5000 acc=0.7027 (565s)
+[cifar10|iris|noise=0.0|seed=0] round 5: n=6000 acc=0.7460 (769s)
+=== run 14/30: cifar10 iris noise=0.0 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.0|seed=1] round 0: n=1000 acc=0.4594 (38s)
+[cifar10|iris|noise=0.0|seed=1] round 1: n=2000 acc=0.5062 (126s)
+[cifar10|iris|noise=0.0|seed=1] round 2: n=3000 acc=0.5546 (243s)
+[cifar10|iris|noise=0.0|seed=1] round 3: n=4000 acc=0.6024 (367s)
+[cifar10|iris|noise=0.0|seed=1] round 4: n=5000 acc=0.6814 (490s)
+[cifar10|iris|noise=0.0|seed=1] round 5: n=6000 acc=0.7352 (658s)
+=== run 15/30: cifar10 iris noise=0.0 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.0|seed=2] round 0: n=1000 acc=0.4610 (36s)
+[cifar10|iris|noise=0.0|seed=2] round 1: n=2000 acc=0.4967 (115s)
+[cifar10|iris|noise=0.0|seed=2] round 2: n=3000 acc=0.5614 (231s)
+[cifar10|iris|noise=0.0|seed=2] round 3: n=4000 acc=0.6127 (378s)
+[cifar10|iris|noise=0.0|seed=2] round 4: n=5000 acc=0.6942 (538s)
+[cifar10|iris|noise=0.0|seed=2] round 5: n=6000 acc=0.7164 (728s)
+=== run 16/30: cifar10 random noise=0.2 seed=0 ===
+GPU busy (2212MB free < 3500MB needed) — waiting 180s
+GPU busy (262MB free < 3500MB needed) — waiting 180s
+GPU busy (444MB free < 3500MB needed) — waiting 180s
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.2|seed=0] round 0: n=1000 acc=0.3921 (30s)
+[cifar10|random|noise=0.2|seed=0] round 1: n=2000 acc=0.4822 (87s)
+[cifar10|random|noise=0.2|seed=0] round 2: n=3000 acc=0.5308 (169s)
+[cifar10|random|noise=0.2|seed=0] round 3: n=4000 acc=0.5896 (282s)
+[cifar10|random|noise=0.2|seed=0] round 4: n=5000 acc=0.5963 (423s)
+[cifar10|random|noise=0.2|seed=0] round 5: n=6000 acc=0.6299 (600s)
+=== run 17/30: cifar10 random noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.2|seed=1] round 0: n=1000 acc=0.3993 (35s)
+[cifar10|random|noise=0.2|seed=1] round 1: n=2000 acc=0.4718 (101s)
+[cifar10|random|noise=0.2|seed=1] round 2: n=3000 acc=0.5027 (197s)
+[cifar10|random|noise=0.2|seed=1] round 3: n=4000 acc=0.5635 (322s)
+[cifar10|random|noise=0.2|seed=1] round 4: n=5000 acc=0.6249 (477s)
+[cifar10|random|noise=0.2|seed=1] round 5: n=6000 acc=0.6505 (662s)
+=== run 18/30: cifar10 random noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|random|noise=0.2|seed=2] round 0: n=1000 acc=0.3835 (36s)
+[cifar10|random|noise=0.2|seed=2] round 1: n=2000 acc=0.4681 (103s)
+[cifar10|random|noise=0.2|seed=2] round 2: n=3000 acc=0.5418 (199s)
+[cifar10|random|noise=0.2|seed=2] round 3: n=4000 acc=0.5349 (327s)
+[cifar10|random|noise=0.2|seed=2] round 4: n=5000 acc=0.6111 (478s)
+[cifar10|random|noise=0.2|seed=2] round 5: n=6000 acc=0.6304 (620s)
+=== run 19/30: cifar10 entropy noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.2|seed=0] round 0: n=1000 acc=0.3963 (19s)
+[cifar10|entropy|noise=0.2|seed=0] round 1: n=2000 acc=0.4228 (57s)
+[cifar10|entropy|noise=0.2|seed=0] round 2: n=3000 acc=0.5236 (108s)
+[cifar10|entropy|noise=0.2|seed=0] round 3: n=4000 acc=0.5620 (174s)
+[cifar10|entropy|noise=0.2|seed=0] round 4: n=5000 acc=0.5764 (253s)
+[cifar10|entropy|noise=0.2|seed=0] round 5: n=6000 acc=0.6567 (345s)
+=== run 20/30: cifar10 entropy noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.2|seed=1] round 0: n=1000 acc=0.3927 (19s)
+[cifar10|entropy|noise=0.2|seed=1] round 1: n=2000 acc=0.4632 (57s)
+[cifar10|entropy|noise=0.2|seed=1] round 2: n=3000 acc=0.5221 (108s)
+[cifar10|entropy|noise=0.2|seed=1] round 3: n=4000 acc=0.5319 (174s)
+[cifar10|entropy|noise=0.2|seed=1] round 4: n=5000 acc=0.5672 (253s)
+[cifar10|entropy|noise=0.2|seed=1] round 5: n=6000 acc=0.6328 (346s)
+=== run 21/30: cifar10 entropy noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|entropy|noise=0.2|seed=2] round 0: n=1000 acc=0.3898 (19s)
+[cifar10|entropy|noise=0.2|seed=2] round 1: n=2000 acc=0.4331 (57s)
+[cifar10|entropy|noise=0.2|seed=2] round 2: n=3000 acc=0.5124 (109s)
+[cifar10|entropy|noise=0.2|seed=2] round 3: n=4000 acc=0.5382 (174s)
+[cifar10|entropy|noise=0.2|seed=2] round 4: n=5000 acc=0.6019 (253s)
+[cifar10|entropy|noise=0.2|seed=2] round 5: n=6000 acc=0.5740 (345s)
+=== run 22/30: cifar10 bald noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.2|seed=0] round 0: n=1000 acc=0.3916 (19s)
+[cifar10|bald|noise=0.2|seed=0] round 1: n=2000 acc=0.4331 (97s)
+[cifar10|bald|noise=0.2|seed=0] round 2: n=3000 acc=0.4921 (155s)
+[cifar10|bald|noise=0.2|seed=0] round 3: n=4000 acc=0.5475 (247s)
+[cifar10|bald|noise=0.2|seed=0] round 4: n=5000 acc=0.6037 (372s)
+[cifar10|bald|noise=0.2|seed=0] round 5: n=6000 acc=0.6424 (530s)
+=== run 23/30: cifar10 bald noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.2|seed=1] round 0: n=1000 acc=0.3959 (24s)
+[cifar10|bald|noise=0.2|seed=1] round 1: n=2000 acc=0.4207 (129s)
+[cifar10|bald|noise=0.2|seed=1] round 2: n=3000 acc=0.4594 (253s)
+[cifar10|bald|noise=0.2|seed=1] round 3: n=4000 acc=0.5245 (394s)
+[cifar10|bald|noise=0.2|seed=1] round 4: n=5000 acc=0.5648 (552s)
+[cifar10|bald|noise=0.2|seed=1] round 5: n=6000 acc=0.6208 (727s)
+=== run 24/30: cifar10 bald noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|bald|noise=0.2|seed=2] round 0: n=1000 acc=0.3680 (24s)
+[cifar10|bald|noise=0.2|seed=2] round 1: n=2000 acc=0.4273 (130s)
+[cifar10|bald|noise=0.2|seed=2] round 2: n=3000 acc=0.4721 (254s)
+[cifar10|bald|noise=0.2|seed=2] round 3: n=4000 acc=0.5272 (395s)
+[cifar10|bald|noise=0.2|seed=2] round 4: n=5000 acc=0.5666 (553s)
+[cifar10|bald|noise=0.2|seed=2] round 5: n=6000 acc=0.5963 (729s)
+=== run 25/30: cifar10 coreset noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.2|seed=0] round 0: n=1000 acc=0.4085 (24s)
+[cifar10|coreset|noise=0.2|seed=0] round 1: n=2000 acc=0.4483 (81s)
+[cifar10|coreset|noise=0.2|seed=0] round 2: n=3000 acc=0.4841 (156s)
+[cifar10|coreset|noise=0.2|seed=0] round 3: n=4000 acc=0.5136 (251s)
+[cifar10|coreset|noise=0.2|seed=0] round 4: n=5000 acc=0.5706 (363s)
+[cifar10|coreset|noise=0.2|seed=0] round 5: n=6000 acc=0.6052 (495s)
+=== run 26/30: cifar10 coreset noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.2|seed=1] round 0: n=1000 acc=0.3881 (24s)
+[cifar10|coreset|noise=0.2|seed=1] round 1: n=2000 acc=0.4383 (69s)
+[cifar10|coreset|noise=0.2|seed=1] round 2: n=3000 acc=0.4869 (122s)
+[cifar10|coreset|noise=0.2|seed=1] round 3: n=4000 acc=0.5354 (189s)
+[cifar10|coreset|noise=0.2|seed=1] round 4: n=5000 acc=0.5747 (283s)
+[cifar10|coreset|noise=0.2|seed=1] round 5: n=6000 acc=0.6100 (411s)
+=== run 27/30: cifar10 coreset noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|coreset|noise=0.2|seed=2] round 0: n=1000 acc=0.3839 (24s)
+[cifar10|coreset|noise=0.2|seed=2] round 1: n=2000 acc=0.4105 (80s)
+[cifar10|coreset|noise=0.2|seed=2] round 2: n=3000 acc=0.4847 (156s)
+[cifar10|coreset|noise=0.2|seed=2] round 3: n=4000 acc=0.5331 (251s)
+[cifar10|coreset|noise=0.2|seed=2] round 4: n=5000 acc=0.5736 (349s)
+[cifar10|coreset|noise=0.2|seed=2] round 5: n=6000 acc=0.5892 (468s)
+=== run 28/30: cifar10 iris noise=0.2 seed=0 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.2|seed=0] round 0: n=1000 acc=0.4177 (25s)
+[cifar10|iris|noise=0.2|seed=0] round 1: n=2000 acc=0.4643 (81s)
+[cifar10|iris|noise=0.2|seed=0] round 2: n=3000 acc=0.5099 (157s)
+[cifar10|iris|noise=0.2|seed=0] round 3: n=4000 acc=0.5615 (253s)
+[cifar10|iris|noise=0.2|seed=0] round 4: n=5000 acc=0.5954 (368s)
+[cifar10|iris|noise=0.2|seed=0] round 5: n=6000 acc=0.5682 (503s)
+=== run 29/30: cifar10 iris noise=0.2 seed=1 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.2|seed=1] round 0: n=1000 acc=0.3972 (27s)
+[cifar10|iris|noise=0.2|seed=1] round 1: n=2000 acc=0.4552 (85s)
+[cifar10|iris|noise=0.2|seed=1] round 2: n=3000 acc=0.5044 (164s)
+[cifar10|iris|noise=0.2|seed=1] round 3: n=4000 acc=0.5180 (262s)
+[cifar10|iris|noise=0.2|seed=1] round 4: n=5000 acc=0.5863 (377s)
+[cifar10|iris|noise=0.2|seed=1] round 5: n=6000 acc=0.5815 (512s)
+=== run 30/30: cifar10 iris noise=0.2 seed=2 ===
+/opt/miniconda/lib/python3.13/site-packages/torchvision/datasets/cifar.py:83: VisibleDeprecationWarning: dtype(): align should be passed as Python or NumPy boolean but got `align=0`. Did you mean to pass a tuple to create a subarray type? (Deprecated NumPy 2.4)
+  entry = pickle.load(f, encoding="latin1")
+[cifar10|iris|noise=0.2|seed=2] round 0: n=1000 acc=0.3970 (27s)
+[cifar10|iris|noise=0.2|seed=2] round 1: n=2000 acc=0.4209 (85s)
+[cifar10|iris|noise=0.2|seed=2] round 2: n=3000 acc=0.4911 (163s)
+[cifar10|iris|noise=0.2|seed=2] round 3: n=4000 acc=0.5424 (262s)
+[cifar10|iris|noise=0.2|seed=2] round 4: n=5000 acc=0.5874 (377s)
+[cifar10|iris|noise=0.2|seed=2] round 5: n=6000 acc=0.5986 (512s)
+ALL RUNS COMPLETE

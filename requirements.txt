@@ -1,0 +1,14 @@
+# Reproducing the figures, tables and paper numbers from the shipped
+# results/ needs only these three.
+numpy>=1.24
+pandas>=2.0
+matplotlib>=3.7
+scipy>=1.10
+
+# Only needed to RE-RUN the experiment grid (not required otherwise).
+# torch>=2.1
+# torchvision>=0.16
+
+# Only needed to rebuild the notebook.
+# nbformat>=5.9
+# nbclient>=0.9

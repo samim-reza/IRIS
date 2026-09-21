@@ -1,0 +1,69 @@
+device=cuda torch=2.11.0+cu130
+grid: 12 runs
+skip (done): fmnist random 0.0 4
+skip (done): fmnist entropy 0.0 4
+skip (done): fmnist bald 0.0 4
+=== run 4/12: fmnist coreset noise=0.0 seed=4 ===
+[fmnist|coreset|noise=0.0|seed=4] round 0: n=500 acc=0.7351 (3s)
+[fmnist|coreset|noise=0.0|seed=4] round 1: n=1000 acc=0.7968 (11s)
+[fmnist|coreset|noise=0.0|seed=4] round 2: n=1500 acc=0.8039 (19s)
+[fmnist|coreset|noise=0.0|seed=4] round 3: n=2000 acc=0.8165 (29s)
+[fmnist|coreset|noise=0.0|seed=4] round 4: n=2500 acc=0.8193 (39s)
+[fmnist|coreset|noise=0.0|seed=4] round 5: n=3000 acc=0.8420 (51s)
+=== run 5/12: fmnist iris noise=0.0 seed=4 ===
+[fmnist|iris|noise=0.0|seed=4] round 0: n=500 acc=0.7351 (5s)
+[fmnist|iris|noise=0.0|seed=4] round 1: n=1000 acc=0.7923 (12s)
+[fmnist|iris|noise=0.0|seed=4] round 2: n=1500 acc=0.8208 (21s)
+[fmnist|iris|noise=0.0|seed=4] round 3: n=2000 acc=0.8574 (31s)
+[fmnist|iris|noise=0.0|seed=4] round 4: n=2500 acc=0.8654 (41s)
+[fmnist|iris|noise=0.0|seed=4] round 5: n=3000 acc=0.8832 (53s)
+=== run 6/12: fmnist iris-nodiv noise=0.0 seed=4 ===
+[fmnist|iris-nodiv|noise=0.0|seed=4] round 0: n=500 acc=0.7351 (4s)
+[fmnist|iris-nodiv|noise=0.0|seed=4] round 1: n=1000 acc=0.7730 (11s)
+[fmnist|iris-nodiv|noise=0.0|seed=4] round 2: n=1500 acc=0.7915 (20s)
+[fmnist|iris-nodiv|noise=0.0|seed=4] round 3: n=2000 acc=0.8232 (30s)
+[fmnist|iris-nodiv|noise=0.0|seed=4] round 4: n=2500 acc=0.8445 (40s)
+[fmnist|iris-nodiv|noise=0.0|seed=4] round 5: n=3000 acc=0.8604 (53s)
+=== run 7/12: fmnist random noise=0.2 seed=4 ===
+[fmnist|random|noise=0.2|seed=4] round 0: n=500 acc=0.7071 (4s)
+[fmnist|random|noise=0.2|seed=4] round 1: n=1000 acc=0.7753 (10s)
+[fmnist|random|noise=0.2|seed=4] round 2: n=1500 acc=0.7965 (18s)
+[fmnist|random|noise=0.2|seed=4] round 3: n=2000 acc=0.8199 (27s)
+[fmnist|random|noise=0.2|seed=4] round 4: n=2500 acc=0.8295 (38s)
+[fmnist|random|noise=0.2|seed=4] round 5: n=3000 acc=0.8333 (49s)
+=== run 8/12: fmnist entropy noise=0.2 seed=4 ===
+[fmnist|entropy|noise=0.2|seed=4] round 0: n=500 acc=0.7071 (4s)
+[fmnist|entropy|noise=0.2|seed=4] round 1: n=1000 acc=0.7744 (13s)
+[fmnist|entropy|noise=0.2|seed=4] round 2: n=1500 acc=0.7958 (22s)
+[fmnist|entropy|noise=0.2|seed=4] round 3: n=2000 acc=0.8078 (34s)
+[fmnist|entropy|noise=0.2|seed=4] round 4: n=2500 acc=0.8139 (46s)
+[fmnist|entropy|noise=0.2|seed=4] round 5: n=3000 acc=0.8351 (60s)
+=== run 9/12: fmnist bald noise=0.2 seed=4 ===
+[fmnist|bald|noise=0.2|seed=4] round 0: n=500 acc=0.7071 (4s)
+[fmnist|bald|noise=0.2|seed=4] round 1: n=1000 acc=0.7669 (32s)
+[fmnist|bald|noise=0.2|seed=4] round 2: n=1500 acc=0.7788 (61s)
+[fmnist|bald|noise=0.2|seed=4] round 3: n=2000 acc=0.7935 (92s)
+[fmnist|bald|noise=0.2|seed=4] round 4: n=2500 acc=0.8032 (124s)
+[fmnist|bald|noise=0.2|seed=4] round 5: n=3000 acc=0.8090 (156s)
+=== run 10/12: fmnist coreset noise=0.2 seed=4 ===
+[fmnist|coreset|noise=0.2|seed=4] round 0: n=500 acc=0.7071 (4s)
+[fmnist|coreset|noise=0.2|seed=4] round 1: n=1000 acc=0.7673 (14s)
+[fmnist|coreset|noise=0.2|seed=4] round 2: n=1500 acc=0.7851 (24s)
+[fmnist|coreset|noise=0.2|seed=4] round 3: n=2000 acc=0.8070 (36s)
+[fmnist|coreset|noise=0.2|seed=4] round 4: n=2500 acc=0.8042 (48s)
+[fmnist|coreset|noise=0.2|seed=4] round 5: n=3000 acc=0.8093 (63s)
+=== run 11/12: fmnist iris noise=0.2 seed=4 ===
+[fmnist|iris|noise=0.2|seed=4] round 0: n=500 acc=0.7225 (4s)
+[fmnist|iris|noise=0.2|seed=4] round 1: n=1000 acc=0.7586 (12s)
+[fmnist|iris|noise=0.2|seed=4] round 2: n=1500 acc=0.8028 (21s)
+[fmnist|iris|noise=0.2|seed=4] round 3: n=2000 acc=0.8341 (30s)
+[fmnist|iris|noise=0.2|seed=4] round 4: n=2500 acc=0.8327 (41s)
+[fmnist|iris|noise=0.2|seed=4] round 5: n=3000 acc=0.8468 (52s)
+=== run 12/12: fmnist iris-norel noise=0.2 seed=4 ===
+[fmnist|iris-norel|noise=0.2|seed=4] round 0: n=500 acc=0.7071 (4s)
+[fmnist|iris-norel|noise=0.2|seed=4] round 1: n=1000 acc=0.7620 (11s)
+[fmnist|iris-norel|noise=0.2|seed=4] round 2: n=1500 acc=0.7924 (20s)
+[fmnist|iris-norel|noise=0.2|seed=4] round 3: n=2000 acc=0.8246 (30s)
+[fmnist|iris-norel|noise=0.2|seed=4] round 4: n=2500 acc=0.8337 (39s)
+[fmnist|iris-norel|noise=0.2|seed=4] round 5: n=3000 acc=0.8366 (49s)
+ALL RUNS COMPLETE
