@@ -51,7 +51,14 @@ returned for them.
 ```bash
 python src/verify_checkpoint.py                    # re-measure all 180 checkpoints
 python src/verify_checkpoint.py --dataset bloodmnist
+python src/check_claims.py                         # 17 qualitative claims vs data
 ```
+
+`check_claims.py` exists because the macros keep the paper's *numbers* honest but
+not its *sentences*. "IRIS ranks last", "the single largest ablation effect",
+"BALD falls below random" are English, and English does not regenerate. Run it
+after any re-run: a conclusion that silently inverts fails loudly instead of
+leaving prose that contradicts the table beside it.
 
 It reloads each model, re-evaluates it on the untouched test set, and prints the
 delta against the accuracy recorded during training. A clean result is
@@ -158,6 +165,7 @@ Three findings the repository is built to let you check:
 | `src/build_notebook.py` | regenerates `notebooks/IRIS.ipynb` from the experiment source |
 | `results/` | **shipped**: `results.csv`, `summary.csv`, `diagnostics.csv`, figures, tables |
 | `notebooks/IRIS.ipynb` | self-contained notebook (code + results + figures) |
+| `docs/HANDOFF.md` | project state, what changed and why, gotchas, open items |
 | `docs/literature_review/` | the synthesis, the gap table, and per-source metadata |
 | `logs/` | logs of the actual runs that produced `results/` |
 
