@@ -23,7 +23,7 @@ It costs under 1% extra parameters and no extra forward pass at query time.
 
 ## Everything here reproduces without training
 
-The full experiment grid (108 runs) is **already in `results/`**. Cloning this
+The full experiment grid (174 runs) is **already in `results/`**. Cloning this
 repo and running two scripts regenerates every figure, table and number in the
 paper — including the paper PDF itself — in well under a minute on a laptop, with
 **no GPU and no training**.
@@ -39,6 +39,26 @@ python src/make_numbers.py    # -> paper/numbers.tex  (196 LaTeX macros)
 
 That is the whole reproduction path. Re-running the experiments is optional and
 covered in [Re-running the experiments](#re-running-the-experiments-optional-gpu).
+
+### What "no training" does and does not cover
+
+`results/` holds the **measurements**, not model weights. Every number, figure,
+table, significance test and the paper PDF regenerate from it exactly, with no
+GPU — that is verified, and a fresh clone reproduces the committed figures
+bit-identically.
+
+There are deliberately **no saved checkpoints in this repository**. Active
+learning retrains the classifier *from scratch* after every acquisition round
+(see `run_al` in `src/hitl_experiments.py`), so the 174 runs produce 1,044
+short-lived models; each is trained, evaluated, recorded to
+`results/results.csv`, and discarded. Keeping them is neither meaningful for the
+claim being made — which is about the *acquisition policy*, not about one set of
+weights — nor practical.
+
+So: to **check the paper's results**, you need no training. To **run inference
+with a trained IRIS classifier** on your own images, you do have to train one;
+a single run is about 3 minutes for Fashion-MNIST or BloodMNIST and about 11
+minutes for CIFAR-10 on one GPU.
 
 ### Rebuild the paper too
 
@@ -111,8 +131,9 @@ Two directories are deliberately **not** in git:
 
 ## Re-running the experiments (optional, GPU)
 
-Only needed if you want to regenerate `results/` from scratch. The grid is 108
-runs and takes hours on a single GPU.
+Only needed if you want to regenerate `results/` from scratch, or if you want
+trained weights (see below). The grid is 174 runs and takes roughly 10 GPU-hours
+in total.
 
 ```bash
 pip install torch torchvision          # in addition to requirements.txt
@@ -141,7 +162,8 @@ python -u src/hitl_experiments.py --datasets fmnist bloodmnist --seeds 3 4 5
 - **Methods** — random · entropy · BALD · core-set · **IRIS**, plus the
   `iris-nodiv` and `iris-norel` ablations on the two 28×28 datasets
 - **Oracle** — clean (γ = 0) and noisy (γ = 0.2 symmetric label noise)
-- **Seeds** — 6 on Fashion-MNIST and BloodMNIST, 3 on CIFAR-10 (108 runs)
+- **Seeds** — 6 on Fashion-MNIST and BloodMNIST, 3 on CIFAR-10 (72 + 72 + 30 =
+  174 runs)
 - **Metrics** — accuracy vs. budget, final accuracy, AUBC, error-prediction
   AUROC, and a paired *t*-test of IRIS against the strongest baseline on matched
   seeds

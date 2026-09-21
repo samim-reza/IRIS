@@ -29,7 +29,7 @@ while true; do
   fi
   if [ "$(done_runs)" -ge 102 ]; then
     assemble
-    echo "$(date) FINAL assembly done ($(done_runs)/102 runs)" >> "$ROOT/logs/finalize.log"
+    echo "$(date) FINAL assembly done ($(done_runs)/174 runs)" >> "$ROOT/logs/finalize.log"
     exit 0
   fi
   sleep 1800
