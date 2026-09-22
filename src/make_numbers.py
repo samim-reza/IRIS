@@ -13,9 +13,13 @@ OUT = os.path.join(ROOT, "paper", "numbers.tex")
 DS = {"fmnist": "Fmnist", "cifar10": "Cifar", "bloodmnist": "Blood"}
 NOISE = {0.0: "Clean", 0.2: "Noisy"}
 METH = {"random": "Random", "entropy": "Entropy", "bald": "Bald",
-        "coreset": "Coreset", "iris": "Iris",
+        "coreset": "Coreset", "learnloss": "Learnloss", "badge": "Badge", "badge-rel": "BadgeRel",
+        "iris": "Iris", "iris-grad": "IrisGrad",
         "iris-nodiv": "IrisNodiv", "iris-norel": "IrisNorel"}
-BASELINES = ["random", "entropy", "bald", "coreset"]
+# Learning-Loss and BADGE are competitors, not ablations: they must be
+# inside the set that "best baseline" is computed over, or every gain
+# macro in the paper would silently ignore them.
+BASELINES = ["random", "entropy", "bald", "coreset", "learnloss", "badge"]
 
 
 def main():
@@ -42,7 +46,9 @@ def main():
         best_a = base.loc[base.aubc_mean.idxmax()]
         best_f = base.loc[base.final_acc_mean.idxmax()]
         display = {"random": "Random", "entropy": "Entropy",
-                   "bald": "BALD", "coreset": "Coreset"}
+                   "bald": "BALD", "coreset": "Coreset",
+                   "learnloss": "Learning-Loss", "badge": "BADGE",
+                   "badge-rel": "BADGE + reliability"}
         cmd(tag + "BestBaseName", display[best_a.method])
         cmd(tag + "IrisAubcGain",
             f"{100 * (iris.iloc[0].aubc_mean - best_a.aubc_mean):+.2f}")
@@ -58,7 +64,8 @@ def main():
     finals = res_all[res_all["round"] == res_all["round"].max()].pivot_table(
         index=["dataset", "noise", "seed"], columns="method", values="test_acc")
     display = {"random": "Random", "entropy": "Entropy",
-               "bald": "BALD", "coreset": "Coreset"}
+               "bald": "BALD", "coreset": "Coreset",
+               "learnloss": "Learning-Loss", "badge": "BADGE"}
     for (ds, noise), g in finals.groupby(level=[0, 1]):
         if "iris" not in g.columns or g["iris"].isna().any():
             continue
@@ -143,6 +150,42 @@ def main():
             x = a[a.seed.isin(common)].sort_values("seed").test_acc.values
             y = b[b.seed.isin(common)].sort_values("seed").test_acc.values
             cmd(name, f"{_st.ttest_rel(x, y)[1]:.3f}")
+
+    # ---- the reliability gate measured on a DIFFERENT acquirer.
+    # This is the paper's central claim, so it gets its own macros: the lift
+    # badge-rel gains over plain badge, per dataset, with a paired test.
+    for ds, tag in DS.items():
+        a = fin[(fin.dataset == ds) & (fin.noise == 0.2)
+                & (fin.method == "badge-rel")]
+        b = fin[(fin.dataset == ds) & (fin.noise == 0.2)
+                & (fin.method == "badge")]
+        common = sorted(set(a.seed) & set(b.seed))
+        if len(common) > 1:
+            x = a[a.seed.isin(common)].sort_values("seed").test_acc.values * 100
+            y = b[b.seed.isin(common)].sort_values("seed").test_acc.values * 100
+            cmd(f"{tag}RelOnBadgeGain", f"{x.mean() - y.mean():+.2f}")
+            cmd(f"{tag}RelOnBadgeP", f"{_st.ttest_rel(x, y)[1]:.3f}")
+            cmd(f"{tag}RelOnBadgeWon", f"{int((x > y).sum())}/{len(common)}")
+    # and the same lift measured inside IRIS, for the comparison
+    for ds, tag in DS.items():
+        a = fin[(fin.dataset == ds) & (fin.noise == 0.2) & (fin.method == "iris")]
+        b = fin[(fin.dataset == ds) & (fin.noise == 0.2)
+                & (fin.method == "iris-norel")]
+        common = sorted(set(a.seed) & set(b.seed))
+        if len(common) > 1:
+            x = a[a.seed.isin(common)].sort_values("seed").test_acc.values * 100
+            y = b[b.seed.isin(common)].sort_values("seed").test_acc.values * 100
+            cmd(f"{tag}RelOnIrisGain", f"{x.mean() - y.mean():+.2f}")
+
+    # ---- margin of our learned signal over the prior learned signal
+    for ds, tag in DS.items():
+        for nz, ntag in ((0.2, "Noisy"), (0.0, "Clean")):
+            i = fin[(fin.dataset == ds) & (fin.noise == nz) & (fin.method == "iris")]
+            l = fin[(fin.dataset == ds) & (fin.noise == nz)
+                    & (fin.method == "learnloss")]
+            if len(i) and len(l):
+                cmd(f"{tag}{ntag}LearnlossGap",
+                    f"{100 * (i.test_acc.mean() - l.test_acc.mean()):+.2f}")
 
     # ---- parameter cost of the introspection head, per backbone.
     # The head is a fixed d->128->1 MLP, so its share shrinks as the

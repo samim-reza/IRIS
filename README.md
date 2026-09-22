@@ -1,151 +1,152 @@
 # IRIS — Introspective Reliability-gated Instance Selection
 
-**Introspective, reliability-gated instance selection for human-in-the-loop deep
-active learning under imperfect annotators.**
+Human-in-the-loop deep active learning when the annotator is imperfect.
 
-A deep classifier trained on a small labelled set is confused about exactly the
+A classifier trained on a few hundred labels is confused about exactly the
 examples it has not seen enough of, and its own output probabilities are a poor
-guide to which those are. IRIS adds three things to an ordinary classifier so it
-can ask a human the right questions and survive the wrong answers:
+guide to which those are. A human can resolve that — a few thousand times, and
+not perfectly. This repository studies two separable mechanisms for that
+setting:
 
-1. an **introspection head** — a two-layer MLP on detached penultimate features
-   that learns, from the model's own error history, the probability that the
-   classifier is about to be wrong (replacing hand-crafted entropy as the
-   acquisition signal);
-2. a **k-center diversity gate** over its top-ranked candidates, so a batch of
-   500 labels buys 500 distinct insights instead of 500 copies of one;
-3. **small-loss reliability weighting** of the labels bought from a noisy human
-   annotator, so corrupted annotations are damped inside the same training loop.
+- **Reliability-weighted label acceptance** — a per-sample exponential moving
+  average of the loss down-weights annotations that behave like mistakes, inside
+  the normal training loop. This is the part that **transfers**: bolted onto
+  BADGE, an acquisition function built on completely different principles, it
+  still gains about a point on every dataset.
+- **An introspection head** — a two-layer MLP on detached penultimate features
+  that learns, from the model's own error history, the probability it is about
+  to be wrong. Used as the acquisition signal with a k-center diversity gate.
+  It beats the prior learned-signal method (Learning-Loss) decisively, and beats
+  every uncertainty and coverage baseline, but it does **not** beat BADGE.
 
-It costs under 1% extra parameters and no extra forward pass at query time.
+Both results are in the table below, including the one that goes against us.
 
 ---
 
-## Everything here reproduces without training
+## Everything reproduces without training
 
-The full experiment grid (180 runs) is **already in `results/`**. Cloning this
-repo and running two scripts regenerates every figure, table and number in the
-paper — including the paper PDF itself — in well under a minute on a laptop, with
-**no GPU and no training**.
+All **285 runs** are already in `results/`. Cloning the repo and running two
+scripts regenerates every figure, table and reported number in under a minute on
+a laptop — **no GPU, no training**.
 
 ```bash
 git clone git@github.com:samim-reza/IRIS.git
 cd IRIS
 pip install -r requirements.txt
 
-python src/make_plots.py      # -> results/*.png, results/summary_table.{tex,md}
-python src/make_numbers.py    # -> paper/numbers.tex  (196 LaTeX macros)
+python src/make_plots.py      # -> results/*.png and the summary tables
+python src/make_numbers.py    # -> the reported figures, regenerated
+python src/check_claims.py    # -> 22/22 claims verified against the data
 ```
 
-That is the whole reproduction path. Re-running the experiments is optional and
-covered in [Re-running the experiments](#re-running-the-experiments-optional-gpu).
+A fresh clone reproduces the committed figures **bit-identically** — verified,
+not assumed.
 
-### Verifying the results, not just reading them
-
-Every run keeps the **final trained model** that produced its published
-accuracy, under `checkpoints/` (180 files, ~1.9 GB, git-ignored). Each file
-carries the weights, both heads, and the audit trail a claim needs: the exact
-examples the model was trained on and the labels the (possibly lying) oracle
-returned for them.
-
-```bash
-python src/verify_checkpoint.py                    # re-measure all 180 checkpoints
-python src/verify_checkpoint.py --dataset bloodmnist
-python src/check_claims.py                         # 17 qualitative claims vs data
-```
-
-`check_claims.py` exists because the macros keep the paper's *numbers* honest but
-not its *sentences*. "IRIS ranks last", "the single largest ablation effect",
-"BALD falls below random" are English, and English does not regenerate. Run it
-after any re-run: a conclusion that silently inverts fails loudly instead of
-leaving prose that contradicts the table beside it.
-
-It reloads each model, re-evaluates it on the untouched test set, and prints the
-delta against the accuracy recorded during training. A clean result is
-`max |delta| = 0.000000`.
-
-Training is **deterministic**: cuDNN autotuning is disabled and the training
-DataLoader is seeded, so re-running reproduces the published numbers exactly
-rather than approximately. This was verified by re-running a completed run and
-getting byte-identical per-round accuracies.
-
-The grid also carries a **divergence guard**. SGD occasionally fails to escape
-its initialisation and a run sits at chance level for good; one such run
-appeared here and would have silently dragged a baseline's mean down by 11
-points. After training, the model is checked against *its own training set* --
-never the test set -- and restarted from a different initialisation if it could
-not fit the data it was just shown. Healthy runs never trigger it and are
-bit-identical with or without it.
-
-To reproduce the whole grid from scratch, with checkpoints:
-
-```bash
-tmux new-session -d -s iris 'bash src/rerun_all.sh > logs/rerun.log 2>&1'
-tmux attach -t iris        # watch;  Ctrl-b d to detach
-```
-
-`results/previous_run/` holds the earlier, pre-checkpointing results, and
-`python src/compare_runs.py` diffs the two per scenario and flags any change in
-which method wins.
-
-### What "no training" does and does not cover
-
-`results/` holds the **measurements**, not model weights. Every number, figure,
-table, significance test and the paper PDF regenerate from it exactly, with no
-GPU — that is verified, and a fresh clone reproduces the committed figures
-bit-identically.
-
-Active learning retrains the classifier *from scratch* after every acquisition
-round (see `run_al` in `src/hitl_experiments.py`), so the 180 runs train 1,080
-models in total. Keeping all of them would serve nobody, so each run keeps the
-**final** one — the model that produced that run's published accuracy. Those
-180 checkpoints are ~1.9 GB, too large for git, so they are produced by the
-grid rather than shipped; `src/verify_checkpoint.py` re-measures them.
-
-So: to **check the paper's numbers, figures and tables**, you need no GPU and no
-training. To **hold the trained models** and re-measure them yourself, rerun the
-grid with `--save-checkpoints` (~3 GPU-hours for all of it, or ~3 minutes for a
-single Fashion-MNIST or BloodMNIST run).
-
-### Rebuild the paper too
-
-```bash
-cd paper
-make            # pdflatex -> bibtex -> pdflatex x2  -> main_en.pdf
-```
-
-Needs a TeX distribution with `stix`, `algorithmicx`, `pgf/tikz` and `natbib`.
-The Elsevier CAS class files (`cas-sc.cls`, `cas-common.sty`,
-`cas-model2-names.bst`) are vendored in `paper/`, so nothing else is required.
+Prefer a notebook? `notebooks/IRIS.ipynb` carries the full implementation, the
+results, the learning curves and the checkpoint verification in one file. It
+does not train anything unless you set `RUN_FULL = True`.
 
 ---
 
-## Headline results
+## Results — final accuracy under a noisy annotator (γ = 0.2)
 
-Final accuracy after 3,000 labels (Fashion-MNIST, BloodMNIST) or 6,000 labels
-(CIFAR-10), under a **noisy annotator** (γ = 0.2 symmetric label noise), mean ±
-sd over seeds. Full table: `results/summary_table.md`.
+Mean ± sd over 6 seeds (3 for CIFAR-10). Full table: `results/summary_table.md`.
 
-| Dataset | Regime | Random | IRIS (ours) | Verdict |
-|---|---|---|---|---|
-| Fashion-MNIST | capable base model | 83.71 ± 0.54 | **85.68 ± 0.61** | best of 5; wins 5/6 seeds, *p* = 0.021, and saves 17% of the budget |
-| BloodMNIST | capable base model | 86.94 ± 0.75 | **87.82 ± 0.75** | best of 5; wins 5/6 seeds, *p* = 0.097 — a trend, not proof |
-| CIFAR-10 | cold start (ResNet-18 from scratch) | **63.24 ± 0.55** | 62.20 ± 0.30 | **IRIS loses** — see below |
+| Method | Fashion-MNIST | BloodMNIST | CIFAR-10 |
+|---|---|---|---|
+| Random | 83.71 ± 0.59 | 86.94 ± 0.82 | 63.24 ± 0.67 |
+| Learning-Loss | 83.27 ± 1.09 | 80.53 ± 2.67 | 53.97 ± 4.63 |
+| **IRIS** (ours) | 85.68 ± 0.67 | 87.82 ± 0.82 | 62.20 ± 0.37 |
+| BADGE | 86.59 ± 0.33 | 88.42 ± 0.77 | 63.15 ± 1.86 |
+| **BADGE + reliability** (ours) | **87.52 ± 0.43** | **89.36 ± 0.77** | **64.59 ± 1.42** |
 
-Three findings the repository is built to let you check:
+What to take from it:
 
-- **BALD collapses under annotator noise.** The strongest baseline with a perfect
-  oracle drops *below* random sampling once labels are noisy, on both capable-model
-  datasets.
-- **Cold start defeats every acquisition strategy, ours included.** On CIFAR-10
-  from scratch nothing beats random sampling. Running both ablations there
-  localises the cause: removing reliability weighting changes nothing
-  (*p* = 0.850) and removing the diversity gate makes things worse, so it is the
-  learned *selection signal* that fails when the backbone is still at ~46%
-  accuracy. The paper reports this as a condition of use, not a footnote.
+- **The reliability gate transfers.** Added to BADGE it gains +0.92 on
+  Fashion-MNIST (*p* = 0.003, 6/6 seeds), +0.94 on BloodMNIST and +1.44 on
+  CIFAR-10 — lifts as large as those it produces inside IRIS, on an acquisition
+  function it was never designed for.
+- **Our acquisition signal loses to BADGE**, and we say so. It beats
+  Learning-Loss by 2.4 and 7.3 points, and beats every uncertainty and coverage
+  baseline, but BADGE's gradient embedding selects better batches. Rebuilding
+  our diversity gate in that same geometry (`iris-grad`) did not close the gap.
+- **BALD collapses under annotator noise** — the best baseline with a clean
+  oracle drops *below* random sampling once labels are noisy.
+- **Cold start defeats every acquisition strategy.** On CIFAR-10 from scratch
+  nothing beats random sampling; BADGE + reliability is the only configuration
+  anywhere in this study that does.
 - **Batch quality ≠ error-ranking quality.** Softmax entropy has a *higher*
   point-wise error-detection AUROC than the learned head on all three datasets,
-  yet picks worse batches (`results/diagnostics_auroc.png`).
+  yet picks worse batches.
+
+---
+
+## Training
+
+Only needed to regenerate `results/` from scratch. The full grid is 285 runs,
+roughly 6 GPU-hours on an idle RTX 4090.
+
+```bash
+pip install torch torchvision          # in addition to requirements.txt
+
+# detached, survives an SSH disconnect
+setsid nohup bash src/rerun_all.sh > logs/rerun.log 2>&1 &
+tail -f logs/rerun.log                 # ends with "RERUN COMPLETE"
+```
+
+**Restarts are safe.** Any (dataset, method, noise, seed) already recorded in
+`results/results.csv` is skipped, so you can stop and resume freely.
+
+Subsets:
+
+```bash
+python -u src/hitl_experiments.py --datasets bloodmnist --seeds 0 1 2
+python -u src/hitl_experiments.py --datasets fmnist --seeds 0 --save-checkpoints
+python -u src/hitl_experiments.py --quick        # 2-minute smoke test
+```
+
+> `--quick` appends rows to `results/results.csv`. Use a scratch copy if you
+> care about the file.
+
+### The grid
+
+- **Datasets** — Fashion-MNIST (500 + 5×500 labels, small CNN), BloodMNIST /
+  MedMNIST v2 (identical CNN and schedule, no retuning), CIFAR-10
+  (1,000 + 5×1,000, ResNet-18 from scratch)
+- **Methods** — `random`, `entropy`, `bald`, `coreset`, `learnloss`, `badge`,
+  `badge-rel`, `iris`, `iris-grad`, plus the `iris-nodiv` / `iris-norel`
+  ablations
+- **Oracle** — clean (γ = 0) and noisy (γ = 0.2 symmetric label noise)
+- **Seeds** — 6 on the 28×28 datasets, 3 on CIFAR-10 (285 runs)
+
+Training is **deterministic**: cuDNN autotuning is off and the DataLoader is
+seeded, so a re-run reproduces the published numbers exactly rather than
+approximately. A **divergence guard** catches the occasional run where SGD never
+escapes its initialisation — detected from *training* accuracy only, never the
+test set, and restarted from a fresh init. Healthy runs are bit-identical with
+or without it.
+
+---
+
+## Testing
+
+```bash
+python src/check_claims.py                 # 22 stated conclusions vs the data
+python src/verify_checkpoint.py            # reload every saved model, re-measure
+python src/verify_checkpoint.py --dataset bloodmnist
+python src/compare_runs.py                 # this grid vs results/previous_run/
+```
+
+`--save-checkpoints` keeps the final trained model of each run in
+`checkpoints/`, together with the examples it was trained on and the labels the
+(possibly lying) oracle returned — the audit trail an accuracy claim needs.
+`verify_checkpoint.py` reloads each one and re-measures it on the untouched test
+set; a clean result is `max |delta| = 0.000000`.
+
+`check_claims.py` exists because regenerating numbers keeps figures honest but
+not *sentences*. "BADGE beats IRIS", "BALD falls below random", "the gate lifts
+BADGE" are English, and English does not regenerate. Run it after any re-run: a
+conclusion that silently inverts fails loudly instead.
 
 ---
 
@@ -153,90 +154,38 @@ Three findings the repository is built to let you check:
 
 | Path | Contents |
 |---|---|
-| `paper/main_en.tex` → `main_en.pdf` | the manuscript, Elsevier CAS single-column format |
-| `paper/refs.bib` | 50-entry BibTeX database (author–year, `cas-model2-names`) |
-| `paper/numbers.tex` | auto-generated LaTeX macros — never edit by hand |
-| `paper/cas-*.{cls,sty,bst}` | vendored Elsevier CAS class files |
-| `paper/Makefile` | `make` builds the PDF, `make clean` removes artefacts |
-| `src/hitl_experiments.py` | full implementation: models, IRIS, 4 baselines, noisy oracle, AL loop |
-| `src/make_plots.py` | figures + summary tables from `results/results.csv` |
-| `src/make_numbers.py` | LaTeX macros + paired t-tests, so the prose cannot drift from the data |
-| `src/finalize.sh` | watcher that regenerates figures/tables/PDF as results land |
-| `src/build_notebook.py` | regenerates `notebooks/IRIS.ipynb` from the experiment source |
+| `src/hitl_experiments.py` | everything: models, IRIS, the reliability gate, all 9 acquisition methods, the noisy oracle, the AL loop |
+| `src/make_plots.py` | figures and summary tables from `results/results.csv` |
+| `src/make_numbers.py` | reported figures and paired t-tests, regenerated from the data |
+| `src/check_claims.py` | asserts the stated conclusions against the data |
+| `src/verify_checkpoint.py` | reload saved models and re-measure them |
+| `src/compare_runs.py` | diff this grid against a previous one |
+| `src/rerun_all.sh` | full grid, detached, with checkpoints |
 | `results/` | **shipped**: `results.csv`, `summary.csv`, `diagnostics.csv`, figures, tables |
-| `notebooks/IRIS.ipynb` | self-contained notebook (code + results + figures) |
+| `notebooks/IRIS.ipynb` | code, results and verification in one file |
 | `docs/HANDOFF.md` | project state, what changed and why, gotchas, open items |
-| `docs/literature_review/` | the synthesis, the gap table, and per-source metadata |
-| `logs/` | logs of the actual runs that produced `results/` |
+| `docs/literature_review/` | the synthesis and per-source metadata |
+| `logs/` | logs of the runs that produced `results/` |
 
-Two directories are deliberately **not** in git:
-
-- `data/` — the datasets (~460 MB). Fashion-MNIST and CIFAR-10 download
-  automatically on first run; BloodMNIST is fetched from
-  [Zenodo record 10519652](https://zenodo.org/records/10519652) as
-  `data/bloodmnist.npz`.
-- `papers/` — the 21 reference PDFs. Third-party copyright; not redistributable.
-
----
-
-## Re-running the experiments (optional, GPU)
-
-Only needed if you want to regenerate `results/` from scratch, or if you want
-trained weights (see below). The grid is 180 runs and takes roughly 3 GPU-hours
-on an idle RTX 4090.
-
-```bash
-pip install torch torchvision          # in addition to requirements.txt
-
-nohup python -u src/hitl_experiments.py > logs/experiments.log 2>&1 &
-nohup bash src/finalize.sh > /dev/null 2>&1 &   # rebuilds figures/PDF as results land
-
-tail -f logs/experiments.log           # grid ends with "ALL RUNS COMPLETE"
-```
-
-Both survive an SSH disconnect. **Restarts are safe**: any (dataset, method,
-noise, seed) combination already recorded in `results/results.csv` is skipped, so
-you can stop and resume freely.
-
-To run a subset:
-
-```bash
-python -u src/hitl_experiments.py --datasets fmnist bloodmnist --seeds 3 4 5
-```
-
-### The grid
-
-- **Datasets** — Fashion-MNIST (500 + 5×500 labels, small CNN), BloodMNIST /
-  MedMNIST v2 (500 + 5×500, *the same* small CNN and recipe, untuned), CIFAR-10
-  (1,000 + 5×1,000, ResNet-18 from scratch)
-- **Methods** — random · entropy · BALD · core-set · **IRIS**, plus the
-  `iris-nodiv` and `iris-norel` ablations on all three datasets
-- **Oracle** — clean (γ = 0) and noisy (γ = 0.2 symmetric label noise)
-- **Seeds** — 6 on Fashion-MNIST and BloodMNIST, 3 on CIFAR-10 (72 + 72 + 36 =
-  180 runs, ablations included)
-- **Metrics** — accuracy vs. budget, final accuracy, AUBC, error-prediction
-  AUROC, and a paired *t*-test of IRIS against the strongest baseline on matched
-  seeds
-
-BloodMNIST inherits the Fashion-MNIST architecture, optimiser, schedule and
-budget with **no retuned hyperparameter**, which is what makes it a transfer test
-rather than a demonstration.
+Not in git: `data/` (~460 MB, downloads on first run; BloodMNIST comes from
+[Zenodo record 10519652](https://zenodo.org/records/10519652)), `checkpoints/`
+(3.2 GB, produced by `--save-checkpoints`), and `papers/` (third-party PDFs).
 
 ---
 
 ## Requirements
 
-Reproduction only (no training): Python ≥ 3.9 with `numpy`, `pandas`,
-`matplotlib`, `scipy` — see `requirements.txt`. Re-running the grid additionally
-needs `torch` and `torchvision`; rebuilding the notebook needs `nbformat` and
-`nbclient`.
+Reproduction only: Python ≥ 3.9 with `numpy`, `pandas`, `matplotlib`, `scipy`
+(`requirements.txt`). Training additionally needs `torch` and `torchvision`;
+rebuilding the notebook needs `nbformat` and `nbclient`.
+
+Note `src/` targets Python 3.10+, and the results were produced with
+**torch 2.12.0+cu130**. Torch 2.11 gives different accuracies for the same seed,
+so do not split a grid across versions.
 
 ## Citing
 
-The manuscript is under preparation for submission. Until it appears, please cite
-this repository.
-
-```bibtex
+```
 @software{iris2026,
   author = {Samim},
   title  = {IRIS: Introspective Reliability-gated Instance Selection for

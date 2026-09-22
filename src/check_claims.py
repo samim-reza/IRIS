@@ -41,14 +41,36 @@ def main():
     drop = lambda ds, nz, ab: fin.loc[ds, nz, "iris"] - fin.loc[ds, nz, ab]
 
     claims = [
-        ("Fashion-MNIST noisy: IRIS best on final accuracy",
-         fin.loc["fmnist", 0.2].idxmax() == "iris"),
-        ("Fashion-MNIST noisy: IRIS best on AUBC",
-         au.loc["fmnist", 0.2].idxmax() == "iris"),
-        ("BloodMNIST noisy: IRIS best on final accuracy",
-         fin.loc["bloodmnist", 0.2].idxmax() == "iris"),
-        ("BloodMNIST noisy: random best on AUBC (the metric disagreement)",
-         au.loc["bloodmnist", 0.2].idxmax() == "random"),
+        # --- central claim: the reliability gate transfers to another acquirer
+        ("Reliability gate lifts BADGE on Fashion-MNIST",
+         fin.loc["fmnist", 0.2, "badge-rel"] > fin.loc["fmnist", 0.2, "badge"]),
+        ("Reliability gate lifts BADGE on BloodMNIST",
+         fin.loc["bloodmnist", 0.2, "badge-rel"] > fin.loc["bloodmnist", 0.2, "badge"]),
+        ("Reliability gate lifts BADGE on CIFAR-10",
+         fin.loc["cifar10", 0.2, "badge-rel"] > fin.loc["cifar10", 0.2, "badge"]),
+        ("BADGE+reliability is the best configuration on all three (noisy)",
+         all(fin.loc[d, 0.2].idxmax() == "badge-rel"
+             for d in ("fmnist", "bloodmnist", "cifar10"))),
+        ("BADGE+reliability is the only thing beating random at cold start",
+         fin.loc["cifar10", 0.2, "badge-rel"] > fin.loc["cifar10", 0.2, "random"]
+         and all(fin.loc["cifar10", 0.2, m] < fin.loc["cifar10", 0.2, "random"]
+                 for m in WITH_IRIS if m != "random")),
+        # --- the honest negative, reported rather than hidden
+        ("IRIS beats Learning-Loss on all three datasets (noisy)",
+         all(fin.loc[d, 0.2, "iris"] > fin.loc[d, 0.2, "learnloss"]
+             for d in ("fmnist", "bloodmnist", "cifar10"))),
+        ("BADGE beats IRIS on both capable datasets",
+         fin.loc["fmnist", 0.2, "badge"] > fin.loc["fmnist", 0.2, "iris"]
+         and fin.loc["bloodmnist", 0.2, "badge"] > fin.loc["bloodmnist", 0.2, "iris"]),
+        ("IRIS-grad did not close the gap to BADGE",
+         fin.loc["fmnist", 0.2, "iris-grad"] < fin.loc["fmnist", 0.2, "badge"]),
+        ("IRIS beats every uncertainty/coverage baseline (F-MNIST noisy)",
+         all(fin.loc["fmnist", 0.2, "iris"] > fin.loc["fmnist", 0.2, m]
+             for m in ("random", "entropy", "bald", "coreset", "learnloss"))),
+        ("BloodMNIST: random still beats IRIS on AUBC while losing on final "
+         "(the metric disagreement, now restricted to point-wise scorers)",
+         au.loc["bloodmnist", 0.2, "random"] > au.loc["bloodmnist", 0.2, "iris"]
+         and fin.loc["bloodmnist", 0.2, "random"] < fin.loc["bloodmnist", 0.2, "iris"]),
         ("BloodMNIST clean: IRIS has the lowest AUBC",
          au.loc["bloodmnist", 0.0][WITH_IRIS].idxmin() == "iris"),
         ("BloodMNIST clean: BALD, Entropy and IRIS all beat random",
@@ -62,10 +84,8 @@ def main():
          fin.loc["bloodmnist", 0.2][WITH_IRIS].idxmin() == "bald"),
         ("CIFAR-10 clean: random beats every acquisition method",
          fin.loc["cifar10", 0.0][WITH_IRIS].idxmax() == "random"),
-        ("CIFAR-10 noisy: random best on final accuracy",
+        ("CIFAR-10 noisy: random beats every acquisition method",
          fin.loc["cifar10", 0.2][WITH_IRIS].idxmax() == "random"),
-        ("CIFAR-10 noisy: random best on AUBC",
-         au.loc["cifar10", 0.2][WITH_IRIS].idxmax() == "random"),
         ("CIFAR-10 noisy: IRIS is NOT last (paper no longer claims it is)",
          fin.loc["cifar10", 0.2][WITH_IRIS].idxmin() != "iris"),
         ("CIFAR-10 clean: removing the diversity gate makes it worse",

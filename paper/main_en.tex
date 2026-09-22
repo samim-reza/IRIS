@@ -144,33 +144,41 @@ over the top-ranked candidates seeded by the already-labelled set; and
 (iii) accepts returned labels under \emph{reliability weighting}, which
 damps likely-corrupted annotations using a per-sample exponential
 moving average of the loss. We evaluate on Fashion-MNIST, BloodMNIST
-and CIFAR-10, against Random, Entropy, BALD and Core-set, under both a
-perfect and a noisy ($\gamma=0.2$) synthetic annotator. On the two
-datasets whose base model is already competent when selection begins,
-\method{} attains the highest final accuracy under the noisy oracle
-(\FmnistNoisyIrisFinal\% on Fashion-MNIST, significant over the best
-baseline at $p=\FmnistNoisyIrisPairedP$, and \BloodNoisyIrisFinal\% on
-BloodMNIST, a consistent but unconfirmed
-\BloodNoisyIrisSeedsWon{}-seed trend at
-$p=\BloodNoisyIrisPairedP$ obtained with no hyperparameter retuning),
-whereas BALD --- the strongest baseline under a perfect oracle ---
-drops \emph{below} random sampling once annotator noise is present. We also map where the method stops working: in the
-CIFAR-10 cold start no acquisition strategy beats random sampling, and
-an ablation localises the cause to the \emph{selection signal} rather
-than to label handling --- removing reliability weighting there changes
-nothing, while concentrating a scarce budget on the predicted errors of
-a model that is still weak is itself the mistake. The extension
+and CIFAR-10 against Random, Entropy, BALD, Core-set, Learning-Loss and
+BADGE, under a perfect and a noisy ($\gamma=0.2$) synthetic annotator.
+Two findings separate the two halves of the method. As an
+\emph{acquisition} signal the introspection head is strong but not
+best: it beats Learning-Loss, the prior learned-signal method, by
+\FmnistNoisyLearnlossGap{} points on Fashion-MNIST and
+\BloodNoisyLearnlossGap{} on BloodMNIST, and beats every uncertainty
+and coverage baseline under noise, yet BADGE's gradient embedding
+outperforms it throughout. The \emph{reliability gate}, by contrast,
+transfers: bolted onto BADGE it adds
+\FmnistRelOnBadgeGain{} points on Fashion-MNIST
+($p=\FmnistRelOnBadgeP$, \FmnistRelOnBadgeWon{} seeds),
+\BloodRelOnBadgeGain{} on BloodMNIST and
+\CifarRelOnBadgeGain{} on CIFAR-10 --- lifts comparable to those it
+produces inside \method{} itself, on an acquisition function built on
+entirely different principles. BADGE with our gate is the strongest
+configuration we measured on all three datasets, and the only one to
+beat random sampling in the CIFAR-10 cold start. Along the way we
+document that BALD, the best baseline under a perfect oracle, falls
+\emph{below} random sampling once annotator noise is present, and that
+softmax entropy ranks individual errors better than our learned head
+while selecting worse batches --- batch quality does not reduce to
+point-wise error prediction. The extension
 costs a fixed two-layer MLP --- \FmnistHeadPct\% of the small CNN used
 here and \CifarHeadPct\% of a ResNet-18, a share that keeps shrinking as
-the backbone grows --- and no extra forward pass at query time.
+the backbone grows --- and the reliability gate costs nothing at query
+time at all, which is what makes it portable.
 \end{abstract}
 
 \begin{highlights}
-\item A learned introspection head replaces hand-crafted uncertainty in sample selection.
-\item A $k$-center diversity gate turns that point-wise signal into a non-redundant batch.
-\item Reliability weighting absorbs annotator errors inside the same training loop.
-\item Best final accuracy under a noisy oracle on Fashion-MNIST and BloodMNIST.
-\item In a cold start no acquisition strategy beats random sampling, ours included.
+\item Reliability-weighted label acceptance lifts any acquisition function under noise.
+\item It transfers: added to BADGE it gains ${\sim}1$ point on all three datasets.
+\item A learned error head beats Learning-Loss but not BADGE's gradient embedding.
+\item BALD, best under a clean oracle, falls below random sampling once labels are noisy.
+\item Entropy ranks errors better point-wise yet selects worse batches.
 \end{highlights}
 
 \begin{keywords}
@@ -229,8 +237,9 @@ serious about this setting therefore has to decide what to ask, how to
 avoid asking the same question repeatedly, and how much to believe the
 answer --- in one system, not three.
 
-\paragraph{Contribution.} We complete this loop with an architectural
-modification and its training scheme --- \method{}:
+\paragraph{Contribution.} We close this loop with an architectural
+modification and its training scheme --- \method{} --- and then take it
+apart to see which half does the work:
 \begin{enumerate}
 \item \textbf{Introspection head} (Section~\ref{sec:head}): a two-layer
 MLP operating on isolated penultimate features, which learns --- using
@@ -249,11 +258,22 @@ labels using per-sample EMA loss; this links the selection architecture
 with noise-robust utilisation of acquired labels for the first time in
 this line of work.
 \end{enumerate}
-Under a noisy synthetic annotator ($\gamma=0.2$) --- a scenario the
-literature deems realistic --- \method{} achieves the highest final
-accuracy compared to four standard baselines on both Fashion-MNIST and
-BloodMNIST; ablation studies reveal why (the reliability gate ensures
-robustness, while the diversity gate ensures batch quality).
+Separating the two turns out to matter more than combining them. Under
+a noisy synthetic annotator ($\gamma=0.2$) --- the scenario the
+literature deems realistic --- the introspection signal beats every
+uncertainty and coverage baseline and improves substantially on
+Learning-Loss, the prior learned-signal method, but it does \emph{not}
+beat BADGE, whose gradient embedding couples informativeness and
+diversity in a single geometry. The reliability gate behaves quite
+differently: it is indifferent to what feeds it. Attached to BADGE
+rather than to our own selector it still gains
+\FmnistRelOnBadgeGain{} points on Fashion-MNIST
+($p=\FmnistRelOnBadgeP$), \BloodRelOnBadgeGain{} on BloodMNIST and
+\CifarRelOnBadgeGain{} on CIFAR-10. That combination is the strongest
+configuration in this study, and the only one that beats random
+sampling in the CIFAR-10 cold start. The transferable contribution of
+this paper is therefore the label-acceptance mechanism, not the
+acquisition function it was first built around.
 
 \paragraph{Scope, and what we found by looking for the boundary.} Much
 of the applied HITL work cited above is written around one very
@@ -1153,8 +1173,15 @@ a curated demonstration.
 \textbf{Oracle.} Noise-free ($\gamma{=}0$) and noisy ($\gamma{=}0.2$
 symmetric); the initial seed set is labelled by the same oracle. Test
 set labels are never corrupted. \textbf{Baselines.} Random, Entropy,
-BALD (10 MC-dropout passes) \citep{gal2017}, and Core-set $k$-center
-\citep{sener2018}. All methods use identical backbones, optimisers,
+BALD (10 MC-dropout passes) \citep{gal2017}, Core-set $k$-center
+\citep{sener2018}, Learning-Loss \citep{yoo2019} --- the prior learned
+acquisition signal, reimplemented with its pairwise ranking objective
+and without detachment, so its gradients reach the backbone as in the
+original --- and BADGE \citep{ash2020}, $k$-means++ seeding on
+hypothetical gradient embeddings. To separate the two halves of our
+method we also run \emph{BADGE $+$ reliability}: BADGE acquisition with
+our label-acceptance gate, which isolates the gate from the selector it
+was designed alongside. All methods use identical backbones, optimisers,
 schedules and seeds; the introspection head is present in every run,
 though unused for selection, to keep parameter counts and RNG streams
 matched. \textbf{Ablations}, on all three datasets:
@@ -1214,16 +1241,59 @@ scenarios with a capable model, followed by the cold start.}
 \paragraph{Three regimes.} The results separate into three regimes,
 distinguished by the initial capability of the base model at the start
 of selection (Table~\ref{tab:datasets}). For the two datasets where the
-model is already capable --- Fashion-MNIST and BloodMNIST --- \method{}
-achieves the highest final accuracy under the noisy oracle that the
-applied literature considers realistic. On CIFAR-10, where the model
-starts from scratch and reaches only ${\sim}\CifarRoundZero\%$ accuracy, no
-selection method outperforms random sampling. For BloodMNIST, the two
+model is already capable --- Fashion-MNIST and BloodMNIST --- every
+method carrying an informativeness signal improves on random sampling
+under the noisy oracle the applied literature considers realistic, and
+the ordering among them is where the interesting result lies. On
+CIFAR-10, where the model starts from scratch and reaches only
+${\sim}\CifarRoundZero\%$ accuracy, no \emph{acquisition} strategy
+beats random sampling; only the reliability gate does. For BloodMNIST, the two
 metrics disagree in an instructive manner; rather than glossing over
 this discrepancy, we present it as a result in itself.
 
+\paragraph{Which half does the work.} The comparison against
+Learning-Loss and BADGE splits our own method in two, and the halves
+behave differently enough that reporting a single verdict would hide
+the result. As an acquisition signal, the introspection head is good
+but not best. It improves on Learning-Loss --- the method that
+introduced the idea of learning the selection signal --- by
+\FmnistNoisyLearnlossGap{} points on Fashion-MNIST and
+\BloodNoisyLearnlossGap{} on BloodMNIST under noise, which is the
+comparison our design was aimed at and which it wins clearly. It also
+beats Entropy, BALD, Core-set and random sampling there. But BADGE
+beats \emph{it}: \FmnistNoisyBadgeFinal\% against
+\FmnistNoisyIrisFinal\% on Fashion-MNIST and \BloodNoisyBadgeFinal\%
+against \BloodNoisyIrisFinal\% on BloodMNIST, consistently across
+seeds. We tried the obvious repair --- rebuilding the diversity gate in
+BADGE's gradient geometry instead of raw feature space, reported as
+\emph{\method{}-grad} --- and it did not close the gap
+(\FmnistNoisyIrisGradFinal\% and \BloodNoisyIrisGradFinal\%). The
+shortlist is the binding constraint: taking the top $\beta K$ by
+predicted error discards the pool before any gate can act on it,
+whereas BADGE lets gradient magnitude and direction trade off
+continuously over everything. This is the same lesson the AUROC
+analysis below reaches from the other direction.
+
+The reliability gate does not behave this way at all. It is
+indifferent to the selector in front of it: attached to BADGE, an
+acquisition function built on entirely different principles and tuned
+by someone else, it still gains \FmnistRelOnBadgeGain{} points on
+Fashion-MNIST ($p=\FmnistRelOnBadgeP$, winning
+\FmnistRelOnBadgeWon{} seeds), \BloodRelOnBadgeGain{} on BloodMNIST
+($p=\BloodRelOnBadgeP$, \BloodRelOnBadgeWon{} seeds) and
+\CifarRelOnBadgeGain{} on CIFAR-10. Those lifts are the same size as
+the ones it produces inside \method{} itself
+(\FmnistRelOnIrisGain{} and \BloodRelOnIrisGain{} points), which is
+the evidence that it is a general mechanism rather than a patch for our
+own selector. BADGE with the gate attached is the strongest
+configuration we measured on all three datasets
+(\FmnistNoisyBadgeRelFinal\%, \BloodNoisyBadgeRelFinal\% and
+\CifarNoisyBadgeRelFinal\%), and the only configuration anywhere in
+this study that beats random sampling in the CIFAR-10 cold start.
+
 \paragraph{Noisy oracle: the realistic scenario.} At $\gamma=0.2$,
-\method{} is the strongest on Fashion-MNIST by both metrics:
+among the methods that do not use gradient embeddings \method{} is the
+strongest on Fashion-MNIST by both metrics:
 \FmnistNoisyIrisFinal$\pm$\FmnistNoisyIrisFinalStd\% final accuracy and
 \FmnistNoisyIrisAubc$\pm$\FmnistNoisyIrisAubcStd\% AUBC, outperforming
 the best baseline \FmnistNoisyBestBaseName{} by
@@ -1266,13 +1336,13 @@ gains only when the base model is capable enough to recognise its own
 ignorance --- on a dataset unrelated to Fashion-MNIST, while keeping
 the Fashion-MNIST hyperparameters unchanged. The hypothesis holds, and
 it holds exactly where it matters most. With a noisy oracle on
-BloodMNIST, \method{} achieves the highest final-budget accuracy
-(\BloodNoisyIrisFinal$\pm$\BloodNoisyIrisFinalStd\%), beating the best
-baseline (\BloodNoisyBestBaseFinalName) on
-\BloodNoisyIrisSeedsWon{} of \BloodNoisyNSeeds{} seeds, though the
-paired test stops short of the 5\% level
-($p=\BloodNoisyIrisPairedP$). That the effect transfers at all is the
-point worth making: BloodMNIST received no tuning of any kind. The
+BloodMNIST, \method{} reaches
+\BloodNoisyIrisFinal$\pm$\BloodNoisyIrisFinalStd\%, ahead of every
+uncertainty and coverage baseline though behind BADGE
+(\BloodNoisyBadgeFinal\%). That the behaviour transfers at all is the
+point worth making: BloodMNIST received no tuning of any kind, and the
+reliability gate gains \BloodRelOnBadgeGain{} points here on an
+acquisition function it was never designed for. The
 picture is less clear with a perfect oracle, and we report it as such:
 \method{} is statistically indistinguishable from BALD
 (\BloodCleanBaldFinal\%) and Entropy (\BloodCleanEntropyFinal\%), and
@@ -1284,9 +1354,11 @@ all three learned-signal methods outperform random sampling
 CIFAR-10.
 
 For AUBC the hypothesis does \emph{not} hold, and the reason is evident
-in Figure~\ref{fig:curves}: on BloodMNIST, all informativeness-based
-methods --- Entropy, BALD and \method{} alike --- lag behind random
-sampling for roughly the first two-thirds of the budget. With a perfect
+in Figure~\ref{fig:curves}: on BloodMNIST, the methods that rank the
+pool by a \emph{point-wise} score --- Entropy, BALD and \method{} alike
+--- lag behind random sampling for roughly the first two-thirds of the
+budget. BADGE is the instructive exception: its embedding is not a
+point-wise score, and it leads on both metrics throughout. With a perfect
 oracle, all three eventually surpass it in the final stages; under
 noise, only \method{} does so. Beating random sampling is inherently
 difficult when the labelled set is small and the eight white blood cell
@@ -1424,9 +1496,10 @@ Fashion-MNIST and from \BloodNoisyIrisFinal\% to
 \BloodNoisyIrisNorelFinal\% on BloodMNIST (AUBC \BloodNoisyIrisAubc\%
 $\to$ \BloodNoisyIrisNorelAubc\%); the ablated version still
 outperforms most baselines by a small margin, implying that the
-selection and label-acceptance components contribute additively --- each
-gate earns its place, and only the full method tops the rankings across
-every scenario involving a capable model and a constrained budget.
+selection and label-acceptance components contribute additively rather
+than redundantly. That additivity is what the BADGE experiment then
+confirms from outside: the label-acceptance term keeps its value when
+the selection term is replaced wholesale.
 
 The same two ablations on CIFAR-10 say something different, and that
 contrast is the point. There, dropping the reliability weight moves
@@ -1483,9 +1556,9 @@ introspection head's validation AUROC crosses a threshold --- in
 essence, the capability gate of Section~\ref{sec:application}.
 
 BloodMNIST also sharpens a methodological question. Because every
-informativeness-based method starts behind random sampling but
-eventually surpasses it, AUBC and final accuracy offer conflicting
-views of which method is best. Neither metric is incorrect; they simply
+point-wise-scored method starts behind random sampling but eventually
+surpasses it, AUBC and final accuracy offer conflicting views of which
+of those methods is best. Neither metric is incorrect; they simply
 embody different stopping assumptions. A programme that deploys a model
 only after exhausting the entire annotation budget should maximise the
 endpoint value, whereas one that can halt as soon as accuracy is
@@ -1532,12 +1605,16 @@ with real annotators, comparable to that of \citet{petso2026}, is the
 natural next step.
 
 \section{Conclusion}\label{sec:conclusion}
-A two-layer introspection head, a $k$-center diversity gate, and a
-low-loss reliability weight together turn a standard classifier into a
-noise-aware HITL learner that yields higher accuracy per human label
-than conventional active learning baselines. This happens precisely in
-the scenario --- imperfect annotators and a capable base model --- that
-defines the current reality of applied work in the field. The effect
+A two-layer introspection head, a $k$-center diversity gate and a
+low-loss reliability weight turn a standard classifier into a
+noise-aware HITL learner, and separating them shows that the three are
+not equally portable. The learned acquisition signal is a real
+improvement on the prior learned signal, Learning-Loss, but it does not
+overturn a well-built hybrid of uncertainty and diversity: BADGE
+selects better batches than it does. The reliability weight is the part
+that travels. It was designed alongside our selector and works just as
+well bolted onto someone else's, which is the property that matters for
+a mechanism intended to be adopted rather than merely reported. The effect
 replicates on a medical dataset that received no hyperparameter tuning
 at all, while the method's failure on CIFAR-10 delineates its scope:
 use this approach only when the model already understands what it does

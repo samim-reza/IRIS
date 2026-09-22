@@ -239,6 +239,138 @@ class IntrospectionHead(nn.Module):
         return self.net(feat).squeeze(-1)
 
 
+class LossPredictionModule(nn.Module):
+    """Yoo & Kweon (2019), Learning Loss for Active Learning.
+
+    Predicts the target network's loss from its penultimate feature.  Two
+    deliberate differences from our introspection head, because they are the
+    differences the paper claims: the target is the raw, unbounded loss rather
+    than a bounded error probability, and the features are NOT detached, so
+    this module's gradient does reach the backbone.
+    """
+
+    def __init__(self, feat_dim, hidden=128):
+        super().__init__()
+        self.net = nn.Sequential(nn.Linear(feat_dim, hidden), nn.ReLU(),
+                                 nn.Linear(hidden, 1))
+
+    def forward(self, feat):
+        return self.net(feat).squeeze(-1)
+
+
+def loss_pred_ranking_loss(pred, target, margin=1.0):
+    """Pairwise ranking objective from Learning-Loss.
+
+    The batch is split in half and paired up; the module is asked only to get
+    the *ordering* of each pair right.  This is what makes the method robust
+    to the loss changing scale as training proceeds.
+    """
+    m = pred.numel() - (pred.numel() % 2)
+    if m < 2:
+        return pred.sum() * 0.0
+    half = m // 2
+    pi, pj = pred[:m][:half], pred[:m][half:]
+    ti, tj = target[:m][:half].detach(), target[:m][half:].detach()
+    sign = torch.where(ti > tj, 1.0, -1.0)
+    return torch.clamp(margin - sign * (pi - pj), min=0).mean()
+
+
+def make_lpm(dataset, seed):
+    torch.manual_seed(seed + 7919)
+    spec = DATASET_SPECS[dataset]
+    dim = 256 if spec["backbone"] == "smallcnn" else 512
+    return LossPredictionModule(dim).to(DEVICE)
+
+
+def badge_kmeanspp(probs, feats, k, rng):
+    """BADGE (Ash et al., 2020): k-means++ seeding on gradient embeddings.
+
+    The embedding is g_i = (p_i - e_{yhat_i}) outer f_i, the gradient of the
+    cross-entropy w.r.t. the last linear layer.  Materialising it costs C*d
+    floats per point, which is 5,120 for the ResNet.  We never build it:
+    because <a_i (x) f_i, a_j (x) f_j> = (a_i.a_j)(f_i.f_j), squared distances
+    follow exactly from the two small inner products, so this is the real
+    BADGE embedding rather than an approximation of it.
+    """
+    a = probs.clone()
+    a[torch.arange(a.shape[0]), probs.argmax(1)] -= 1.0      # p - e_yhat
+    a = a.to(DEVICE).float()
+    f = feats.to(DEVICE).float()
+    sq = (a * a).sum(1) * (f * f).sum(1)                     # ||g_i||^2
+
+    def sqdist_to(c):
+        return (sq + sq[c] - 2.0 * (a @ a[c]) * (f @ f[c])).clamp_min_(0)
+
+    first = int(rng.integers(len(sq)))
+    chosen = [first]
+    mind = sqdist_to(first)
+    for _ in range(1, min(k, len(sq))):
+        total = float(mind.sum())
+        if total <= 0:                                        # degenerate pool
+            remaining = [i for i in range(len(sq)) if i not in set(chosen)]
+            chosen.append(int(rng.choice(remaining)))
+        else:
+            probs_cpu = (mind / mind.sum()).cpu().numpy().astype("float64")
+            probs_cpu /= probs_cpu.sum()
+            chosen.append(int(rng.choice(len(sq), p=probs_cpu)))
+        mind = torch.minimum(mind, sqdist_to(chosen[-1]))
+    return chosen
+
+
+def kcenter_greedy_grad(a_pool, f_pool, k, a_init=None, f_init=None):
+    """Greedy k-center on BADGE gradient embeddings g = a (x) f.
+
+    Same covering objective as our feature-space gate, but in the geometry
+    BADGE uses, where distance reflects disagreement in the *gradient* the
+    sample would induce rather than in raw representation.  Distances come
+    from the outer-product identity, so the C*d embedding is never built.
+    """
+    a_pool = a_pool.to(DEVICE).float()
+    f_pool = f_pool.to(DEVICE).float()
+    sq = (a_pool * a_pool).sum(1) * (f_pool * f_pool).sum(1)
+    n = sq.numel()
+    mind = torch.full((n,), float("inf"), device=DEVICE)
+    if a_init is not None and len(a_init):
+        ai = a_init.to(DEVICE).float()
+        fi = f_init.to(DEVICE).float()
+        sqi = (ai * ai).sum(1) * (fi * fi).sum(1)
+        for s0 in range(0, ai.shape[0], 512):          # chunked: bounds memory
+            A, F_, S = ai[s0:s0 + 512], fi[s0:s0 + 512], sqi[s0:s0 + 512]
+            d = (sq[:, None] + S[None, :]
+                 - 2.0 * (a_pool @ A.T) * (f_pool @ F_.T))
+            mind = torch.minimum(mind, d.clamp_min_(0).min(1).values)
+    chosen = []
+    for _ in range(min(k, n)):
+        c = int(torch.argmax(mind))
+        chosen.append(c)
+        d = (sq + sq[c]
+             - 2.0 * (a_pool @ a_pool[c]) * (f_pool @ f_pool[c])).clamp_min_(0)
+        mind = torch.minimum(mind, d)
+        mind[c] = -1.0
+    return chosen
+
+
+def _grad_embed_parts(backbone, ds, indices):
+    """The (a, f) factors of the BADGE gradient embedding for given indices."""
+    probs, feats = predict(backbone, ds, indices)
+    a = probs.clone()
+    a[torch.arange(a.shape[0]), probs.argmax(1)] -= 1.0
+    return a, feats
+
+
+@torch.no_grad()
+def loss_predictions(backbone, lpm, ds, indices, batch_size=256):
+    backbone.eval()
+    lpm.eval()
+    loader = DataLoader(torch.utils.data.Subset(ds, list(indices)),
+                        batch_size=batch_size, num_workers=2)
+    out = []
+    for x, _ in loader:
+        _, feat = backbone(x.to(DEVICE))
+        out.append(lpm(feat).cpu())
+    return torch.cat(out)
+
+
 def make_model(dataset, seed):
     torch.manual_seed(seed)
     spec = DATASET_SPECS[dataset]
@@ -253,7 +385,8 @@ def make_model(dataset, seed):
 # --------------------------------------------------------------------------
 # Training with joint introspection head and optional reliability weighting
 # --------------------------------------------------------------------------
-def train_model(backbone, head, labeled_ds, cfg, use_reliability, noise_rate):
+def train_model(backbone, head, labeled_ds, cfg, use_reliability, noise_rate,
+                lpm=None, lpm_weight=1.0):
     epochs = cfg["epochs"]
     # a tiny trailing batch (e.g. 5000 % 128 = 8) destabilizes BatchNorm badly
     # enough to dent a whole round — drop it when degenerate
@@ -264,6 +397,8 @@ def train_model(backbone, head, labeled_ds, cfg, use_reliability, noise_rate):
                         num_workers=2, drop_last=drop_last,
                         generator=gen, worker_init_fn=_worker_init)
     params = list(backbone.parameters()) + list(head.parameters())
+    if lpm is not None:
+        params += list(lpm.parameters())
     opt = torch.optim.SGD(params, lr=cfg["lr"], momentum=0.9, weight_decay=5e-4)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
 
@@ -275,6 +410,8 @@ def train_model(backbone, head, labeled_ds, cfg, use_reliability, noise_rate):
 
     backbone.train()
     head.train()
+    if lpm is not None:
+        lpm.train()
     for ep in range(epochs):
         for x, y, idx in loader:
             x, y, idx = x.to(DEVICE), y.to(DEVICE), idx.to(DEVICE)
@@ -311,8 +448,15 @@ def train_model(backbone, head, labeled_ds, cfg, use_reliability, noise_rate):
             aux_loss = F.binary_cross_entropy_with_logits(aux_logit, wrong,
                                                           pos_weight=pos_weight)
 
+            total_loss = cls_loss + aux_loss
+            if lpm is not None:
+                # NOT detached: Learning-Loss lets this gradient reach the
+                # backbone, which is the behaviour we are comparing against.
+                total_loss = total_loss + lpm_weight * loss_pred_ranking_loss(
+                    lpm(feat), per_sample)
+
             opt.zero_grad()
-            (cls_loss + aux_loss).backward()
+            total_loss.backward()
             opt.step()
         sched.step()
     return backbone, head
@@ -416,7 +560,8 @@ def kcenter_greedy(cand_feats, k, init_feats=None):
 # --------------------------------------------------------------------------
 # Acquisition functions: return positions into `pool` (a list of dataset idx)
 # --------------------------------------------------------------------------
-def acquire(method, k, backbone, head, plain_ds, pool, labeled_idx, rng):
+def acquire(method, k, backbone, head, plain_ds, pool, labeled_idx, rng,
+            lpm=None):
     if method == "random":
         return list(rng.choice(len(pool), size=k, replace=False))
 
@@ -433,17 +578,33 @@ def acquire(method, k, backbone, head, plain_ds, pool, labeled_idx, rng):
         mi = h_mean - mean_h
         return mi.topk(k).indices.tolist()
 
+    if method == "learnloss":
+        scores = loss_predictions(backbone, lpm, plain_ds, pool)
+        return scores.topk(k).indices.tolist()
+
+    if method in ("badge", "badge-rel"):
+        probs, pool_f = predict(backbone, plain_ds, pool)
+        return badge_kmeanspp(probs, pool_f, k, rng)
+
     if method == "coreset":
         _, pool_f = predict(backbone, plain_ds, pool)
         _, lab_f = predict(backbone, plain_ds, labeled_idx)
         return kcenter_greedy(pool_f, k, init_feats=lab_f)
 
-    if method in ("iris", "iris-nodiv", "iris-norel"):
+    if method in ("iris", "iris-nodiv", "iris-norel", "iris-grad"):
         scores, pool_f = introspection_scores(backbone, head, plain_ds, pool)
         if method == "iris-nodiv":
             return scores.topk(k).indices.tolist()
         beta = 5
         cand_pos = scores.topk(min(beta * k, len(pool))).indices
+        if method == "iris-grad":
+            # same shortlist, but spread it in gradient space instead of
+            # feature space -- the one thing BADGE does that we did not.
+            a_c, f_c = _grad_embed_parts(
+                backbone, plain_ds, [pool[int(i)] for i in cand_pos])
+            a_l, f_l = _grad_embed_parts(backbone, plain_ds, labeled_idx)
+            picked = kcenter_greedy_grad(a_c, f_c, k, a_l, f_l)
+            return [int(cand_pos[q]) for q in picked]
         _, lab_f = predict(backbone, plain_ds, labeled_idx)
         picked_in_cand = kcenter_greedy(pool_f[cand_pos], k, init_feats=lab_f)
         return [int(cand_pos[p]) for p in picked_in_cand]
@@ -578,7 +739,11 @@ def run_al(dataset, method, noise_rate, seed, cfg, ckpt_dir=None,
                            noise_rate, num_classes, rng)
     oracle_map = dict(zip(labeled_idx, labels))
 
-    use_rel = (method == "iris" and noise_rate > 0)
+    # badge-rel isolates the reliability gate: BADGE acquisition, our
+    # noise-robust label acceptance.  It answers whether the gate helps
+    # independently of which acquisition function feeds it.
+    use_rel = (method in ("iris", "iris-grad", "badge-rel")
+               and noise_rate > 0)
 
     for rnd in range(cfg["rounds"] + 1):
         labeled_ds = LabeledSubset(train_aug, labeled_idx,
@@ -594,7 +759,10 @@ def run_al(dataset, method, noise_rate, seed, cfg, ckpt_dir=None,
         for attempt in range(MAX_DIVERGENCE_RETRIES + 1):
             backbone, head = make_model(dataset, seed * 1000 + rnd
                                         + attempt * 100000)
-            train_model(backbone, head, labeled_ds, cfg, use_rel, noise_rate)
+            lpm = (make_lpm(dataset, seed * 1000 + rnd + attempt * 100000)
+                   if method == "learnloss" else None)
+            train_model(backbone, head, labeled_ds, cfg, use_rel, noise_rate,
+                        lpm=lpm)
             tr_acc = train_accuracy(backbone, eval_ds)
             if tr_acc >= floor or attempt == MAX_DIVERGENCE_RETRIES:
                 break
@@ -625,7 +793,7 @@ def run_al(dataset, method, noise_rate, seed, cfg, ckpt_dir=None,
         if rnd == cfg["rounds"]:
             break
         picked_pos = acquire(method, cfg["query_size"], backbone, head,
-                             train_plain, pool, labeled_idx, rng)
+                             train_plain, pool, labeled_idx, rng, lpm=lpm)
         picked = [pool[p] for p in picked_pos]
         new_labels = oracle_labels([true_targets[i] for i in picked],
                                    noise_rate, num_classes, rng)
@@ -634,7 +802,7 @@ def run_al(dataset, method, noise_rate, seed, cfg, ckpt_dir=None,
         labeled_idx.extend(picked)
         pool = [i for i in pool if i not in set(picked)]
 
-        del backbone, head
+        del backbone, head, lpm
         torch.cuda.empty_cache()
 
 
@@ -683,7 +851,8 @@ CFGS = {
 ABLATION_DATASETS = ("fmnist", "bloodmnist", "cifar10")  # cifar10 added to test
 # the cold-start mechanism claim directly rather than inferring it
 
-BASE_METHODS = ["random", "entropy", "bald", "coreset", "iris"]
+BASE_METHODS = ["random", "entropy", "bald", "coreset",
+                "learnloss", "badge", "iris", "iris-grad"]
 
 
 def already_done(dataset, method, noise, seed, rounds):
@@ -722,6 +891,9 @@ def main():
         if ds in ABLATION_DATASETS:  # ablations on the fast datasets
             methods_clean.append("iris-nodiv")
             methods_noisy.append("iris-norel")
+        # only meaningful with a noisy oracle: with gamma=0 the reliability
+        # weight is inactive and badge-rel would be identical to badge.
+        methods_noisy.append("badge-rel")
         for noise, methods in ((0.0, methods_clean), (0.2, methods_noisy)):
             for m in methods:
                 for s in args.seeds:

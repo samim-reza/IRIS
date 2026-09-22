@@ -1,0 +1,669 @@
+=== NEW BASELINES START Tue Sep 22 03:14:27 AM +06 2026 ===
+device=cuda torch=2.12.0+cu130
+grid: 144 runs
+skip (done): fmnist random 0.0 0
+skip (done): fmnist random 0.0 1
+skip (done): fmnist random 0.0 2
+skip (done): fmnist entropy 0.0 0
+skip (done): fmnist entropy 0.0 1
+skip (done): fmnist entropy 0.0 2
+skip (done): fmnist bald 0.0 0
+skip (done): fmnist bald 0.0 1
+skip (done): fmnist bald 0.0 2
+skip (done): fmnist coreset 0.0 0
+skip (done): fmnist coreset 0.0 1
+skip (done): fmnist coreset 0.0 2
+=== run 13/144: fmnist learnloss noise=0.0 seed=0 ===
+[fmnist|learnloss|noise=0.0|seed=0] round 0: n=500 acc=0.7507 (3s)
+[fmnist|learnloss|noise=0.0|seed=0] round 1: n=1000 acc=0.7946 (9s)
+[fmnist|learnloss|noise=0.0|seed=0] round 2: n=1500 acc=0.8253 (16s)
+[fmnist|learnloss|noise=0.0|seed=0] round 3: n=2000 acc=0.8327 (24s)
+[fmnist|learnloss|noise=0.0|seed=0] round 4: n=2500 acc=0.8548 (32s)
+    saved fmnist_learnloss_noise0.0_seed0_round5.pt
+[fmnist|learnloss|noise=0.0|seed=0] round 5: n=3000 acc=0.8709 (41s)
+=== run 14/144: fmnist learnloss noise=0.0 seed=1 ===
+[fmnist|learnloss|noise=0.0|seed=1] round 0: n=500 acc=0.7532 (3s)
+[fmnist|learnloss|noise=0.0|seed=1] round 1: n=1000 acc=0.8022 (9s)
+[fmnist|learnloss|noise=0.0|seed=1] round 2: n=1500 acc=0.8168 (16s)
+[fmnist|learnloss|noise=0.0|seed=1] round 3: n=2000 acc=0.8314 (23s)
+[fmnist|learnloss|noise=0.0|seed=1] round 4: n=2500 acc=0.8390 (31s)
+    saved fmnist_learnloss_noise0.0_seed1_round5.pt
+[fmnist|learnloss|noise=0.0|seed=1] round 5: n=3000 acc=0.8423 (40s)
+=== run 15/144: fmnist learnloss noise=0.0 seed=2 ===
+[fmnist|learnloss|noise=0.0|seed=2] round 0: n=500 acc=0.7511 (3s)
+[fmnist|learnloss|noise=0.0|seed=2] round 1: n=1000 acc=0.7991 (9s)
+[fmnist|learnloss|noise=0.0|seed=2] round 2: n=1500 acc=0.8295 (16s)
+[fmnist|learnloss|noise=0.0|seed=2] round 3: n=2000 acc=0.8389 (24s)
+[fmnist|learnloss|noise=0.0|seed=2] round 4: n=2500 acc=0.8473 (32s)
+    saved fmnist_learnloss_noise0.0_seed2_round5.pt
+[fmnist|learnloss|noise=0.0|seed=2] round 5: n=3000 acc=0.8676 (40s)
+=== run 16/144: fmnist badge noise=0.0 seed=0 ===
+[fmnist|badge|noise=0.0|seed=0] round 0: n=500 acc=0.7431 (3s)
+[fmnist|badge|noise=0.0|seed=0] round 1: n=1000 acc=0.8258 (9s)
+[fmnist|badge|noise=0.0|seed=0] round 2: n=1500 acc=0.8535 (16s)
+[fmnist|badge|noise=0.0|seed=0] round 3: n=2000 acc=0.8777 (24s)
+[fmnist|badge|noise=0.0|seed=0] round 4: n=2500 acc=0.8801 (33s)
+    saved fmnist_badge_noise0.0_seed0_round5.pt
+[fmnist|badge|noise=0.0|seed=0] round 5: n=3000 acc=0.8901 (42s)
+=== run 17/144: fmnist badge noise=0.0 seed=1 ===
+[fmnist|badge|noise=0.0|seed=1] round 0: n=500 acc=0.7543 (3s)
+[fmnist|badge|noise=0.0|seed=1] round 1: n=1000 acc=0.8101 (10s)
+[fmnist|badge|noise=0.0|seed=1] round 2: n=1500 acc=0.8482 (17s)
+[fmnist|badge|noise=0.0|seed=1] round 3: n=2000 acc=0.8671 (25s)
+[fmnist|badge|noise=0.0|seed=1] round 4: n=2500 acc=0.8853 (33s)
+    saved fmnist_badge_noise0.0_seed1_round5.pt
+[fmnist|badge|noise=0.0|seed=1] round 5: n=3000 acc=0.8841 (42s)
+=== run 18/144: fmnist badge noise=0.0 seed=2 ===
+[fmnist|badge|noise=0.0|seed=2] round 0: n=500 acc=0.7491 (3s)
+[fmnist|badge|noise=0.0|seed=2] round 1: n=1000 acc=0.8298 (10s)
+[fmnist|badge|noise=0.0|seed=2] round 2: n=1500 acc=0.8518 (17s)
+[fmnist|badge|noise=0.0|seed=2] round 3: n=2000 acc=0.8623 (24s)
+[fmnist|badge|noise=0.0|seed=2] round 4: n=2500 acc=0.8787 (33s)
+    saved fmnist_badge_noise0.0_seed2_round5.pt
+[fmnist|badge|noise=0.0|seed=2] round 5: n=3000 acc=0.8885 (42s)
+skip (done): fmnist iris 0.0 0
+skip (done): fmnist iris 0.0 1
+skip (done): fmnist iris 0.0 2
+skip (done): fmnist iris-nodiv 0.0 0
+skip (done): fmnist iris-nodiv 0.0 1
+skip (done): fmnist iris-nodiv 0.0 2
+skip (done): fmnist random 0.2 0
+skip (done): fmnist random 0.2 1
+skip (done): fmnist random 0.2 2
+skip (done): fmnist entropy 0.2 0
+skip (done): fmnist entropy 0.2 1
+skip (done): fmnist entropy 0.2 2
+skip (done): fmnist bald 0.2 0
+skip (done): fmnist bald 0.2 1
+skip (done): fmnist bald 0.2 2
+skip (done): fmnist coreset 0.2 0
+skip (done): fmnist coreset 0.2 1
+skip (done): fmnist coreset 0.2 2
+=== run 37/144: fmnist learnloss noise=0.2 seed=0 ===
+[fmnist|learnloss|noise=0.2|seed=0] round 0: n=500 acc=0.7321 (3s)
+[fmnist|learnloss|noise=0.2|seed=0] round 1: n=1000 acc=0.7427 (10s)
+[fmnist|learnloss|noise=0.2|seed=0] round 2: n=1500 acc=0.7774 (16s)
+[fmnist|learnloss|noise=0.2|seed=0] round 3: n=2000 acc=0.7964 (24s)
+[fmnist|learnloss|noise=0.2|seed=0] round 4: n=2500 acc=0.8046 (32s)
+    saved fmnist_learnloss_noise0.2_seed0_round5.pt
+[fmnist|learnloss|noise=0.2|seed=0] round 5: n=3000 acc=0.8320 (41s)
+=== run 38/144: fmnist learnloss noise=0.2 seed=1 ===
+[fmnist|learnloss|noise=0.2|seed=1] round 0: n=500 acc=0.7136 (3s)
+[fmnist|learnloss|noise=0.2|seed=1] round 1: n=1000 acc=0.7518 (10s)
+[fmnist|learnloss|noise=0.2|seed=1] round 2: n=1500 acc=0.7612 (17s)
+[fmnist|learnloss|noise=0.2|seed=1] round 3: n=2000 acc=0.7818 (24s)
+[fmnist|learnloss|noise=0.2|seed=1] round 4: n=2500 acc=0.8107 (33s)
+    saved fmnist_learnloss_noise0.2_seed1_round5.pt
+[fmnist|learnloss|noise=0.2|seed=1] round 5: n=3000 acc=0.8282 (42s)
+=== run 39/144: fmnist learnloss noise=0.2 seed=2 ===
+[fmnist|learnloss|noise=0.2|seed=2] round 0: n=500 acc=0.7351 (3s)
+[fmnist|learnloss|noise=0.2|seed=2] round 1: n=1000 acc=0.7600 (9s)
+[fmnist|learnloss|noise=0.2|seed=2] round 2: n=1500 acc=0.7857 (16s)
+[fmnist|learnloss|noise=0.2|seed=2] round 3: n=2000 acc=0.8039 (24s)
+[fmnist|learnloss|noise=0.2|seed=2] round 4: n=2500 acc=0.8279 (32s)
+    saved fmnist_learnloss_noise0.2_seed2_round5.pt
+[fmnist|learnloss|noise=0.2|seed=2] round 5: n=3000 acc=0.8473 (41s)
+=== run 40/144: fmnist badge noise=0.2 seed=0 ===
+[fmnist|badge|noise=0.2|seed=0] round 0: n=500 acc=0.7245 (3s)
+[fmnist|badge|noise=0.2|seed=0] round 1: n=1000 acc=0.7808 (10s)
+[fmnist|badge|noise=0.2|seed=0] round 2: n=1500 acc=0.8066 (17s)
+[fmnist|badge|noise=0.2|seed=0] round 3: n=2000 acc=0.8397 (24s)
+[fmnist|badge|noise=0.2|seed=0] round 4: n=2500 acc=0.8597 (33s)
+    saved fmnist_badge_noise0.2_seed0_round5.pt
+[fmnist|badge|noise=0.2|seed=0] round 5: n=3000 acc=0.8686 (42s)
+=== run 41/144: fmnist badge noise=0.2 seed=1 ===
+[fmnist|badge|noise=0.2|seed=1] round 0: n=500 acc=0.7266 (3s)
+[fmnist|badge|noise=0.2|seed=1] round 1: n=1000 acc=0.7873 (10s)
+[fmnist|badge|noise=0.2|seed=1] round 2: n=1500 acc=0.8095 (17s)
+[fmnist|badge|noise=0.2|seed=1] round 3: n=2000 acc=0.8285 (24s)
+[fmnist|badge|noise=0.2|seed=1] round 4: n=2500 acc=0.8551 (33s)
+    saved fmnist_badge_noise0.2_seed1_round5.pt
+[fmnist|badge|noise=0.2|seed=1] round 5: n=3000 acc=0.8670 (42s)
+=== run 42/144: fmnist badge noise=0.2 seed=2 ===
+[fmnist|badge|noise=0.2|seed=2] round 0: n=500 acc=0.7349 (3s)
+[fmnist|badge|noise=0.2|seed=2] round 1: n=1000 acc=0.7894 (10s)
+[fmnist|badge|noise=0.2|seed=2] round 2: n=1500 acc=0.8197 (17s)
+[fmnist|badge|noise=0.2|seed=2] round 3: n=2000 acc=0.8405 (24s)
+[fmnist|badge|noise=0.2|seed=2] round 4: n=2500 acc=0.8546 (33s)
+    saved fmnist_badge_noise0.2_seed2_round5.pt
+[fmnist|badge|noise=0.2|seed=2] round 5: n=3000 acc=0.8670 (42s)
+skip (done): fmnist iris 0.2 0
+skip (done): fmnist iris 0.2 1
+skip (done): fmnist iris 0.2 2
+skip (done): fmnist iris-norel 0.2 0
+skip (done): fmnist iris-norel 0.2 1
+skip (done): fmnist iris-norel 0.2 2
+skip (done): cifar10 random 0.0 0
+skip (done): cifar10 random 0.0 1
+skip (done): cifar10 random 0.0 2
+skip (done): cifar10 entropy 0.0 0
+skip (done): cifar10 entropy 0.0 1
+skip (done): cifar10 entropy 0.0 2
+skip (done): cifar10 bald 0.0 0
+skip (done): cifar10 bald 0.0 1
+skip (done): cifar10 bald 0.0 2
+skip (done): cifar10 coreset 0.0 0
+skip (done): cifar10 coreset 0.0 1
+skip (done): cifar10 coreset 0.0 2
+=== run 61/144: cifar10 learnloss noise=0.0 seed=0 ===
+[cifar10|learnloss|noise=0.0|seed=0] round 0: n=1000 acc=0.4255 (8s)
+[cifar10|learnloss|noise=0.0|seed=0] round 1: n=2000 acc=0.4446 (20s)
+[cifar10|learnloss|noise=0.0|seed=0] round 2: n=3000 acc=0.4980 (35s)
+[cifar10|learnloss|noise=0.0|seed=0] round 3: n=4000 acc=0.5381 (54s)
+[cifar10|learnloss|noise=0.0|seed=0] round 4: n=5000 acc=0.6157 (76s)
+    saved cifar10_learnloss_noise0.0_seed0_round5.pt
+[cifar10|learnloss|noise=0.0|seed=0] round 5: n=6000 acc=0.5646 (102s)
+=== run 62/144: cifar10 learnloss noise=0.0 seed=1 ===
+[cifar10|learnloss|noise=0.0|seed=1] round 0: n=1000 acc=0.4420 (8s)
+[cifar10|learnloss|noise=0.0|seed=1] round 1: n=2000 acc=0.4893 (20s)
+[cifar10|learnloss|noise=0.0|seed=1] round 2: n=3000 acc=0.5374 (35s)
+[cifar10|learnloss|noise=0.0|seed=1] round 3: n=4000 acc=0.4478 (54s)
+[cifar10|learnloss|noise=0.0|seed=1] round 4: n=5000 acc=0.5689 (78s)
+    saved cifar10_learnloss_noise0.0_seed1_round5.pt
+[cifar10|learnloss|noise=0.0|seed=1] round 5: n=6000 acc=0.6680 (104s)
+=== run 63/144: cifar10 learnloss noise=0.0 seed=2 ===
+[cifar10|learnloss|noise=0.0|seed=2] round 0: n=1000 acc=0.4304 (8s)
+[cifar10|learnloss|noise=0.0|seed=2] round 1: n=2000 acc=0.4988 (20s)
+[cifar10|learnloss|noise=0.0|seed=2] round 2: n=3000 acc=0.4641 (37s)
+[cifar10|learnloss|noise=0.0|seed=2] round 3: n=4000 acc=0.5150 (59s)
+[cifar10|learnloss|noise=0.0|seed=2] round 4: n=5000 acc=0.4378 (81s)
+    saved cifar10_learnloss_noise0.0_seed2_round5.pt
+[cifar10|learnloss|noise=0.0|seed=2] round 5: n=6000 acc=0.6668 (107s)
+=== run 64/144: cifar10 badge noise=0.0 seed=0 ===
+[cifar10|badge|noise=0.0|seed=0] round 0: n=1000 acc=0.4308 (8s)
+[cifar10|badge|noise=0.0|seed=0] round 1: n=2000 acc=0.5489 (20s)
+[cifar10|badge|noise=0.0|seed=0] round 2: n=3000 acc=0.6133 (36s)
+[cifar10|badge|noise=0.0|seed=0] round 3: n=4000 acc=0.6732 (55s)
+[cifar10|badge|noise=0.0|seed=0] round 4: n=5000 acc=0.6866 (78s)
+    saved cifar10_badge_noise0.0_seed0_round5.pt
+[cifar10|badge|noise=0.0|seed=0] round 5: n=6000 acc=0.6940 (103s)
+=== run 65/144: cifar10 badge noise=0.0 seed=1 ===
+[cifar10|badge|noise=0.0|seed=1] round 0: n=1000 acc=0.4441 (8s)
+[cifar10|badge|noise=0.0|seed=1] round 1: n=2000 acc=0.5349 (20s)
+[cifar10|badge|noise=0.0|seed=1] round 2: n=3000 acc=0.6360 (36s)
+[cifar10|badge|noise=0.0|seed=1] round 3: n=4000 acc=0.6614 (55s)
+[cifar10|badge|noise=0.0|seed=1] round 4: n=5000 acc=0.7091 (78s)
+    saved cifar10_badge_noise0.0_seed1_round5.pt
+[cifar10|badge|noise=0.0|seed=1] round 5: n=6000 acc=0.7439 (103s)
+=== run 66/144: cifar10 badge noise=0.0 seed=2 ===
+[cifar10|badge|noise=0.0|seed=2] round 0: n=1000 acc=0.4423 (8s)
+[cifar10|badge|noise=0.0|seed=2] round 1: n=2000 acc=0.5631 (20s)
+[cifar10|badge|noise=0.0|seed=2] round 2: n=3000 acc=0.6131 (36s)
+[cifar10|badge|noise=0.0|seed=2] round 3: n=4000 acc=0.6654 (55s)
+[cifar10|badge|noise=0.0|seed=2] round 4: n=5000 acc=0.7039 (78s)
+    saved cifar10_badge_noise0.0_seed2_round5.pt
+[cifar10|badge|noise=0.0|seed=2] round 5: n=6000 acc=0.7672 (103s)
+skip (done): cifar10 iris 0.0 0
+skip (done): cifar10 iris 0.0 1
+skip (done): cifar10 iris 0.0 2
+skip (done): cifar10 iris-nodiv 0.0 0
+skip (done): cifar10 iris-nodiv 0.0 1
+skip (done): cifar10 iris-nodiv 0.0 2
+skip (done): cifar10 random 0.2 0
+skip (done): cifar10 random 0.2 1
+skip (done): cifar10 random 0.2 2
+skip (done): cifar10 entropy 0.2 0
+skip (done): cifar10 entropy 0.2 1
+skip (done): cifar10 entropy 0.2 2
+skip (done): cifar10 bald 0.2 0
+skip (done): cifar10 bald 0.2 1
+skip (done): cifar10 bald 0.2 2
+skip (done): cifar10 coreset 0.2 0
+skip (done): cifar10 coreset 0.2 1
+skip (done): cifar10 coreset 0.2 2
+=== run 85/144: cifar10 learnloss noise=0.2 seed=0 ===
+[cifar10|learnloss|noise=0.2|seed=0] round 0: n=1000 acc=0.3939 (8s)
+[cifar10|learnloss|noise=0.2|seed=0] round 1: n=2000 acc=0.4056 (20s)
+[cifar10|learnloss|noise=0.2|seed=0] round 2: n=3000 acc=0.4595 (36s)
+[cifar10|learnloss|noise=0.2|seed=0] round 3: n=4000 acc=0.4801 (55s)
+[cifar10|learnloss|noise=0.2|seed=0] round 4: n=5000 acc=0.5291 (77s)
+    saved cifar10_learnloss_noise0.2_seed0_round5.pt
+[cifar10|learnloss|noise=0.2|seed=0] round 5: n=6000 acc=0.5909 (102s)
+=== run 86/144: cifar10 learnloss noise=0.2 seed=1 ===
+[cifar10|learnloss|noise=0.2|seed=1] round 0: n=1000 acc=0.3620 (8s)
+[cifar10|learnloss|noise=0.2|seed=1] round 1: n=2000 acc=0.4160 (20s)
+[cifar10|learnloss|noise=0.2|seed=1] round 2: n=3000 acc=0.4988 (36s)
+[cifar10|learnloss|noise=0.2|seed=1] round 3: n=4000 acc=0.3775 (55s)
+[cifar10|learnloss|noise=0.2|seed=1] round 4: n=5000 acc=0.5213 (77s)
+    saved cifar10_learnloss_noise0.2_seed1_round5.pt
+[cifar10|learnloss|noise=0.2|seed=1] round 5: n=6000 acc=0.5273 (102s)
+=== run 87/144: cifar10 learnloss noise=0.2 seed=2 ===
+[cifar10|learnloss|noise=0.2|seed=2] round 0: n=1000 acc=0.3877 (8s)
+[cifar10|learnloss|noise=0.2|seed=2] round 1: n=2000 acc=0.4115 (20s)
+[cifar10|learnloss|noise=0.2|seed=2] round 2: n=3000 acc=0.4177 (36s)
+[cifar10|learnloss|noise=0.2|seed=2] round 3: n=4000 acc=0.4621 (55s)
+[cifar10|learnloss|noise=0.2|seed=2] round 4: n=5000 acc=0.5292 (77s)
+    saved cifar10_learnloss_noise0.2_seed2_round5.pt
+[cifar10|learnloss|noise=0.2|seed=2] round 5: n=6000 acc=0.5008 (102s)
+=== run 88/144: cifar10 badge noise=0.2 seed=0 ===
+[cifar10|badge|noise=0.2|seed=0] round 0: n=1000 acc=0.3913 (8s)
+[cifar10|badge|noise=0.2|seed=0] round 1: n=2000 acc=0.4894 (20s)
+[cifar10|badge|noise=0.2|seed=0] round 2: n=3000 acc=0.5313 (36s)
+[cifar10|badge|noise=0.2|seed=0] round 3: n=4000 acc=0.5502 (55s)
+[cifar10|badge|noise=0.2|seed=0] round 4: n=5000 acc=0.6288 (78s)
+    saved cifar10_badge_noise0.2_seed0_round5.pt
+[cifar10|badge|noise=0.2|seed=0] round 5: n=6000 acc=0.6492 (103s)
+=== run 89/144: cifar10 badge noise=0.2 seed=1 ===
+[cifar10|badge|noise=0.2|seed=1] round 0: n=1000 acc=0.4016 (8s)
+[cifar10|badge|noise=0.2|seed=1] round 1: n=2000 acc=0.4595 (20s)
+[cifar10|badge|noise=0.2|seed=1] round 2: n=3000 acc=0.5272 (36s)
+[cifar10|badge|noise=0.2|seed=1] round 3: n=4000 acc=0.5660 (55s)
+[cifar10|badge|noise=0.2|seed=1] round 4: n=5000 acc=0.6230 (78s)
+    saved cifar10_badge_noise0.2_seed1_round5.pt
+[cifar10|badge|noise=0.2|seed=1] round 5: n=6000 acc=0.6333 (103s)
+=== run 90/144: cifar10 badge noise=0.2 seed=2 ===
+[cifar10|badge|noise=0.2|seed=2] round 0: n=1000 acc=0.3769 (8s)
+[cifar10|badge|noise=0.2|seed=2] round 1: n=2000 acc=0.4746 (20s)
+[cifar10|badge|noise=0.2|seed=2] round 2: n=3000 acc=0.5433 (36s)
+[cifar10|badge|noise=0.2|seed=2] round 3: n=4000 acc=0.5638 (56s)
+[cifar10|badge|noise=0.2|seed=2] round 4: n=5000 acc=0.6061 (78s)
+    saved cifar10_badge_noise0.2_seed2_round5.pt
+[cifar10|badge|noise=0.2|seed=2] round 5: n=6000 acc=0.6121 (103s)
+skip (done): cifar10 iris 0.2 0
+skip (done): cifar10 iris 0.2 1
+skip (done): cifar10 iris 0.2 2
+skip (done): cifar10 iris-norel 0.2 0
+skip (done): cifar10 iris-norel 0.2 1
+skip (done): cifar10 iris-norel 0.2 2
+skip (done): bloodmnist random 0.0 0
+skip (done): bloodmnist random 0.0 1
+skip (done): bloodmnist random 0.0 2
+skip (done): bloodmnist entropy 0.0 0
+skip (done): bloodmnist entropy 0.0 1
+skip (done): bloodmnist entropy 0.0 2
+skip (done): bloodmnist bald 0.0 0
+skip (done): bloodmnist bald 0.0 1
+skip (done): bloodmnist bald 0.0 2
+skip (done): bloodmnist coreset 0.0 0
+skip (done): bloodmnist coreset 0.0 1
+skip (done): bloodmnist coreset 0.0 2
+=== run 109/144: bloodmnist learnloss noise=0.0 seed=0 ===
+[bloodmnist|learnloss|noise=0.0|seed=0] round 0: n=500 acc=0.6782 (4s)
+[bloodmnist|learnloss|noise=0.0|seed=0] round 1: n=1000 acc=0.7059 (8s)
+[bloodmnist|learnloss|noise=0.0|seed=0] round 2: n=1500 acc=0.7422 (14s)
+[bloodmnist|learnloss|noise=0.0|seed=0] round 3: n=2000 acc=0.8275 (20s)
+[bloodmnist|learnloss|noise=0.0|seed=0] round 4: n=2500 acc=0.8120 (27s)
+    saved bloodmnist_learnloss_noise0.0_seed0_round5.pt
+[bloodmnist|learnloss|noise=0.0|seed=0] round 5: n=3000 acc=0.8854 (35s)
+=== run 110/144: bloodmnist learnloss noise=0.0 seed=1 ===
+[bloodmnist|learnloss|noise=0.0|seed=1] round 0: n=500 acc=0.6741 (4s)
+[bloodmnist|learnloss|noise=0.0|seed=1] round 1: n=1000 acc=0.5399 (8s)
+[bloodmnist|learnloss|noise=0.0|seed=1] round 2: n=1500 acc=0.7936 (14s)
+[bloodmnist|learnloss|noise=0.0|seed=1] round 3: n=2000 acc=0.8346 (20s)
+[bloodmnist|learnloss|noise=0.0|seed=1] round 4: n=2500 acc=0.8275 (27s)
+    saved bloodmnist_learnloss_noise0.0_seed1_round5.pt
+[bloodmnist|learnloss|noise=0.0|seed=1] round 5: n=3000 acc=0.8588 (35s)
+=== run 111/144: bloodmnist learnloss noise=0.0 seed=2 ===
+[bloodmnist|learnloss|noise=0.0|seed=2] round 0: n=500 acc=0.7091 (4s)
+[bloodmnist|learnloss|noise=0.0|seed=2] round 1: n=1000 acc=0.5963 (8s)
+[bloodmnist|learnloss|noise=0.0|seed=2] round 2: n=1500 acc=0.7784 (14s)
+[bloodmnist|learnloss|noise=0.0|seed=2] round 3: n=2000 acc=0.8126 (20s)
+[bloodmnist|learnloss|noise=0.0|seed=2] round 4: n=2500 acc=0.8351 (27s)
+    saved bloodmnist_learnloss_noise0.0_seed2_round5.pt
+[bloodmnist|learnloss|noise=0.0|seed=2] round 5: n=3000 acc=0.8538 (35s)
+=== run 112/144: bloodmnist badge noise=0.0 seed=0 ===
+[bloodmnist|badge|noise=0.0|seed=0] round 0: n=500 acc=0.7702 (3s)
+[bloodmnist|badge|noise=0.0|seed=0] round 1: n=1000 acc=0.7875 (8s)
+[bloodmnist|badge|noise=0.0|seed=0] round 2: n=1500 acc=0.8480 (14s)
+[bloodmnist|badge|noise=0.0|seed=0] round 3: n=2000 acc=0.8918 (20s)
+[bloodmnist|badge|noise=0.0|seed=0] round 4: n=2500 acc=0.8918 (27s)
+    saved bloodmnist_badge_noise0.0_seed0_round5.pt
+[bloodmnist|badge|noise=0.0|seed=0] round 5: n=3000 acc=0.9281 (35s)
+=== run 113/144: bloodmnist badge noise=0.0 seed=1 ===
+[bloodmnist|badge|noise=0.0|seed=1] round 0: n=500 acc=0.6498 (3s)
+[bloodmnist|badge|noise=0.0|seed=1] round 1: n=1000 acc=0.8123 (8s)
+[bloodmnist|badge|noise=0.0|seed=1] round 2: n=1500 acc=0.8270 (14s)
+[bloodmnist|badge|noise=0.0|seed=1] round 3: n=2000 acc=0.8924 (20s)
+[bloodmnist|badge|noise=0.0|seed=1] round 4: n=2500 acc=0.9135 (27s)
+    saved bloodmnist_badge_noise0.0_seed1_round5.pt
+[bloodmnist|badge|noise=0.0|seed=1] round 5: n=3000 acc=0.9135 (35s)
+=== run 114/144: bloodmnist badge noise=0.0 seed=2 ===
+[bloodmnist|badge|noise=0.0|seed=2] round 0: n=500 acc=0.6831 (3s)
+[bloodmnist|badge|noise=0.0|seed=2] round 1: n=1000 acc=0.8115 (8s)
+[bloodmnist|badge|noise=0.0|seed=2] round 2: n=1500 acc=0.8565 (14s)
+[bloodmnist|badge|noise=0.0|seed=2] round 3: n=2000 acc=0.8825 (20s)
+[bloodmnist|badge|noise=0.0|seed=2] round 4: n=2500 acc=0.8977 (27s)
+    saved bloodmnist_badge_noise0.0_seed2_round5.pt
+[bloodmnist|badge|noise=0.0|seed=2] round 5: n=3000 acc=0.9345 (35s)
+skip (done): bloodmnist iris 0.0 0
+skip (done): bloodmnist iris 0.0 1
+skip (done): bloodmnist iris 0.0 2
+skip (done): bloodmnist iris-nodiv 0.0 0
+skip (done): bloodmnist iris-nodiv 0.0 1
+skip (done): bloodmnist iris-nodiv 0.0 2
+skip (done): bloodmnist random 0.2 0
+skip (done): bloodmnist random 0.2 1
+skip (done): bloodmnist random 0.2 2
+skip (done): bloodmnist entropy 0.2 0
+skip (done): bloodmnist entropy 0.2 1
+skip (done): bloodmnist entropy 0.2 2
+skip (done): bloodmnist bald 0.2 0
+skip (done): bloodmnist bald 0.2 1
+skip (done): bloodmnist bald 0.2 2
+skip (done): bloodmnist coreset 0.2 0
+skip (done): bloodmnist coreset 0.2 1
+skip (done): bloodmnist coreset 0.2 2
+=== run 133/144: bloodmnist learnloss noise=0.2 seed=0 ===
+[bloodmnist|learnloss|noise=0.2|seed=0] round 0: n=500 acc=0.7039 (4s)
+[bloodmnist|learnloss|noise=0.2|seed=0] round 1: n=1000 acc=0.5744 (8s)
+[bloodmnist|learnloss|noise=0.2|seed=0] round 2: n=1500 acc=0.6951 (14s)
+[bloodmnist|learnloss|noise=0.2|seed=0] round 3: n=2000 acc=0.7010 (20s)
+[bloodmnist|learnloss|noise=0.2|seed=0] round 4: n=2500 acc=0.7720 (27s)
+    saved bloodmnist_learnloss_noise0.2_seed0_round5.pt
+[bloodmnist|learnloss|noise=0.2|seed=0] round 5: n=3000 acc=0.8527 (35s)
+=== run 134/144: bloodmnist learnloss noise=0.2 seed=1 ===
+[bloodmnist|learnloss|noise=0.2|seed=1] round 0: n=500 acc=0.6577 (4s)
+[bloodmnist|learnloss|noise=0.2|seed=1] round 1: n=1000 acc=0.6749 (8s)
+[bloodmnist|learnloss|noise=0.2|seed=1] round 2: n=1500 acc=0.6460 (14s)
+[bloodmnist|learnloss|noise=0.2|seed=1] round 3: n=2000 acc=0.7723 (20s)
+[bloodmnist|learnloss|noise=0.2|seed=1] round 4: n=2500 acc=0.7913 (27s)
+    saved bloodmnist_learnloss_noise0.2_seed1_round5.pt
+[bloodmnist|learnloss|noise=0.2|seed=1] round 5: n=3000 acc=0.7901 (35s)
+=== run 135/144: bloodmnist learnloss noise=0.2 seed=2 ===
+[bloodmnist|learnloss|noise=0.2|seed=2] round 0: n=500 acc=0.6022 (3s)
+[bloodmnist|learnloss|noise=0.2|seed=2] round 1: n=1000 acc=0.6723 (8s)
+[bloodmnist|learnloss|noise=0.2|seed=2] round 2: n=1500 acc=0.6331 (13s)
+[bloodmnist|learnloss|noise=0.2|seed=2] round 3: n=2000 acc=0.7486 (20s)
+[bloodmnist|learnloss|noise=0.2|seed=2] round 4: n=2500 acc=0.7723 (27s)
+    saved bloodmnist_learnloss_noise0.2_seed2_round5.pt
+[bloodmnist|learnloss|noise=0.2|seed=2] round 5: n=3000 acc=0.7971 (35s)
+=== run 136/144: bloodmnist badge noise=0.2 seed=0 ===
+[bloodmnist|badge|noise=0.2|seed=0] round 0: n=500 acc=0.7270 (4s)
+[bloodmnist|badge|noise=0.2|seed=0] round 1: n=1000 acc=0.7720 (8s)
+[bloodmnist|badge|noise=0.2|seed=0] round 2: n=1500 acc=0.8366 (14s)
+[bloodmnist|badge|noise=0.2|seed=0] round 3: n=2000 acc=0.8460 (20s)
+[bloodmnist|badge|noise=0.2|seed=0] round 4: n=2500 acc=0.8693 (27s)
+    saved bloodmnist_badge_noise0.2_seed0_round5.pt
+[bloodmnist|badge|noise=0.2|seed=0] round 5: n=3000 acc=0.8945 (35s)
+=== run 137/144: bloodmnist badge noise=0.2 seed=1 ===
+[bloodmnist|badge|noise=0.2|seed=1] round 0: n=500 acc=0.5574 (3s)
+[bloodmnist|badge|noise=0.2|seed=1] round 1: n=1000 acc=0.7635 (8s)
+[bloodmnist|badge|noise=0.2|seed=1] round 2: n=1500 acc=0.7746 (14s)
+[bloodmnist|badge|noise=0.2|seed=1] round 3: n=2000 acc=0.8609 (20s)
+[bloodmnist|badge|noise=0.2|seed=1] round 4: n=2500 acc=0.8685 (27s)
+    saved bloodmnist_badge_noise0.2_seed1_round5.pt
+[bloodmnist|badge|noise=0.2|seed=1] round 5: n=3000 acc=0.8728 (35s)
+=== run 138/144: bloodmnist badge noise=0.2 seed=2 ===
+[bloodmnist|badge|noise=0.2|seed=2] round 0: n=500 acc=0.6121 (3s)
+[bloodmnist|badge|noise=0.2|seed=2] round 1: n=1000 acc=0.7708 (8s)
+[bloodmnist|badge|noise=0.2|seed=2] round 2: n=1500 acc=0.7892 (14s)
+[bloodmnist|badge|noise=0.2|seed=2] round 3: n=2000 acc=0.8559 (20s)
+[bloodmnist|badge|noise=0.2|seed=2] round 4: n=2500 acc=0.8796 (27s)
+    saved bloodmnist_badge_noise0.2_seed2_round5.pt
+[bloodmnist|badge|noise=0.2|seed=2] round 5: n=3000 acc=0.8842 (35s)
+skip (done): bloodmnist iris 0.2 0
+skip (done): bloodmnist iris 0.2 1
+skip (done): bloodmnist iris 0.2 2
+skip (done): bloodmnist iris-norel 0.2 0
+skip (done): bloodmnist iris-norel 0.2 1
+skip (done): bloodmnist iris-norel 0.2 2
+ALL RUNS COMPLETE
+=== seeds 0-2 done Tue Sep 22 03:50:29 AM +06 2026 ===
+device=cuda torch=2.12.0+cu130
+grid: 96 runs
+skip (done): fmnist random 0.0 3
+skip (done): fmnist random 0.0 4
+skip (done): fmnist random 0.0 5
+skip (done): fmnist entropy 0.0 3
+skip (done): fmnist entropy 0.0 4
+skip (done): fmnist entropy 0.0 5
+skip (done): fmnist bald 0.0 3
+skip (done): fmnist bald 0.0 4
+skip (done): fmnist bald 0.0 5
+skip (done): fmnist coreset 0.0 3
+skip (done): fmnist coreset 0.0 4
+skip (done): fmnist coreset 0.0 5
+=== run 13/96: fmnist learnloss noise=0.0 seed=3 ===
+[fmnist|learnloss|noise=0.0|seed=3] round 0: n=500 acc=0.7466 (3s)
+[fmnist|learnloss|noise=0.0|seed=3] round 1: n=1000 acc=0.7856 (9s)
+[fmnist|learnloss|noise=0.0|seed=3] round 2: n=1500 acc=0.8203 (16s)
+[fmnist|learnloss|noise=0.0|seed=3] round 3: n=2000 acc=0.8319 (23s)
+[fmnist|learnloss|noise=0.0|seed=3] round 4: n=2500 acc=0.8468 (31s)
+    saved fmnist_learnloss_noise0.0_seed3_round5.pt
+[fmnist|learnloss|noise=0.0|seed=3] round 5: n=3000 acc=0.8617 (40s)
+=== run 14/96: fmnist learnloss noise=0.0 seed=4 ===
+[fmnist|learnloss|noise=0.0|seed=4] round 0: n=500 acc=0.7382 (3s)
+[fmnist|learnloss|noise=0.0|seed=4] round 1: n=1000 acc=0.7912 (9s)
+[fmnist|learnloss|noise=0.0|seed=4] round 2: n=1500 acc=0.8156 (16s)
+[fmnist|learnloss|noise=0.0|seed=4] round 3: n=2000 acc=0.8471 (23s)
+[fmnist|learnloss|noise=0.0|seed=4] round 4: n=2500 acc=0.8477 (31s)
+    saved fmnist_learnloss_noise0.0_seed4_round5.pt
+[fmnist|learnloss|noise=0.0|seed=4] round 5: n=3000 acc=0.8553 (39s)
+=== run 15/96: fmnist learnloss noise=0.0 seed=5 ===
+[fmnist|learnloss|noise=0.0|seed=5] round 0: n=500 acc=0.7214 (3s)
+[fmnist|learnloss|noise=0.0|seed=5] round 1: n=1000 acc=0.7859 (9s)
+[fmnist|learnloss|noise=0.0|seed=5] round 2: n=1500 acc=0.8254 (16s)
+[fmnist|learnloss|noise=0.0|seed=5] round 3: n=2000 acc=0.8302 (23s)
+[fmnist|learnloss|noise=0.0|seed=5] round 4: n=2500 acc=0.8573 (31s)
+    saved fmnist_learnloss_noise0.0_seed5_round5.pt
+[fmnist|learnloss|noise=0.0|seed=5] round 5: n=3000 acc=0.8641 (40s)
+=== run 16/96: fmnist badge noise=0.0 seed=3 ===
+[fmnist|badge|noise=0.0|seed=3] round 0: n=500 acc=0.7381 (3s)
+[fmnist|badge|noise=0.0|seed=3] round 1: n=1000 acc=0.8198 (9s)
+[fmnist|badge|noise=0.0|seed=3] round 2: n=1500 acc=0.8554 (16s)
+[fmnist|badge|noise=0.0|seed=3] round 3: n=2000 acc=0.8765 (24s)
+[fmnist|badge|noise=0.0|seed=3] round 4: n=2500 acc=0.8814 (32s)
+    saved fmnist_badge_noise0.0_seed3_round5.pt
+[fmnist|badge|noise=0.0|seed=3] round 5: n=3000 acc=0.8892 (41s)
+=== run 17/96: fmnist badge noise=0.0 seed=4 ===
+[fmnist|badge|noise=0.0|seed=4] round 0: n=500 acc=0.7271 (3s)
+[fmnist|badge|noise=0.0|seed=4] round 1: n=1000 acc=0.8093 (9s)
+[fmnist|badge|noise=0.0|seed=4] round 2: n=1500 acc=0.8507 (16s)
+[fmnist|badge|noise=0.0|seed=4] round 3: n=2000 acc=0.8842 (24s)
+[fmnist|badge|noise=0.0|seed=4] round 4: n=2500 acc=0.8889 (32s)
+    saved fmnist_badge_noise0.0_seed4_round5.pt
+[fmnist|badge|noise=0.0|seed=4] round 5: n=3000 acc=0.8910 (41s)
+=== run 18/96: fmnist badge noise=0.0 seed=5 ===
+[fmnist|badge|noise=0.0|seed=5] round 0: n=500 acc=0.7223 (3s)
+[fmnist|badge|noise=0.0|seed=5] round 1: n=1000 acc=0.8099 (9s)
+[fmnist|badge|noise=0.0|seed=5] round 2: n=1500 acc=0.8525 (16s)
+[fmnist|badge|noise=0.0|seed=5] round 3: n=2000 acc=0.8693 (24s)
+[fmnist|badge|noise=0.0|seed=5] round 4: n=2500 acc=0.8800 (32s)
+    saved fmnist_badge_noise0.0_seed5_round5.pt
+[fmnist|badge|noise=0.0|seed=5] round 5: n=3000 acc=0.8892 (41s)
+skip (done): fmnist iris 0.0 3
+skip (done): fmnist iris 0.0 4
+skip (done): fmnist iris 0.0 5
+skip (done): fmnist iris-nodiv 0.0 3
+skip (done): fmnist iris-nodiv 0.0 4
+skip (done): fmnist iris-nodiv 0.0 5
+skip (done): fmnist random 0.2 3
+skip (done): fmnist random 0.2 4
+skip (done): fmnist random 0.2 5
+skip (done): fmnist entropy 0.2 3
+skip (done): fmnist entropy 0.2 4
+skip (done): fmnist entropy 0.2 5
+skip (done): fmnist bald 0.2 3
+skip (done): fmnist bald 0.2 4
+skip (done): fmnist bald 0.2 5
+skip (done): fmnist coreset 0.2 3
+skip (done): fmnist coreset 0.2 4
+skip (done): fmnist coreset 0.2 5
+=== run 37/96: fmnist learnloss noise=0.2 seed=3 ===
+[fmnist|learnloss|noise=0.2|seed=3] round 0: n=500 acc=0.7225 (3s)
+[fmnist|learnloss|noise=0.2|seed=3] round 1: n=1000 acc=0.7409 (9s)
+[fmnist|learnloss|noise=0.2|seed=3] round 2: n=1500 acc=0.7575 (16s)
+[fmnist|learnloss|noise=0.2|seed=3] round 3: n=2000 acc=0.7931 (24s)
+[fmnist|learnloss|noise=0.2|seed=3] round 4: n=2500 acc=0.8201 (32s)
+    saved fmnist_learnloss_noise0.2_seed3_round5.pt
+[fmnist|learnloss|noise=0.2|seed=3] round 5: n=3000 acc=0.8444 (40s)
+=== run 38/96: fmnist learnloss noise=0.2 seed=4 ===
+[fmnist|learnloss|noise=0.2|seed=4] round 0: n=500 acc=0.7132 (3s)
+[fmnist|learnloss|noise=0.2|seed=4] round 1: n=1000 acc=0.7465 (9s)
+[fmnist|learnloss|noise=0.2|seed=4] round 2: n=1500 acc=0.7576 (16s)
+[fmnist|learnloss|noise=0.2|seed=4] round 3: n=2000 acc=0.7813 (24s)
+[fmnist|learnloss|noise=0.2|seed=4] round 4: n=2500 acc=0.8014 (32s)
+    saved fmnist_learnloss_noise0.2_seed4_round5.pt
+[fmnist|learnloss|noise=0.2|seed=4] round 5: n=3000 acc=0.8212 (41s)
+=== run 39/96: fmnist learnloss noise=0.2 seed=5 ===
+[fmnist|learnloss|noise=0.2|seed=5] round 0: n=500 acc=0.6964 (3s)
+[fmnist|learnloss|noise=0.2|seed=5] round 1: n=1000 acc=0.7410 (9s)
+[fmnist|learnloss|noise=0.2|seed=5] round 2: n=1500 acc=0.7562 (16s)
+[fmnist|learnloss|noise=0.2|seed=5] round 3: n=2000 acc=0.7887 (24s)
+[fmnist|learnloss|noise=0.2|seed=5] round 4: n=2500 acc=0.7948 (32s)
+    saved fmnist_learnloss_noise0.2_seed5_round5.pt
+[fmnist|learnloss|noise=0.2|seed=5] round 5: n=3000 acc=0.8231 (40s)
+=== run 40/96: fmnist badge noise=0.2 seed=3 ===
+[fmnist|badge|noise=0.2|seed=3] round 0: n=500 acc=0.7209 (3s)
+[fmnist|badge|noise=0.2|seed=3] round 1: n=1000 acc=0.7849 (10s)
+[fmnist|badge|noise=0.2|seed=3] round 2: n=1500 acc=0.8134 (17s)
+[fmnist|badge|noise=0.2|seed=3] round 3: n=2000 acc=0.8352 (24s)
+[fmnist|badge|noise=0.2|seed=3] round 4: n=2500 acc=0.8585 (32s)
+    saved fmnist_badge_noise0.2_seed3_round5.pt
+[fmnist|badge|noise=0.2|seed=3] round 5: n=3000 acc=0.8678 (41s)
+=== run 41/96: fmnist badge noise=0.2 seed=4 ===
+[fmnist|badge|noise=0.2|seed=4] round 0: n=500 acc=0.7188 (3s)
+[fmnist|badge|noise=0.2|seed=4] round 1: n=1000 acc=0.7831 (10s)
+[fmnist|badge|noise=0.2|seed=4] round 2: n=1500 acc=0.8134 (16s)
+[fmnist|badge|noise=0.2|seed=4] round 3: n=2000 acc=0.8498 (24s)
+[fmnist|badge|noise=0.2|seed=4] round 4: n=2500 acc=0.8547 (32s)
+    saved fmnist_badge_noise0.2_seed4_round5.pt
+[fmnist|badge|noise=0.2|seed=4] round 5: n=3000 acc=0.8595 (41s)
+=== run 42/96: fmnist badge noise=0.2 seed=5 ===
+[fmnist|badge|noise=0.2|seed=5] round 0: n=500 acc=0.6920 (3s)
+[fmnist|badge|noise=0.2|seed=5] round 1: n=1000 acc=0.7802 (10s)
+[fmnist|badge|noise=0.2|seed=5] round 2: n=1500 acc=0.8139 (17s)
+[fmnist|badge|noise=0.2|seed=5] round 3: n=2000 acc=0.8443 (24s)
+[fmnist|badge|noise=0.2|seed=5] round 4: n=2500 acc=0.8573 (32s)
+    saved fmnist_badge_noise0.2_seed5_round5.pt
+[fmnist|badge|noise=0.2|seed=5] round 5: n=3000 acc=0.8657 (41s)
+skip (done): fmnist iris 0.2 3
+skip (done): fmnist iris 0.2 4
+skip (done): fmnist iris 0.2 5
+skip (done): fmnist iris-norel 0.2 3
+skip (done): fmnist iris-norel 0.2 4
+skip (done): fmnist iris-norel 0.2 5
+skip (done): bloodmnist random 0.0 3
+skip (done): bloodmnist random 0.0 4
+skip (done): bloodmnist random 0.0 5
+skip (done): bloodmnist entropy 0.0 3
+skip (done): bloodmnist entropy 0.0 4
+skip (done): bloodmnist entropy 0.0 5
+skip (done): bloodmnist bald 0.0 3
+skip (done): bloodmnist bald 0.0 4
+skip (done): bloodmnist bald 0.0 5
+skip (done): bloodmnist coreset 0.0 3
+skip (done): bloodmnist coreset 0.0 4
+skip (done): bloodmnist coreset 0.0 5
+=== run 61/96: bloodmnist learnloss noise=0.0 seed=3 ===
+[bloodmnist|learnloss|noise=0.0|seed=3] round 0: n=500 acc=0.6805 (3s)
+[bloodmnist|learnloss|noise=0.0|seed=3] round 1: n=1000 acc=0.6147 (8s)
+[bloodmnist|learnloss|noise=0.0|seed=3] round 2: n=1500 acc=0.7778 (13s)
+[bloodmnist|learnloss|noise=0.0|seed=3] round 3: n=2000 acc=0.6934 (19s)
+[bloodmnist|learnloss|noise=0.0|seed=3] round 4: n=2500 acc=0.8015 (26s)
+    saved bloodmnist_learnloss_noise0.0_seed3_round5.pt
+[bloodmnist|learnloss|noise=0.0|seed=3] round 5: n=3000 acc=0.8880 (34s)
+=== run 62/96: bloodmnist learnloss noise=0.0 seed=4 ===
+[bloodmnist|learnloss|noise=0.0|seed=4] round 0: n=500 acc=0.5595 (3s)
+[bloodmnist|learnloss|noise=0.0|seed=4] round 1: n=1000 acc=0.6644 (8s)
+[bloodmnist|learnloss|noise=0.0|seed=4] round 2: n=1500 acc=0.7606 (13s)
+[bloodmnist|learnloss|noise=0.0|seed=4] round 3: n=2000 acc=0.6951 (19s)
+[bloodmnist|learnloss|noise=0.0|seed=4] round 4: n=2500 acc=0.8661 (26s)
+    saved bloodmnist_learnloss_noise0.0_seed4_round5.pt
+[bloodmnist|learnloss|noise=0.0|seed=4] round 5: n=3000 acc=0.9000 (34s)
+=== run 63/96: bloodmnist learnloss noise=0.0 seed=5 ===
+[bloodmnist|learnloss|noise=0.0|seed=5] round 0: n=500 acc=0.6866 (3s)
+[bloodmnist|learnloss|noise=0.0|seed=5] round 1: n=1000 acc=0.6609 (8s)
+[bloodmnist|learnloss|noise=0.0|seed=5] round 2: n=1500 acc=0.7343 (13s)
+[bloodmnist|learnloss|noise=0.0|seed=5] round 3: n=2000 acc=0.8372 (19s)
+[bloodmnist|learnloss|noise=0.0|seed=5] round 4: n=2500 acc=0.8620 (26s)
+    saved bloodmnist_learnloss_noise0.0_seed5_round5.pt
+[bloodmnist|learnloss|noise=0.0|seed=5] round 5: n=3000 acc=0.9030 (34s)
+=== run 64/96: bloodmnist badge noise=0.0 seed=3 ===
+[bloodmnist|badge|noise=0.0|seed=3] round 0: n=500 acc=0.6849 (3s)
+[bloodmnist|badge|noise=0.0|seed=3] round 1: n=1000 acc=0.8091 (8s)
+[bloodmnist|badge|noise=0.0|seed=3] round 2: n=1500 acc=0.8591 (13s)
+[bloodmnist|badge|noise=0.0|seed=3] round 3: n=2000 acc=0.8796 (19s)
+[bloodmnist|badge|noise=0.0|seed=3] round 4: n=2500 acc=0.9144 (26s)
+    saved bloodmnist_badge_noise0.0_seed3_round5.pt
+[bloodmnist|badge|noise=0.0|seed=3] round 5: n=3000 acc=0.9085 (34s)
+=== run 65/96: bloodmnist badge noise=0.0 seed=4 ===
+[bloodmnist|badge|noise=0.0|seed=4] round 0: n=500 acc=0.6811 (3s)
+[bloodmnist|badge|noise=0.0|seed=4] round 1: n=1000 acc=0.8217 (8s)
+[bloodmnist|badge|noise=0.0|seed=4] round 2: n=1500 acc=0.8375 (13s)
+[bloodmnist|badge|noise=0.0|seed=4] round 3: n=2000 acc=0.8799 (19s)
+[bloodmnist|badge|noise=0.0|seed=4] round 4: n=2500 acc=0.8913 (26s)
+    saved bloodmnist_badge_noise0.0_seed4_round5.pt
+[bloodmnist|badge|noise=0.0|seed=4] round 5: n=3000 acc=0.9176 (34s)
+=== run 66/96: bloodmnist badge noise=0.0 seed=5 ===
+[bloodmnist|badge|noise=0.0|seed=5] round 0: n=500 acc=0.6945 (3s)
+[bloodmnist|badge|noise=0.0|seed=5] round 1: n=1000 acc=0.8220 (8s)
+[bloodmnist|badge|noise=0.0|seed=5] round 2: n=1500 acc=0.8737 (13s)
+[bloodmnist|badge|noise=0.0|seed=5] round 3: n=2000 acc=0.8720 (19s)
+[bloodmnist|badge|noise=0.0|seed=5] round 4: n=2500 acc=0.9094 (26s)
+    saved bloodmnist_badge_noise0.0_seed5_round5.pt
+[bloodmnist|badge|noise=0.0|seed=5] round 5: n=3000 acc=0.9301 (34s)
+skip (done): bloodmnist iris 0.0 3
+skip (done): bloodmnist iris 0.0 4
+skip (done): bloodmnist iris 0.0 5
+skip (done): bloodmnist iris-nodiv 0.0 3
+skip (done): bloodmnist iris-nodiv 0.0 4
+skip (done): bloodmnist iris-nodiv 0.0 5
+skip (done): bloodmnist random 0.2 3
+skip (done): bloodmnist random 0.2 4
+skip (done): bloodmnist random 0.2 5
+skip (done): bloodmnist entropy 0.2 3
+skip (done): bloodmnist entropy 0.2 4
+skip (done): bloodmnist entropy 0.2 5
+skip (done): bloodmnist bald 0.2 3
+skip (done): bloodmnist bald 0.2 4
+skip (done): bloodmnist bald 0.2 5
+skip (done): bloodmnist coreset 0.2 3
+skip (done): bloodmnist coreset 0.2 4
+skip (done): bloodmnist coreset 0.2 5
+=== run 85/96: bloodmnist learnloss noise=0.2 seed=3 ===
+[bloodmnist|learnloss|noise=0.2|seed=3] round 0: n=500 acc=0.5317 (3s)
+[bloodmnist|learnloss|noise=0.2|seed=3] round 1: n=1000 acc=0.6258 (8s)
+[bloodmnist|learnloss|noise=0.2|seed=3] round 2: n=1500 acc=0.6793 (13s)
+[bloodmnist|learnloss|noise=0.2|seed=3] round 3: n=2000 acc=0.6533 (19s)
+[bloodmnist|learnloss|noise=0.2|seed=3] round 4: n=2500 acc=0.7322 (26s)
+    saved bloodmnist_learnloss_noise0.2_seed3_round5.pt
+[bloodmnist|learnloss|noise=0.2|seed=3] round 5: n=3000 acc=0.8141 (34s)
+=== run 86/96: bloodmnist learnloss noise=0.2 seed=4 ===
+[bloodmnist|learnloss|noise=0.2|seed=4] round 0: n=500 acc=0.5630 (3s)
+[bloodmnist|learnloss|noise=0.2|seed=4] round 1: n=1000 acc=0.7086 (8s)
+[bloodmnist|learnloss|noise=0.2|seed=4] round 2: n=1500 acc=0.7074 (13s)
+[bloodmnist|learnloss|noise=0.2|seed=4] round 3: n=2000 acc=0.7819 (19s)
+[bloodmnist|learnloss|noise=0.2|seed=4] round 4: n=2500 acc=0.7208 (26s)
+    saved bloodmnist_learnloss_noise0.2_seed4_round5.pt
+[bloodmnist|learnloss|noise=0.2|seed=4] round 5: n=3000 acc=0.7746 (34s)
+=== run 87/96: bloodmnist learnloss noise=0.2 seed=5 ===
+[bloodmnist|learnloss|noise=0.2|seed=5] round 0: n=500 acc=0.6358 (3s)
+[bloodmnist|learnloss|noise=0.2|seed=5] round 1: n=1000 acc=0.5729 (8s)
+[bloodmnist|learnloss|noise=0.2|seed=5] round 2: n=1500 acc=0.7966 (13s)
+[bloodmnist|learnloss|noise=0.2|seed=5] round 3: n=2000 acc=0.7404 (19s)
+[bloodmnist|learnloss|noise=0.2|seed=5] round 4: n=2500 acc=0.7901 (26s)
+    saved bloodmnist_learnloss_noise0.2_seed5_round5.pt
+[bloodmnist|learnloss|noise=0.2|seed=5] round 5: n=3000 acc=0.8033 (34s)
+=== run 88/96: bloodmnist badge noise=0.2 seed=3 ===
+[bloodmnist|badge|noise=0.2|seed=3] round 0: n=500 acc=0.6215 (3s)
+[bloodmnist|badge|noise=0.2|seed=3] round 1: n=1000 acc=0.7787 (8s)
+[bloodmnist|badge|noise=0.2|seed=3] round 2: n=1500 acc=0.8275 (13s)
+[bloodmnist|badge|noise=0.2|seed=3] round 3: n=2000 acc=0.8468 (19s)
+[bloodmnist|badge|noise=0.2|seed=3] round 4: n=2500 acc=0.8699 (26s)
+    saved bloodmnist_badge_noise0.2_seed3_round5.pt
+[bloodmnist|badge|noise=0.2|seed=3] round 5: n=3000 acc=0.8863 (34s)
+=== run 89/96: bloodmnist badge noise=0.2 seed=4 ===
+[bloodmnist|badge|noise=0.2|seed=4] round 0: n=500 acc=0.5285 (3s)
+[bloodmnist|badge|noise=0.2|seed=4] round 1: n=1000 acc=0.7229 (8s)
+[bloodmnist|badge|noise=0.2|seed=4] round 2: n=1500 acc=0.8085 (13s)
+[bloodmnist|badge|noise=0.2|seed=4] round 3: n=2000 acc=0.8462 (19s)
+[bloodmnist|badge|noise=0.2|seed=4] round 4: n=2500 acc=0.8705 (26s)
+    saved bloodmnist_badge_noise0.2_seed4_round5.pt
+[bloodmnist|badge|noise=0.2|seed=4] round 5: n=3000 acc=0.8889 (34s)
+=== run 90/96: bloodmnist badge noise=0.2 seed=5 ===
+[bloodmnist|badge|noise=0.2|seed=5] round 0: n=500 acc=0.6367 (3s)
+[bloodmnist|badge|noise=0.2|seed=5] round 1: n=1000 acc=0.7574 (8s)
+[bloodmnist|badge|noise=0.2|seed=5] round 2: n=1500 acc=0.8351 (13s)
+[bloodmnist|badge|noise=0.2|seed=5] round 3: n=2000 acc=0.8448 (19s)
+[bloodmnist|badge|noise=0.2|seed=5] round 4: n=2500 acc=0.8796 (26s)
+    saved bloodmnist_badge_noise0.2_seed5_round5.pt
+[bloodmnist|badge|noise=0.2|seed=5] round 5: n=3000 acc=0.8787 (35s)
+skip (done): bloodmnist iris 0.2 3
+skip (done): bloodmnist iris 0.2 4
+skip (done): bloodmnist iris 0.2 5
+skip (done): bloodmnist iris-norel 0.2 3
+skip (done): bloodmnist iris-norel 0.2 4
+skip (done): bloodmnist iris-norel 0.2 5
+ALL RUNS COMPLETE
+=== NEW BASELINES COMPLETE Tue Sep 22 04:05:26 AM +06 2026 ===

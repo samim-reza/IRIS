@@ -1,5 +1,13 @@
 # Handoff — IRIS, state as of 2026-09-22
 
+> **Update, later the same day.** Learning-Loss and BADGE were added as
+> baselines and the paper's central claim changed as a result. BADGE beats
+> IRIS as an acquisition function; the reliability gate, tested on BADGE,
+> improves it by ~1 point on all three datasets and is now the paper's
+> transferable contribution. Grid is **285 runs**; `src/check_claims.py`
+> reports 22/22. The table below predates this and is superseded by
+> the README.
+
 Written for whoever picks this up next (human or agent). It covers what the
 project is, what was changed in the session of 2026-09-21/22, what is verified,
 and what is still open.

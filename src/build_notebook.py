@@ -116,10 +116,12 @@ import matplotlib.pyplot as plt
 METHOD_ORDER = ["random", "entropy", "bald", "coreset", "iris",
                 "iris-nodiv", "iris-norel"]
 LAB = {"random": "Random", "entropy": "Entropy", "bald": "BALD",
-       "coreset": "Coreset", "iris": "IRIS (ours)",
+       "coreset": "Coreset", "learnloss": "Learning-Loss", "badge": "BADGE", "badge-rel": "BADGE + reliability",
+       "iris": "IRIS (ours)", "iris-grad": "IRIS-grad (ours)",
        "iris-nodiv": "IRIS w/o diversity", "iris-norel": "IRIS w/o reliability"}
 COL = {"random": "#9e9e9e", "entropy": "#1976d2", "bald": "#7b1fa2",
-       "coreset": "#00897b", "iris": "#d32f2f",
+       "coreset": "#00897b", "learnloss": "#5d4037", "badge": "#455a64", "badge-rel": "#0277bd",
+       "iris": "#d32f2f", "iris-grad": "#ad1457",
        "iris-nodiv": "#ef6c00", "iris-norel": "#c2185b"}
 
 if df is not None:
