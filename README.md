@@ -132,6 +132,7 @@ or without it.
 
 ```bash
 python src/check_claims.py                 # 22 stated conclusions vs the data
+python src/lint_prose.py                   # no sentence contradicts its own number
 python src/verify_checkpoint.py            # reload every saved model, re-measure
 python src/verify_checkpoint.py --dataset bloodmnist
 python src/compare_runs.py                 # this grid vs results/previous_run/
