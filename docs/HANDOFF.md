@@ -141,10 +141,16 @@ prose contradicting the table next to it.
    **Zenodo** (50 GB free, mints a citable DOI for the Data Availability
    statement) or a **GitHub Release** with just the 501 MB Fashion-MNIST +
    BloodMNIST subset. Not yet done — awaiting the author's choice.
-2. **`paper/refs.bib` needs verification.** 24 of the 50 entries were written
-   from model knowledge, not from PDFs. Author lists/venues/years are believed
-   right; volumes and pages were mostly omitted. One entry (`jiang2025`) has no
-   volume and renders with a stray space. **Verify before submission.**
+2. ~~`paper/refs.bib` needs verification.~~ **Done 2026-09-22.** Every entry
+   was checked against the source PDFs in `papers/` and against OpenAlex
+   records. Fourteen corrections were applied, including three substantive
+   ones: `hussain2026` had the wrong first author (M. -> Adnan Hussain),
+   `ning2026` had the wrong first author (Q. -> Kun-Peng Ning), and
+   `jiang2025` had both a wrong title and a wrong venue (it is an arXiv
+   preprint, not ACM Computing Surveys). `feng2026` had a wrong given name
+   (Alexej -> Avni Kothari) and `petso2026` had two incorrect co-authors.
+   Remaining `empty pages` warnings from BibTeX are ICLR/NeurIPS/ICML entries
+   where page numbers are not standard.
 3. **Front matter placeholders** in `paper/main_en.tex`: affiliation, e-mail and
    ORCID are intentionally blank (empty CAS keys print stray commas).
 4. **Seed count.** Six seeds cannot resolve a sub-point margin, which is why
