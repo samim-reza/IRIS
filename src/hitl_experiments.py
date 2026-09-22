@@ -755,7 +755,10 @@ def run_al(dataset, method, noise_rate, seed, cfg, ckpt_dir=None,
         # restart from a different init rather than letting one dead run
         # poison a method's mean.  Healthy runs never trigger this, so their
         # results are unchanged.
-        floor = 2.0 / num_classes
+        # The guard assumes a real training schedule.  In --quick mode (2
+        # epochs) nothing fits its training set yet, so it would fire on every
+        # round and bury the smoke test in false alarms.
+        floor = 2.0 / num_classes if cfg["epochs"] >= 10 else 0.0
         for attempt in range(MAX_DIVERGENCE_RETRIES + 1):
             backbone, head = make_model(dataset, seed * 1000 + rnd
                                         + attempt * 100000)
