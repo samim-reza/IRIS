@@ -1,0 +1,19 @@
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\multirow{2}{*}{Method} & \multicolumn{2}{c}{Fashion-MNIST} & \multicolumn{2}{c}{BloodMNIST} & \multicolumn{2}{c}{CIFAR-10} \\
+ & clean & noisy & clean & noisy & clean & noisy \\
+\midrule
+Random & 86.28 $\pm$ 0.41 & 83.71 $\pm$ 0.54 & 89.47 $\pm$ 0.68 & 86.94 $\pm$ 0.75 & \textbf{74.50 $\pm$ 0.46} & 63.24 $\pm$ 0.55 \\
+Entropy & 87.11 $\pm$ 0.48 & 84.30 $\pm$ 0.47 & 91.25 $\pm$ 0.97 & 86.52 $\pm$ 1.69 & 73.42 $\pm$ 2.41 & 62.16 $\pm$ 1.29 \\
+BALD & 88.03 $\pm$ 0.70 & 81.92 $\pm$ 1.30 & 91.51 $\pm$ 0.73 & 83.32 $\pm$ 1.08 & 73.71 $\pm$ 1.14 & 60.55 $\pm$ 1.42 \\
+Coreset & 83.86 $\pm$ 0.48 & 81.89 $\pm$ 0.46 & 85.83 $\pm$ 1.27 & 87.09 $\pm$ 0.45 & 71.43 $\pm$ 0.57 & 60.36 $\pm$ 0.29 \\
+Learning-Loss & 86.03 $\pm$ 0.94 & 83.27 $\pm$ 1.00 & 88.15 $\pm$ 1.89 & 80.53 $\pm$ 2.44 & 63.31 $\pm$ 4.85 & 53.97 $\pm$ 3.78 \\
+BADGE & \textbf{88.87 $\pm$ 0.22} & 86.59 $\pm$ 0.30 & \textbf{92.20 $\pm$ 0.94} & 88.42 $\pm$ 0.70 & 73.50 $\pm$ 3.05 & 63.15 $\pm$ 1.52 \\
+BADGE + reliability & -- & \textbf{87.52 $\pm$ 0.40} & -- & \textbf{89.37 $\pm$ 0.70} & -- & \textbf{64.59 $\pm$ 1.16} \\
+\midrule
+IRIS (ours) & 87.61 $\pm$ 0.65 & 85.68 $\pm$ 0.61 & 90.62 $\pm$ 0.91 & 87.82 $\pm$ 0.75 & 70.91 $\pm$ 1.71 & 62.20 $\pm$ 0.30 \\
+IRIS-grad (ours) & 87.41 $\pm$ 0.50 & 84.95 $\pm$ 0.95 & 90.61 $\pm$ 0.97 & 88.15 $\pm$ 1.48 & 71.32 $\pm$ 3.46 & 59.65 $\pm$ 1.70 \\
+IRIS w/o diversity & 86.31 $\pm$ 0.74 & -- & 87.67 $\pm$ 1.73 & -- & 68.44 $\pm$ 3.15 & -- \\
+IRIS w/o reliability & -- & 84.55 $\pm$ 0.25 & -- & 87.35 $\pm$ 1.15 & -- & 62.09 $\pm$ 0.40 \\
+\bottomrule
+\end{tabular}

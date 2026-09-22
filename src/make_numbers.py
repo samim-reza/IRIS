@@ -187,6 +187,49 @@ def main():
                 cmd(f"{tag}{ntag}LearnlossGap",
                     f"{100 * (i.test_acc.mean() - l.test_acc.mean()):+.2f}")
 
+    # ---- IRIS against the CLASSICAL acquisition functions, and against BADGE
+    # explicitly.  Once BADGE joined BASELINES the generic "best baseline"
+    # macros silently changed meaning; prose that compares IRIS with the
+    # hand-crafted family, or states the BADGE gap, needs its own numbers.
+    CLASSIC = ["random", "entropy", "bald", "coreset"]
+    for (ds, nz), g in summary.groupby(["dataset", "noise"]):
+        tag = f"{DS[ds]}{NOISE[nz]}"
+        iris_s = g[g.method == "iris"]
+        cl = g[g.method.isin(CLASSIC)]
+        if iris_s.empty or cl.empty:
+            continue
+        bf = cl.loc[cl.final_acc_mean.idxmax()]
+        ba = cl.loc[cl.aubc_mean.idxmax()]
+        cmd(tag + "BestClassicFinalName", display[bf.method])
+        cmd(tag + "BestClassicName", display[ba.method])
+        cmd(tag + "IrisClassicFinalGain",
+            f"{100 * (iris_s.iloc[0].final_acc_mean - bf.final_acc_mean):+.2f}")
+        cmd(tag + "IrisClassicAubcGain",
+            f"{100 * (iris_s.iloc[0].aubc_mean - ba.aubc_mean):+.2f}")
+        # paired test vs the best classical method, matched seeds
+        a = fin[(fin.dataset == ds) & (fin.noise == nz) & (fin.method == "iris")]
+        b = fin[(fin.dataset == ds) & (fin.noise == nz) & (fin.method == bf.method)]
+        common = sorted(set(a.seed) & set(b.seed))
+        if len(common) > 1:
+            x = a[a.seed.isin(common)].sort_values("seed").test_acc.values
+            y = b[b.seed.isin(common)].sort_values("seed").test_acc.values
+            cmd(tag + "IrisClassicPairedP", f"{_st.ttest_rel(x, y)[1]:.3f}")
+            cmd(tag + "IrisClassicSeedsWon", f"{int((x > y).sum())}/{len(common)}")
+        # BADGE's lead over IRIS, stated as a positive number when BADGE is ahead
+        bd = g[g.method == "badge"]
+        if not bd.empty:
+            cmd(tag + "BadgeOverIrisFinal",
+                f"{100 * (bd.iloc[0].final_acc_mean - iris_s.iloc[0].final_acc_mean):+.2f}")
+            cmd(tag + "BadgeOverIrisAubc",
+                f"{100 * (bd.iloc[0].aubc_mean - iris_s.iloc[0].aubc_mean):+.2f}")
+            b2 = fin[(fin.dataset == ds) & (fin.noise == nz) & (fin.method == "badge")]
+            common = sorted(set(a.seed) & set(b2.seed))
+            if len(common) > 1:
+                x = a[a.seed.isin(common)].sort_values("seed").test_acc.values
+                y = b2[b2.seed.isin(common)].sort_values("seed").test_acc.values
+                cmd(tag + "IrisBadgePairedP", f"{_st.ttest_rel(x, y)[1]:.3f}")
+                cmd(tag + "IrisBadgeSeedsWon", f"{int((x > y).sum())}/{len(common)}")
+
     # ---- parameter cost of the introspection head, per backbone.
     # The head is a fixed d->128->1 MLP, so its share shrinks as the
     # backbone grows; quoting one number for all three would be wrong.

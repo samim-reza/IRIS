@@ -143,6 +143,59 @@ def main():
             tex.append(f"{setting_tex} & {label} & {fa_tex} & {au_tex} \\\\")
     tex.append("\\bottomrule\n\\end{tabular}")
 
+    # ---- wide, one-page tables for the manuscript --------------------------
+    # One row per method, one column per (dataset, oracle).  The long
+    # setting-by-setting table above runs to 60 rows and no longer fits a
+    # page; these two do, and read the way a comparison should.
+    cols = [(ds, nz) for ds in DS_ORDER for nz in (0.0, 0.2)
+            if ((summary.dataset == ds) & (summary.noise == nz)).any()]
+    for metric, mcol, scol, fname in (
+            ("final", "final_acc_mean", "final_acc_std", "summary_final.tex"),
+            ("aubc", "aubc_mean", "aubc_std", "summary_aubc.tex")):
+        best = {}
+        for ds, nz in cols:
+            g = summary[(summary.dataset == ds) & (summary.noise == nz)]
+            best[(ds, nz)] = g.loc[g[mcol].idxmax(), "method"]
+        head = ("\\begin{tabular}{@{}l" + "c" * len(cols) + "@{}}\n\\toprule\n"
+                "Method & " + " & ".join(
+                    f"{DS_NAME.get(ds, ds)}\\\\{'clean' if nz == 0 else 'noisy'}"
+                    for ds, nz in cols) + " \\\\\n\\midrule")
+        head = head.replace(
+            "Method & ",
+            "\\multirow{2}{*}{Method} & " ).replace("\\\\clean", " & ").replace(
+            "\\\\noisy", " & ")
+        # two-line header: dataset names spanning clean/noisy pairs
+        top = "\\multirow{2}{*}{Method}"
+        sub = ""
+        for ds in DS_ORDER:
+            pair = [(d, n) for d, n in cols if d == ds]
+            if not pair:
+                continue
+            top += f" & \\multicolumn{{{len(pair)}}}{{c}}{{{DS_NAME.get(ds, ds)}}}"
+            sub += "".join(" & clean" if n == 0 else " & noisy" for _, n in pair)
+        lines = ["\\begin{tabular}{@{}l" + "c" * len(cols) + "@{}}", "\\toprule",
+                 top + " \\\\", sub + " \\\\", "\\midrule"]
+        for m in METHOD_ORDER:
+            if not (summary.method == m).any():
+                continue
+            if m == "iris":
+                lines.append("\\midrule")
+            cells = []
+            for ds, nz in cols:
+                r = summary[(summary.dataset == ds) & (summary.noise == nz)
+                            & (summary.method == m)]
+                if r.empty:
+                    cells.append("--")
+                    continue
+                r = r.iloc[0]
+                txt = f"{100 * r[mcol]:.2f} $\\pm$ {100 * r[scol]:.2f}"
+                cells.append(f"\\textbf{{{txt}}}" if best[(ds, nz)] == m else txt)
+            lines.append(f"{LABELS[m]} & " + " & ".join(cells)
+                         + " \\\\")
+        lines += ["\\bottomrule", "\\end{tabular}"]
+        with open(os.path.join(RESULTS_DIR, fname), "w") as f:
+            f.write("\n".join(lines) + "\n")
+
     with open(os.path.join(RESULTS_DIR, "summary_table.md"), "w") as f:
         f.write("\n".join(md) + "\n")
     with open(os.path.join(RESULTS_DIR, "summary_table.tex"), "w") as f:
