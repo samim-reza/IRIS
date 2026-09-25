@@ -694,6 +694,7 @@ def save_checkpoint(ckpt_dir, dataset, method, noise, seed, rnd, cfg,
     os.makedirs(ckpt_dir, exist_ok=True)
     name = f"{dataset}_{method}_noise{noise}_seed{seed}_round{rnd}.pt"
     path = os.path.join(ckpt_dir, name)
+    tmp = path + ".partial"
     torch.save({
         "backbone_state_dict": backbone.state_dict(),
         "head_state_dict": head.state_dict(),
@@ -709,7 +710,8 @@ def save_checkpoint(ckpt_dir, dataset, method, noise, seed, rnd, cfg,
         "cfg": dict(cfg),
         "spec": dict(DATASET_SPECS[dataset]),
         "torch_version": torch.__version__,
-    }, path)
+    }, tmp)
+    os.replace(tmp, path)          # atomic: no half-written .pt is ever visible
     return path
 
 
@@ -776,14 +778,16 @@ def run_al(dataset, method, noise_rate, seed, cfg, ckpt_dir=None,
             del backbone, head
             torch.cuda.empty_cache()
         acc = evaluate(backbone, test)
-        append_csv(RESULTS_CSV, RESULT_HEADER,
-                   [dataset, method, noise_rate, seed, rnd,
-                    len(labeled_idx), f"{acc:.4f}", f"{time.time() - t0:.1f}"])
+        # Save the checkpoint first: the CSV row is the commit marker, so a
+        # recorded run always has a complete checkpoint behind it.
         if ckpt_dir and (save_all_rounds or rnd == cfg["rounds"]):
             cp = save_checkpoint(ckpt_dir, dataset, method, noise_rate, seed,
                                  rnd, cfg, backbone, head, labeled_idx,
                                  oracle_map, acc)
             print(f"    saved {os.path.basename(cp)}", flush=True)
+        append_csv(RESULTS_CSV, RESULT_HEADER,
+                   [dataset, method, noise_rate, seed, rnd,
+                    len(labeled_idx), f"{acc:.4f}", f"{time.time() - t0:.1f}"])
         if method.startswith("iris"):
             a_i, a_e = error_prediction_auroc(backbone, head, test)
             append_csv(DIAG_CSV, DIAG_HEADER,
@@ -858,13 +862,20 @@ BASE_METHODS = ["random", "entropy", "bald", "coreset",
                 "learnloss", "badge", "iris", "iris-grad"]
 
 
-def already_done(dataset, method, noise, seed, rounds):
-    """A run is complete if its final round is already in the CSV."""
+def already_done(dataset, method, noise, seed, rounds, ckpt_dir=None):
+    """A run is complete if its final round is in the CSV -- and, when we are
+    checkpointing, if that checkpoint exists and is non-empty.  Checking only
+    the CSV once let an interrupted run stay permanently half-finished."""
     if not os.path.exists(RESULTS_CSV):
         return False
     key = f"{dataset},{method},{noise},{seed},{rounds},"
     with open(RESULTS_CSV) as f:
-        return any(line.startswith(key) for line in f)
+        recorded = any(line.startswith(key) for line in f)
+    if not recorded or ckpt_dir is None:
+        return recorded
+    cp = os.path.join(
+        ckpt_dir, f"{dataset}_{method}_noise{noise}_seed{seed}_round{rounds}.pt")
+    return os.path.exists(cp) and os.path.getsize(cp) > 0
 
 
 def main():
@@ -910,7 +921,8 @@ def main():
         cfg = dict(CFGS[ds])
         if args.quick:
             cfg.update(rounds=1, epochs=2, init_labeled=200, query_size=200)
-        if not args.quick and already_done(ds, m, noise, seed, cfg["rounds"]):
+        if not args.quick and already_done(ds, m, noise, seed, cfg["rounds"],
+                                           ckpt_dir=ckpt_dir):
             print(f"skip (done): {ds} {m} {noise} {seed}", flush=True)
             continue
         print(f"=== run {i + 1}/{len(grid)}: {ds} {m} noise={noise} seed={seed} ===",

@@ -112,6 +112,11 @@ def main():
     diag_path = os.path.join(RESULTS_DIR, "diagnostics.csv")
     if os.path.exists(diag_path):
         dg = pd.read_csv(diag_path)
+        # A re-run appends fresh rows rather than replacing them, so keep the
+        # newest row per (dataset, method, noise, seed, round) exactly as the
+        # results CSV is handled above.
+        dg = dg.drop_duplicates(
+            subset=["dataset", "method", "noise", "seed", "round"], keep="last")
         dg = dg[dg.method == "iris"]
         for ds, g in dg.groupby("dataset"):
             last = g[g["round"] == g["round"].max()]

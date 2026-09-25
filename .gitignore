@@ -35,3 +35,7 @@ Thumbs.db
 paper/_backup/
 checkpoints/
 results/previous_run/
+
+# Zenodo staging: rebuilt on demand from checkpoints/
+zenodo_upload/
+*.tar
