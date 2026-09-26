@@ -49,3 +49,5 @@ docs/
 zenodotoken.txt
 *token*.txt
 .zenodo_token
+IRIS_HITL.zip
+*.zip
