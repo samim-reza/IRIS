@@ -43,13 +43,15 @@ its reported accuracy independently &mdash; the indices of the examples it was
 trained on, the labels the (possibly noisy) synthetic oracle returned for them,
 the training configuration and the PyTorch version.</p>
 
-<p>Archives are split by dataset so a specific claim can be checked without
-downloading the whole set:</p>
+<p>Archives are split so a specific claim can be checked without downloading
+the whole set:</p>
 <ul>
 <li><code>iris-checkpoints-fmnist.tar</code> &mdash; Fashion-MNIST, 114 models</li>
 <li><code>iris-checkpoints-bloodmnist.tar</code> &mdash; BloodMNIST, 114 models</li>
-<li><code>iris-checkpoints-cifar10.tar</code> &mdash; CIFAR-10, 57 models</li>
-<li><code>MANIFEST.csv</code> &mdash; every model with its recorded test accuracy</li>
+<li><code>iris-checkpoints-cifar10-noise{0.0,0.2}-seed{0,1,2}.tar</code> &mdash;
+CIFAR-10, 57 models in six archives, one per oracle setting and seed</li>
+<li><code>MANIFEST.csv</code> &mdash; every model, the archive holding it, and its
+recorded test accuracy</li>
 <li><code>SHA256SUMS.txt</code> &mdash; checksums for all of the above</li>
 </ul>
 
@@ -217,17 +219,28 @@ def main():
         print(f"draft deposition {dep['id']} created")
     dep_id, bucket = dep["id"], dep["links"]["bucket"]
 
-    have = {f["filename"]: (f.get("filesize"), f.get("checksum", ""))
+    have = {f["filename"]: (f.get("filesize"), f.get("checksum", ""), f["id"])
             for f in dep.get("files", [])}
     for f in files:
         name = os.path.basename(f)
         if name in have:
-            sz, ck = have[name]
+            sz, ck, fid = have[name]
             if sz == os.path.getsize(f) and ck.replace("md5:", "") == md5(f):
                 print(f"  {name}: already uploaded and intact, skipping")
                 continue
-            print(f"  {name}: present but does not match locally, re-uploading")
+            # delete the stale copy explicitly rather than rely on a PUT
+            # overwriting it
+            api(f"{base}/deposit/depositions/{dep_id}/files/{fid}", token,
+                method="DELETE")
+            print(f"  {name}: outdated copy deleted, re-uploading")
         put_file(bucket, f, token)
+
+    local = {os.path.basename(f) for f in files}
+    for name, (_, _, fid) in have.items():
+        if name not in local:
+            api(f"{base}/deposit/depositions/{dep_id}/files/{fid}", token,
+                method="DELETE")
+            print(f"  {name}: no longer in the upload set, removed from draft")
 
     api(f"{base}/deposit/depositions/{dep_id}", token, method="PUT",
         data=METADATA)

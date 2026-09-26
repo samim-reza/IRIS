@@ -166,9 +166,14 @@ everything:
 
 | Archive | Models | Size |
 |---|---|---|
-| `iris-checkpoints-fmnist.tar` | 114 | 396 MB |
-| `iris-checkpoints-bloodmnist.tar` | 114 | 396 MB |
-| `iris-checkpoints-cifar10.tar` | 57 | 2.4 GB |
+| `iris-checkpoints-fmnist.tar` | 114 | 415 MB |
+| `iris-checkpoints-bloodmnist.tar` | 114 | 415 MB |
+| `iris-checkpoints-cifar10-noise0.0-seed{0,1,2}.tar` | 9 each | 406 MB each |
+| `iris-checkpoints-cifar10-noise0.2-seed{0,1,2}.tar` | 10 each | 451 MB each |
+
+CIFAR-10 is split by oracle setting and seed, so no single file exceeds 2 GiB
+and one seed can be checked on its own. `MANIFEST.csv` on the record lists
+every model and the archive that holds it.
 
 ```bash
 tar -xf iris-checkpoints-bloodmnist.tar -C checkpoints/
