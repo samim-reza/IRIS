@@ -174,8 +174,11 @@ def main():
     ap.add_argument("--publish-id", type=int,
                     help="publish an existing draft by deposition id")
     ap.add_argument("--deposition-id", type=int,
-                    help="resume into an existing draft instead of creating "
-                         "one; files already present and intact are skipped")
+                    help="upload into this existing draft; files already "
+                         "present and intact are skipped")
+    ap.add_argument("--new", action="store_true",
+                    help="create a NEW deposition. It gets a NEW DOI -- never "
+                         "use this once a DOI has been cited anywhere")
     args = ap.parse_args()
 
     base = ("https://sandbox.zenodo.org/api" if args.sandbox
@@ -199,6 +202,13 @@ def main():
     print(f"{'SANDBOX' if args.sandbox else 'ZENODO'}: {len(files)} files, "
           f"{total / 1e9:.2f} GB\n")
 
+    # A new deposition means a new DOI. The paper already cites
+    # 10.5281/zenodo.22979683, so creating one silently would break that
+    # link; it now takes an explicit --new.
+    if not args.deposition_id and not args.new:
+        sys.exit("refusing to create a new deposition (it would get a new DOI).\n"
+                 "Use --deposition-id 22979683 for the IRIS record, or --new "
+                 "if you really want a separate record.")
     if args.deposition_id:
         dep = api(f"{base}/deposit/depositions/{args.deposition_id}", token)
         print(f"resuming draft deposition {dep['id']}")

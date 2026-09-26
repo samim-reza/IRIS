@@ -51,3 +51,4 @@ zenodotoken.txt
 .zenodo_token
 IRIS_HITL.zip
 *.zip
+zenodo_split/
