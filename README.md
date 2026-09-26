@@ -219,7 +219,7 @@ so do not split a grid across versions.
 
 ```
 @software{iris2026,
-  author = {Samim},
+  author = {Reza, Samim and Shihavuddin, ASM and Hasan, Muhammad Abul},
   title  = {IRIS: Introspective Reliability-gated Instance Selection for
             Human-in-the-Loop Deep Active Learning under Imperfect Annotators},
   year   = {2026},

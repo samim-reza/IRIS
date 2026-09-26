@@ -70,8 +70,9 @@ METADATA = {
                   "label acceptance in human-in-the-loop deep active learning"),
         "description": DESCRIPTION,
         "creators": [
-            {"name": "Samim"},
+            {"name": "Reza, Samim"},
             {"name": "Shihavuddin, ASM"},
+            {"name": "Hasan, Muhammad Abul"},
         ],
         "license": "cc-by-4.0",
         "access_right": "open",
