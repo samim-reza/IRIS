@@ -194,8 +194,10 @@ models would not let you check anything the CSV does not already state.
 | `notebooks/IRIS.ipynb` | code, results and verification in one file |
 | `logs/` | logs of the runs that produced `results/` |
 
-Not in git: `data/` (~460 MB, downloads on first run; BloodMNIST comes from
-[Zenodo record 10519652](https://zenodo.org/records/10519652)), `checkpoints/`
+Not in git: `data/` (~460 MB, **downloads automatically on first run** —
+Fashion-MNIST and CIFAR-10 via torchvision, BloodMNIST from
+[Zenodo record 10519652](https://zenodo.org/records/10519652) with its checksum
+verified), `checkpoints/`
 (3.2 GB — see below), `papers/` (third-party PDFs), and the manuscript sources.
 
 ---

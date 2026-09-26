@@ -1,0 +1,9 @@
+ZENODO: 6 files, 3.40 GB
+
+resuming draft deposition 22979683
+  MANIFEST.csv: already uploaded and intact, skipping
+  README.txt: already uploaded and intact, skipping
+  SHA256SUMS.txt: already uploaded and intact, skipping
+  uploading iris-checkpoints-bloodmnist.tar (415 MB) ...
+    ok, md5 verified
+  uploading iris-checkpoints-cifar10.tar (2569 MB) ...

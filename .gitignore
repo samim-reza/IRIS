@@ -44,3 +44,8 @@ zenodo_upload/
 # Kept locally (the submission bundle is built from paper/).
 paper/
 docs/
+
+# Never commit credentials
+zenodotoken.txt
+*token*.txt
+.zenodo_token

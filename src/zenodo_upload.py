@@ -16,9 +16,13 @@ the Zenodo page).
     python src/zenodo_upload.py --token-file ~/.zenodo_token --publish-id 1234567
 """
 import argparse
+import hashlib
 import json
 import os
+import stat
+import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.request
 
@@ -101,22 +105,63 @@ def api(url, token, method="GET", data=None, headers=None):
                  f"{e.read().decode()[:500]}\n")
 
 
-def put_file(bucket, path, token):
+def md5(path, chunk=1 << 20):
+    h = hashlib.md5()
+    with open(path, "rb") as f:
+        for b in iter(lambda: f.read(chunk), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def put_file(bucket, path, token, attempts=4):
+    """Upload one file with curl.
+
+    urllib streams a large body in one shot and Zenodo reset the connection
+    partway through a 415 MB archive. curl retries with backoff and reports
+    progress, which matters when a single file is 2.4 GB. The token goes in a
+    0600 config file rather than argv, so it never appears in ps output on a
+    shared machine.
+    """
     size = os.path.getsize(path)
     name = os.path.basename(path)
-    print(f"  uploading {name} ({size / 1e6:.0f} MB) ...", end="", flush=True)
-    with open(path, "rb") as f:
-        req = urllib.request.Request(
-            f"{bucket}/{name}", data=f, method="PUT",
-            headers={"Authorization": f"Bearer {token}",
-                     "Content-Type": "application/octet-stream",
-                     "Content-Length": str(size)})
-        try:
-            with urllib.request.urlopen(req, timeout=3600) as r:
-                r.read()
-        except urllib.error.HTTPError as e:
-            sys.exit(f"\n  FAILED: HTTP {e.code}\n{e.read().decode()[:400]}\n")
-    print(" ok")
+    want = md5(path)
+    fd, cfg = tempfile.mkstemp(prefix=".curlcfg-")
+    os.fchmod(fd, stat.S_IRUSR | stat.S_IWUSR)
+    with os.fdopen(fd, "w") as f:
+        f.write(f'header = "Authorization: Bearer {token}"\n')
+    try:
+        for attempt in range(1, attempts + 1):
+            tag = "" if attempt == 1 else f" [attempt {attempt}/{attempts}]"
+            print(f"  uploading {name} ({size / 1e6:.0f} MB){tag} ...",
+                  flush=True)
+            r = subprocess.run(
+                ["curl", "-sS", "-K", cfg, "-X", "PUT", "-T", path,
+                 "--retry", "5", "--retry-delay", "10", "--retry-all-errors",
+                 "--connect-timeout", "30", "--max-time", "10800",
+                 "--expect100-timeout", "30",
+                 "-w", "%{http_code}", "-o", "/tmp/.zen_resp",
+                 f"{bucket}/{name}"],
+                capture_output=True, text=True)
+            code = (r.stdout or "").strip()[-3:]
+            if code in ("200", "201"):
+                got = ""
+                try:
+                    got = json.load(open("/tmp/.zen_resp")).get("checksum", "")
+                except Exception:
+                    pass
+                got = got.replace("md5:", "")
+                if got and got != want:
+                    print(f"    checksum mismatch (got {got}, want {want})"
+                          " -- retrying")
+                    continue
+                print(f"    ok{', md5 verified' if got else ''}")
+                return
+            print(f"    HTTP {code or '?'} {r.stderr.strip()[:120]}")
+        sys.exit(f"\n  FAILED after {attempts} attempts: {name}\n")
+    finally:
+        os.unlink(cfg)
+        if os.path.exists("/tmp/.zen_resp"):
+            os.unlink("/tmp/.zen_resp")
 
 
 def main():
@@ -127,6 +172,9 @@ def main():
                     help="use sandbox.zenodo.org (throwaway DOIs)")
     ap.add_argument("--publish-id", type=int,
                     help="publish an existing draft by deposition id")
+    ap.add_argument("--deposition-id", type=int,
+                    help="resume into an existing draft instead of creating "
+                         "one; files already present and intact are skipped")
     args = ap.parse_args()
 
     base = ("https://sandbox.zenodo.org/api" if args.sandbox
@@ -150,11 +198,24 @@ def main():
     print(f"{'SANDBOX' if args.sandbox else 'ZENODO'}: {len(files)} files, "
           f"{total / 1e9:.2f} GB\n")
 
-    dep = api(f"{base}/deposit/depositions", token, method="POST", data={})
+    if args.deposition_id:
+        dep = api(f"{base}/deposit/depositions/{args.deposition_id}", token)
+        print(f"resuming draft deposition {dep['id']}")
+    else:
+        dep = api(f"{base}/deposit/depositions", token, method="POST", data={})
+        print(f"draft deposition {dep['id']} created")
     dep_id, bucket = dep["id"], dep["links"]["bucket"]
-    print(f"draft deposition {dep_id} created")
 
+    have = {f["filename"]: (f.get("filesize"), f.get("checksum", ""))
+            for f in dep.get("files", [])}
     for f in files:
+        name = os.path.basename(f)
+        if name in have:
+            sz, ck = have[name]
+            if sz == os.path.getsize(f) and ck.replace("md5:", "") == md5(f):
+                print(f"  {name}: already uploaded and intact, skipping")
+                continue
+            print(f"  {name}: present but does not match locally, re-uploading")
         put_file(bucket, f, token)
 
     api(f"{base}/deposit/depositions/{dep_id}", token, method="PUT",

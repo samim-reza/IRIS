@@ -21,6 +21,7 @@ import subprocess
 import sys
 import time
 import traceback
+import urllib.request
 
 import numpy as np
 import torch
@@ -132,15 +133,51 @@ def get_datasets(name):
     return train_aug, train_plain, test
 
 
+# MedMNIST v2 BloodMNIST, Zenodo record 10519652. The checksum is pinned so a
+# truncated or substituted download is caught rather than trained on.
+BLOOD_URL = ("https://zenodo.org/records/10519652/files/bloodmnist.npz"
+             "?download=1")
+BLOOD_MD5 = "7053d0359d879ad8a5505303e11de1dc"
+
+
+def _md5(path, chunk=1 << 20):
+    import hashlib
+    h = hashlib.md5()
+    with open(path, "rb") as f:
+        for b in iter(lambda: f.read(chunk), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def ensure_bloodmnist(path=None):
+    """Fetch BloodMNIST if absent, the way torchvision does for the others.
+
+    Fashion-MNIST and CIFAR-10 download themselves; BloodMNIST used to raise
+    FileNotFoundError and print a curl command instead, so a fresh clone could
+    not reproduce the BloodMNIST results without a manual step.
+    """
+    path = path or BLOOD_NPZ
+    if os.path.exists(path) and _md5(path) == BLOOD_MD5:
+        return path
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".partial"
+    print(f"downloading BloodMNIST (35 MB) -> {path}", flush=True)
+    urllib.request.urlretrieve(BLOOD_URL, tmp)
+    got = _md5(tmp)
+    if got != BLOOD_MD5:
+        os.unlink(tmp)
+        raise RuntimeError(f"BloodMNIST checksum mismatch: got {got}, "
+                           f"expected {BLOOD_MD5}")
+    os.replace(tmp, path)
+    return path
+
+
 class NpzImageDataset(Dataset):
     """A MedMNIST-style .npz split (images NHWC uint8, labels Nx1) exposed
     with the same interface as the torchvision datasets above."""
 
     def __init__(self, path, split, transform):
-        if not os.path.exists(path):
-            raise FileNotFoundError(
-                f"{path} missing - fetch it with:\n  curl -L -o {path} "
-                "https://zenodo.org/records/10519652/files/bloodmnist.npz")
+        ensure_bloodmnist(path)
         d = np.load(path)
         self.images = d[f"{split}_images"]
         self.targets = [int(t) for t in d[f"{split}_labels"].ravel()]
