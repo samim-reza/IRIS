@@ -39,3 +39,8 @@ results/previous_run/
 # Zenodo staging: rebuilt on demand from checkpoints/
 zenodo_upload/
 *.tar
+
+# Manuscript sources and project notes: not part of the public code release.
+# Kept locally (the submission bundle is built from paper/).
+paper/
+docs/

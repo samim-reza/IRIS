@@ -1,5 +1,7 @@
-"""Emit paper/numbers.tex: one \\newcommand per result so the paper's prose
-and tables always reflect the latest results.csv."""
+"""Emit the result macros (paper/numbers.tex): one \\newcommand per result,
+so every figure quoted in the manuscript is generated from results.csv rather
+than typed. The manuscript itself is not part of this repository; the output
+directory is created if absent."""
 
 import os
 
@@ -255,6 +257,7 @@ def main():
     except Exception as e:  # torch absent: leave the macros to their fallbacks
         print("skipped head-size macros:", e)
 
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as f:
         f.write("\n".join(lines) + "\n")
     print(f"wrote {OUT} ({len(lines) - 1} macros)")

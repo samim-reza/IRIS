@@ -32,8 +32,10 @@ PATTERNS = [
 
 def main():
     if not os.path.exists(PDF):
-        print("no PDF at", PDF)
-        return 1
+        print(f"no manuscript at {PDF} -- nothing to lint.\n"
+              "This tool checks the compiled paper, which is not part of this\n"
+              "repository; it is here so the check travels with the code.")
+        return 0
     txt = subprocess.run(["pdftotext", PDF, "-"], capture_output=True,
                          text=True).stdout.replace("\n", " ")
     hits = 0

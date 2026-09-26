@@ -48,7 +48,6 @@ error-prediction AUROC audit of the introspection head.
 IRIS/
 ├── src/                 # hitl_experiments.py, make_plots.py, make_numbers.py, finalize.sh
 ├── results/             # results.csv, summary tables, figures  (shipped: no training needed)
-├── paper/               # main_en.tex → main_en.pdf (numbers auto-filled from results)
 ├── notebooks/IRIS.ipynb # this notebook
 ├── docs/                # literature review + per-source metadata
 ├── logs/                # experiments.log (the nohup run), finalize.log
@@ -202,14 +201,12 @@ else:
     print(f"\\nmax |delta| over {len(sel)} checkpoint(s) = {worst:.6f}")""")
 
 md("""## 6. Where everything lives
-- **Paper (PDF):** `paper/main_en.pdf` — Elsevier CAS format; every number, table
-  and figure is auto-filled from `results/` by `src/make_numbers.py` and
-  `src/make_plots.py` (rerun together by `src/finalize.sh`).
+- **Reported figures:** regenerated from `results/` by `src/make_numbers.py`
+  and `src/make_plots.py` (rerun together by `src/finalize.sh`).
 - **Saved models:** `checkpoints/` — the final model of each of the 174 runs,
   re-checkable with `src/verify_checkpoint.py` (section 5).
 - **Previous results:** `results/previous_run/` — the earlier grid, with
   `src/compare_runs.py` to diff old against new.
-- **Literature review:** `docs/literature_review/literature_review.md`.
 - **Reproduce from scratch:** `tmux new-session -d -s iris 'bash src/rerun_all.sh
   > logs/rerun.log 2>&1'`, wait for `RERUN COMPLETE`, then re-run section 4 here.
 """)

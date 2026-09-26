@@ -132,7 +132,6 @@ or without it.
 
 ```bash
 python src/check_claims.py                 # 22 stated conclusions vs the data
-python src/lint_prose.py                   # no sentence contradicts its own number
 python src/verify_checkpoint.py            # reload every saved model, re-measure
 python src/verify_checkpoint.py --dataset bloodmnist
 python src/compare_runs.py                 # this grid vs results/previous_run/
@@ -147,7 +146,35 @@ set; a clean result is `max |delta| = 0.000000`.
 `check_claims.py` exists because regenerating numbers keeps figures honest but
 not *sentences*. "BADGE beats IRIS", "BALD falls below random", "the gate lifts
 BADGE" are English, and English does not regenerate. Run it after any re-run: a
-conclusion that silently inverts fails loudly instead.
+conclusion that silently inverts fails loudly instead. (`src/lint_prose.py` is
+its companion for the write-up itself; it needs the compiled manuscript, which
+is not distributed here, and reports that and exits cleanly if absent.)
+
+### Trained models
+
+The 285 trained models — one per run, the final model of each — are archived on
+Zenodo rather than here, at 3.2 GB. Each carries the audit trail needed to
+re-measure its reported accuracy independently: the indices of the examples it
+saw, the labels the noisy oracle returned for them, the training configuration
+and the PyTorch version. All 285 re-measure at `max |delta| = 0.000000`.
+
+Archives are split by dataset, so checking one claim does not mean downloading
+everything:
+
+| Archive | Models | Size |
+|---|---|---|
+| `iris-checkpoints-fmnist.tar` | 114 | 396 MB |
+| `iris-checkpoints-bloodmnist.tar` | 114 | 396 MB |
+| `iris-checkpoints-cifar10.tar` | 57 | 2.4 GB |
+
+```bash
+tar -xf iris-checkpoints-bloodmnist.tar -C checkpoints/
+python src/verify_checkpoint.py --dataset bloodmnist
+```
+
+Only final-round models are kept: the per-round accuracies behind the
+accuracy-budget curves are already in `results/results.csv`, so storing those
+models would not let you check anything the CSV does not already state.
 
 ---
 
@@ -161,16 +188,15 @@ conclusion that silently inverts fails loudly instead.
 | `src/check_claims.py` | asserts the stated conclusions against the data |
 | `src/verify_checkpoint.py` | reload saved models and re-measure them |
 | `src/compare_runs.py` | diff this grid against a previous one |
+| `src/zenodo_upload.py` | deposit the checkpoint archives and mint a DOI |
 | `src/rerun_all.sh` | full grid, detached, with checkpoints |
 | `results/` | **shipped**: `results.csv`, `summary.csv`, `diagnostics.csv`, figures, tables |
 | `notebooks/IRIS.ipynb` | code, results and verification in one file |
-| `docs/HANDOFF.md` | project state, what changed and why, gotchas, open items |
-| `docs/literature_review/` | the synthesis and per-source metadata |
 | `logs/` | logs of the runs that produced `results/` |
 
 Not in git: `data/` (~460 MB, downloads on first run; BloodMNIST comes from
 [Zenodo record 10519652](https://zenodo.org/records/10519652)), `checkpoints/`
-(3.2 GB, produced by `--save-checkpoints`), and `papers/` (third-party PDFs).
+(3.2 GB — see below), `papers/` (third-party PDFs), and the manuscript sources.
 
 ---
 
