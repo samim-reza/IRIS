@@ -1,5 +1,7 @@
 # IRIS — Introspective Reliability-gated Instance Selection
 
+[![Models DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22979683.svg)](https://doi.org/10.5281/zenodo.22979683)
+
 Human-in-the-loop deep active learning when the annotator is imperfect.
 
 A classifier trained on a few hundred labels is confused about exactly the
@@ -153,7 +155,8 @@ is not distributed here, and reports that and exits cleanly if absent.)
 ### Trained models
 
 The 285 trained models — one per run, the final model of each — are archived on
-Zenodo rather than here, at 3.2 GB. Each carries the audit trail needed to
+Zenodo rather than here, at 3.2 GB:
+**[doi.org/10.5281/zenodo.22979683](https://doi.org/10.5281/zenodo.22979683)**. Each carries the audit trail needed to
 re-measure its reported accuracy independently: the indices of the examples it
 saw, the labels the noisy oracle returned for them, the training configuration
 and the PyTorch version. All 285 re-measure at `max |delta| = 0.000000`.
